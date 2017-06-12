@@ -10,6 +10,7 @@ group = group_id
 
 
 def getAction(text):
+	text = text.lower()
 	actions = {
 	"ник":changeNick,
 	"ссылку":changeId,
