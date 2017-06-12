@@ -6,13 +6,15 @@ from time import sleep
 
 def notify(test=False):
 	""" Оповещает игроков о начале сервера или еженедельника """
-	warning = "\n(Это автоматическое сообщение. Отвечать на него не нужно.)"
-	message = "Еженедельник начался, а ты как раз записался. Приходи, если ещё не сдал!\n"
-	message += warning
-	if test: message = "тест"
+	if test:
+		message = "Тест"
+	else:
+		message = "Еженедельник начался, а ты как раз записался. Приходи, если ещё не сдал!\n"
+		warning = "\n(Это автоматическое сообщение. Отвечать на него не нужно.)"
+		message += warning
 	users = getEweekPlayers()
-	ban = getBanned()
-	users = {user for user in users if user not in ban}
+	ban_list = getBanned()
+	users = {user for user in users if user not in ban_list}
 	sendMessages(users, message)
 
 
