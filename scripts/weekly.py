@@ -11,7 +11,7 @@ def generate():
 	challenge = getNewChallenge()
 	setThisWeekChallenge(challenge)
 	for day in days:
-		with open("../Data/week_posts/" + day, encoding="utf-8") as file:
+		with open("../../Data/week_posts/" + day, encoding="utf-8") as file:
 			file = editPost(file.read(), challenge)
 			digit = int(day[0])
 			post_time = getPostTime(digit)
@@ -19,7 +19,7 @@ def generate():
 
 
 def getPlannedPosts():
-	days = listdir("../Data/week_posts")
+	days = listdir("../../Data/week_posts/")
 	return [d for d in days if ".txt" in d]
 
 
