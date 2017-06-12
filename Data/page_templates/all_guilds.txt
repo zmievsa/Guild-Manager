@@ -1,0 +1,6 @@
+<center>[[photo-77675108_425637738|202x94px;nopadding;nolink| ]][[photo-77675108_425637739|202x94px;nopadding|page-64867627_50750295]][[photo-77675108_425637740|202x94px;nopadding;nolink| ]]
+[[photo-77675108_425637742|202x94px;nopadding|topic-64867627_29891323]][[photo-77675108_425637743|202x94px;nopadding|topic-64867627_29901188]][[photo-77675108_425637744|202x94px;nopadding|topic-64867627_36845922]]
+[[photo-77675108_425637745|202x94px;nopadding|page-64867627_47291741]][[photo-77675108_425637746|202x94px;nopadding|page-64867627_49895049]][[photo-77675108_425637747|202x94px;nopadding|topic-64867627_36845916]]</center>
+===Гильдии ([guildnumber])===
+[all_guilds]
+<center>'''Общее количество участников во всех гильдиях: [playernumber]'''</center>
