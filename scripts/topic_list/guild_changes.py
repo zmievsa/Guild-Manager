@@ -2,11 +2,12 @@ from re import search
 from lib.errors import *
 from lib.topics import Player
 from lib.guilds import createPlayer
-from lib.commands import group_id, database
+from lib.commands import group_id, database, getBanned
 
 
 id = 29901188
 group = group_id
+ban_list = getBanned()
 
 
 def getAction(text):
@@ -247,7 +248,9 @@ def addToGuild(request):
 	hyperlink = Hyperlink(request.text)
 	id_, name = hyperlink.id, hyperlink.name
 	player = Player(id_)
-	if player.inguild:
+	if int(id_) in ban_list:
+		raise user_banned
+	elif player.inguild:
 		raise already_in_guild
 	if player.exists:
 		player.set("guild", guild_id)

@@ -59,6 +59,12 @@ def vkCap(method, **kwargs):
 		return vkCap(method, **kwargs)
 
 
+def getBanned():
+	bans = api.groups.getBanned(group_id=group_id)['items']
+	banned = [user['id'] for user in bans]
+	return banned
+
+
 def setCurrentDirectory():
 	path = os.path.realpath(__file__)
 	index = path.rfind("/")

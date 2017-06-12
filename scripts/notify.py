@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from lib.commands import api, group_id, sleep_time, error
+from lib.commands import api, group_id, sleep_time, getBanned, error
 from time import sleep
 
 
@@ -35,12 +35,6 @@ def sendMessages(users, message):
 			api.messages.send(user_id=user, message=message)
 		except:
 			pass
-
-
-def getBanned():
-	bans = api.groups.getBanned(group_id=group_id)['items']
-	banned = [user['id'] for user in bans]
-	return banned
 
 
 if __name__ == "__main__":
