@@ -110,7 +110,7 @@ class Request(object):
 		self.topic = topic
 		self.text = post_text
 		self.asker = Player(post_owner)
-		self.action = self.topic.getAction(self.text)
+		self.action = self.topic.getAction(self.text.lower())
 
 	def process(self):
 		""" Обрабатывает запрос """
@@ -121,7 +121,7 @@ class Request(object):
 			self.message = e
 			self.picture = failure_image.link
 		else:
-			self.message = self.topic.getMessage(self.text, self.asker)
+			self.message = self.topic.getMessage(self.text.lower(), self.asker)
 			self.picture = succeed_image.link
 
 	def finish(self):

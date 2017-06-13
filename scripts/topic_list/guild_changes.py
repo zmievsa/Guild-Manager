@@ -11,7 +11,6 @@ ban_list = getBanned()
 
 
 def getAction(text):
-	text = text.lower()
 	actions = {
 	"ник":changeNick,
 	"ссылку":changeId,
