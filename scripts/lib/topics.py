@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from lib.commands import api, database
-from lib.errors import GMError, wrong_request
+from lib.commands import api, database, vkCap
 from lib.wiki_pages import updateGuild
+from lib.errors import *
+from re import search
 
 
 class Image(object):
@@ -141,7 +142,7 @@ class Request(object):
 
 	def editComment(self):
 		""" Оповещает игрока о результатах обработки заявки """
-		api.board.editComment(
+		vkCap(api.board.editComment,
 			group_id=self.topic.group,
 			topic_id=self.topic.id,
 			comment_id=self.id,
@@ -164,3 +165,41 @@ def getComments(topic, amount):
 		offset = response['count']
 		offset -= amount
 	return comments
+
+
+class Hyperlink(object):
+	def __init__(self, text):
+		hyperlink = self.find(text)
+		if hyperlink is None:
+			raise hyperlink_wrong_format
+		self.id, self.name = self.divide(hyperlink)
+		checkNicknameFormat(self.name)
+
+	def __str__(self):
+		return "[id{}|{}]".format(self.id, self.name)
+
+	@staticmethod
+	def find(text):
+		pattern = r"\[id\d+\|.+\]"
+		match = search(pattern, text)
+		if match is not None:
+			return match.group()
+
+	@staticmethod
+	def divide(hyperlink):
+		hyperlink = hyperlink[3:-1]  # removes brackets [] and "id"
+		id_, name = hyperlink.split("|")
+		return id_, name
+
+
+def checkNicknameFormat(name):
+	if name is not None:
+		nickname_format = GMError("Ник {} содержит недопустимые символы.".format(name))
+		pattern = r"^[A-Za-z_\d]+$"
+		match = search(pattern, name)
+		if match is None:
+			raise nickname_format
+		elif not 20 >= len(name) >= 3:
+			raise nickname_length
+	else:
+		raise nickname_format

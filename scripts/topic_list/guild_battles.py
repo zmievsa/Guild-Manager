@@ -4,6 +4,7 @@ from lib.errors import GB_wrong_request, GB_guild_not_found
 
 id = 35465123
 group = test_id
+comment_amount = 20
 
 
 def getAction(text):

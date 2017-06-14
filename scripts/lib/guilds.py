@@ -6,7 +6,6 @@ import lxml.etree as XML
 def createGuild(players, name, head, vice, requirements, about, logo, banner):
 	""" Добавляет гильдию в базу данных """
 	guild_id = getGuildId()
-	createGuildPlayers(players, guild_id)
 	page = makeGuildPage(name)
 	xml_element = makeGuildXMLElement()
 	fields = (
@@ -17,6 +16,7 @@ def createGuild(players, name, head, vice, requirements, about, logo, banner):
 		("about", about), ("logo", logo),
 		("banner", banner))
 	enterIntoDatabase(fields, xml_element)
+	createGuildPlayers(players, guild_id)
 	database.rewrite()
 	updateGuild(database.getById("guilds", guild_id))
 	refreshGuilds()
@@ -33,13 +33,11 @@ def getGuildId():
 		return first_guild_id
 
 
-def createGuildPlayers(players_str, guild_id):
-	players = players_str.split(" ")
-	players = [p[3:-1].split("|") for p in players]
-	for id, name in players:
+def createGuildPlayers(players, guild_id):
+	for player in players:
 		existing_player = database.getById(kind="players", id=str(id))
 		if existing_player is None:
-			createPlayer(id=id, name=name, guild=guild_id)
+			createPlayer(id=player.id, name=player.name, guild=guild_id)
 		else:
 			existing_player.find("guild").text = guild_id
 

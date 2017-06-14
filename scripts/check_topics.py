@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
-from topic_list import guild_changes, guild_battles
+from topic_list import guild_changes, guild_battles, guild_making
 from lib.topics import Request, failure_image, succeed_image, getComments
 from lib.wiki_pages import refreshGuilds
 from lib.commands import error
 
 
 def main():
-	lst = (guild_changes, guild_battles)
+	lst = (guild_changes, guild_battles, guild_making)
 	for topic in lst:
-		comments = getComments(topic, 20)
+		comments = getComments(topic, topic.comment_amount)
 		parseChanges(comments, topic)
 	refreshGuilds()
 

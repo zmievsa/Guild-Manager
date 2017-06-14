@@ -1,13 +1,14 @@
 from re import search
 from lib.errors import *
-from lib.topics import Player
 from lib.guilds import createPlayer
 from lib.commands import group_id, database, getBanned
+from lib.topics import Player, Hyperlink, checkNicknameFormat
 
 
 id = 29901188
 group = group_id
 ban_list = getBanned()
+comment_amount = 20
 
 
 def getAction(text):
@@ -42,31 +43,6 @@ def getMessage(text, asker):
 		player_id, player_name = asker.get("id"), asker.get("name")
 		message = "Игрок: [id{}|{}]".format(player_id, player_name)
 	return message
-
-
-class Hyperlink(object):
-	def __init__(self, text):
-		hyperlink = self.find(text)
-		if hyperlink is None:
-			raise hyperlink_wrong_format
-		self.id, self.name = self.divide(hyperlink)
-		checkNicknameFormat(self.name)
-
-	def __str__(self):
-		return "[id{}|{}]".format(self.id, self.name)
-
-	@staticmethod
-	def find(text):
-		pattern = r"\[id\d+\|.+\]"
-		match = search(pattern, text)
-		if match is not None:
-			return match.group()
-
-	@staticmethod
-	def divide(hyperlink):
-		hyperlink = hyperlink[3:-1]  # removes brackets [] and "id"
-		id_, name = hyperlink.split("|")
-		return id_, name
 
 
 def changeNick(request):
@@ -292,7 +268,7 @@ def endGuild(request):
 		if player.find("guild").text == guild_id:
 			player.find("guild").text = "0"
 	parent = guild.xml_element.getparent()
-	parent.remove(guild)
+	parent.remove(guild.xml_element)
 
 
 def getNickname(text):
@@ -312,18 +288,6 @@ def searchForNickname(text):
 		name = match.group()
 		name = name.replace(".", "")
 		return name
-
-
-def checkNicknameFormat(name):
-	if name is not None:
-		pattern = r"^[A-Za-z_\d]+$"
-		match = search(pattern, name)
-		if match is None:
-			raise nickname_format
-		elif not 20 >= len(name) >= 3:
-			raise nickname_length
-	else:
-		raise nickname_format
 
 
 def checkRights(player, position):
