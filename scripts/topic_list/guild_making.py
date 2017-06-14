@@ -1,5 +1,5 @@
-from lib.commands import database, group_id, getBanned
-from lib.topics import Hyperlink, Player
+from lib.topics import Hyperlink, Player, Guild
+from lib.commands import group_id, getBanned
 from lib.guilds import createGuild
 from lib.errors import GMError
 from re import search
@@ -16,11 +16,11 @@ def getAction(text):
 
 
 def getMessage(text, asker):
-	player = database.getById("players", asker.get("id"))
+	player = Player(asker.get("id"))
 	guild_name = player.guild.get("name")
 	page_id = player.guild.get("page")
 	link = "https://vk.com/page-{}_{}".format(group_id, page_id)
-	return "Гильдия:{} ({})".format(guild_name, link)
+	return "Гильдия: {} ({})".format(guild_name, link)
 
 
 def makeGuild(request):
@@ -29,8 +29,9 @@ def makeGuild(request):
 	addMissingFields(guild)
 	makeHyperlinks(guild)
 	editHeadsAndVices(guild)
-	checkGuildInfo(guild)
-	guild = createGuild(**guild)
+	if not guildAlreadyExists:
+		checkGuildInfo(guild)
+		guild = createGuild(**guild)
 
 
 def getGuildInfo(text):
@@ -104,7 +105,6 @@ def checkGuildInfo(guild):
 
 
 def checkPlayers(players):
-	print(players)
 	for player in players:
 		checkPlayerUniqueness(player)
 		checkIfPlayerHasGuild(player)
@@ -147,3 +147,12 @@ def checkIfHeadsVicesInGuild(guild):
 			vices.remove(player.id)
 	if len(heads) or len(vices):
 		raise GMError("Не все заместители/главы находятся в составе гильдии.")
+
+
+def guildAlreadyExists(guild):
+	name = guild['name']
+	head = guild['head']
+	old_guild = Guild(name=name)
+	if old_guild.exists:
+		if old_guild.get("head") == head:
+			return True

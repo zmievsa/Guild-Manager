@@ -73,6 +73,7 @@ class Guild(DatabaseElement):
 
 	def __init__(self, id=None, name=None):
 		self.xml_element = self.getElement(id, name)
+		self.exists = self.xml_element is not None
 
 	@property
 	def heads(self):
@@ -129,7 +130,7 @@ class Request(object):
 		""" Завершает обработку и вносит изменения """
 		database.rewrite()
 		if self.asker.guild is not None:
-			updateGuild(self.asker.guild)
+			updateGuild(self.asker.guild.xml_element)
 		self.addMessageToComment(self.message)
 		self.editComment()
 

@@ -10,7 +10,7 @@ def updateGuild(guild):
 		template = file.read()
 	players = getPlayers(guild)
 	guild_children = guild.iterchildren()
-	guild_page = guild.find("page")
+	guild_page = guild.find("page").text
 	attributes = {e.tag:e.text for e in guild_children}
 	attributes['numberofplayers'] = str(len(players))
 	attributes['stats'] = getStats(attributes['wins'], attributes['loses'])
