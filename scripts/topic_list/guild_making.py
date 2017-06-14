@@ -138,8 +138,8 @@ def checkGuildName(guild_name):
 
 
 def checkIfHeadsVicesInGuild(guild):
-	heads = guild['heads'].split(" ")
-	vices = guild['vices'].split(" ")
+	heads = guild['head'].split(" ")
+	vices = guild['vice'].split(" ")
 	for player in guild['players']:
 		if player.id in heads:
 			heads.remove(player.id)
