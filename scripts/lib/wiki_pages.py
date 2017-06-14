@@ -1,5 +1,4 @@
-from lib.commands import database, group_id, my_id, api
-from time import sleep
+from lib.commands import database, group_id, my_id, api, vkCap
 
 
 def updateGuild(guild):
@@ -10,8 +9,8 @@ def updateGuild(guild):
 	with open("../../Data/page_templates/guild.txt", "r") as file:
 		template = file.read()
 	players = getPlayers(guild)
-	guild_children = guild.xml_element.iterchildren()
-	guild_page = guild.get("page")
+	guild_children = guild.iterchildren()
+	guild_page = guild.find("page")
 	attributes = {e.tag:e.text for e in guild_children}
 	attributes['numberofplayers'] = str(len(players))
 	attributes['stats'] = getStats(attributes['wins'], attributes['loses'])
@@ -27,8 +26,7 @@ def updateGuild(guild):
 	for key in attributes:
 		value = attributes[key]
 		template = template.replace("[{}]".format(key), value)
-	api.pages.save(user_id=my_id, text=template, page_id=guild_page, group_id=group_id)
-	sleep(1)
+	vkCap(api.pages.save, user_id=my_id, text=template, page_id=guild_page, group_id=group_id)
 
 
 def splitHeadsVices(string):
@@ -127,7 +125,7 @@ def refreshGuilds():
 	for key in attributes:
 		value = attributes[key]
 		template = template.replace("[{}]".format(key), str(value))
-	api.pages.save(user_id=my_id, text=template, group_id=group_id, page_id=47292063)
+	vkCap(api.pages.save, user_id=my_id, text=template, group_id=group_id, page_id=47292063)
 
 
 def getGuildList(all_guilds):

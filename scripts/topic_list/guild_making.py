@@ -30,7 +30,6 @@ def makeGuild(request):
 	makeHyperlinks(guild)
 	editHeadsAndVices(guild)
 	checkGuildInfo(guild)
-	checkPlayers(guild)
 	guild = createGuild(**guild)
 
 
@@ -77,7 +76,7 @@ def checkMissingFields(guild):
 
 
 def addMissingFields(guild):
-	field_list = ("vice")
+	field_list = "vice",
 	for field in field_list:
 		if field not in guild:
 			guild[field] = ""
@@ -86,7 +85,7 @@ def addMissingFields(guild):
 def makeHyperlinks(guild):
 	fields = ("head", "vice", "players")
 	for field in fields:
-		players = guild[field].split(" ")
+		players = guild[field].strip().split(" ")
 		guild[field] = [Hyperlink(p) for p in players]
 
 
@@ -105,6 +104,7 @@ def checkGuildInfo(guild):
 
 
 def checkPlayers(players):
+	print(players)
 	for player in players:
 		checkPlayerUniqueness(player)
 		checkIfPlayerHasGuild(player)
