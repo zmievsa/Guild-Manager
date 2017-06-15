@@ -29,7 +29,7 @@ def makeGuild(request):
 	addMissingFields(guild)
 	makeHyperlinks(guild)
 	editHeadsAndVices(guild)
-	if not guildAlreadyExists:
+	if not guildAlreadyExists(guild):
 		checkGuildInfo(guild)
 		guild = createGuild(**guild)
 
@@ -135,6 +135,8 @@ def checkGuildName(guild_name):
 	pattern = r"^[\[\]A-Za-z_\d ]+$"
 	if search(pattern, guild_name) is None:
 		raise GMError("Название гильдии содержит недопустимые символы.")
+	elif Guild(name=guild_name).exists:
+		raise GMError("Гильдия с таким названием уже существует.")
 
 
 def checkIfHeadsVicesInGuild(guild):

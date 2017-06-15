@@ -77,11 +77,20 @@ class Guild(DatabaseElement):
 
 	@property
 	def heads(self):
-		return self.get("head").split(" ")
+		head = self.get("head")
+		return self.getNonEmptyField(head)
 
 	@property
 	def vices(self):
-		return self.get("vice").split(" ")
+		vice = self.get("vice")
+		return self.getNonEmptyField(vice)
+
+	@staticmethod
+	def getNonEmptyField(field):
+		if field is None:
+			return []
+		else:
+			return field.split(" ")
 
 	def setPosition(self, player_id, position):
 		player_id = str(player_id)

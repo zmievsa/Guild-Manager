@@ -1,5 +1,6 @@
-from lib.commands import database, test_id
 from lib.errors import GB_wrong_request, GB_guild_not_found
+from lib.commands import test_id
+from lib.topics import Guild
 
 
 id = 35465123
@@ -37,8 +38,8 @@ def getResult(text):
 def getGuild(text, result):
 	result_index = text.index(result)
 	name = text[:result_index].strip()
-	guild = database.getByField("guilds", "name", name)
-	if guild is not None:
+	guild = Guild(name=name)
+	if guild.exists:
 		return guild
 	else:
 		raise GB_guild_not_found

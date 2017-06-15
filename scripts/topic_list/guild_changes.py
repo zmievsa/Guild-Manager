@@ -67,12 +67,12 @@ def changeId(request):
 
 def checkIfPlayerExists(id=None, name=None):
 	if id:
-		existing_player = database.getById(kind="players", id=id)
-		if existing_player:
+		player = Player(id=id)
+		if player.exists:
 			raise player_already_exists
 	elif name:
-		existing_player = database.getByField("players", "name", name)
-		if existing_player:
+		player = Player(name=name)
+		if player.exists:
 			raise nickname_already_exists
 
 
@@ -263,10 +263,18 @@ def endGuild(request):
 	checkRights(request.asker, "head")
 	guild = request.asker.guild
 	guild_id = guild.get("id")
+	removePlayersFromGuild(guild_id)
+	deleteGuildElement(guild)
+
+
+def removePlayersFromGuild(guild_id):
 	players = database.find("players").iterchildren()
 	for player in players:
 		if player.find("guild").text == guild_id:
 			player.find("guild").text = "0"
+
+
+def deleteGuildElement(guild):
 	parent = guild.xml_element.getparent()
 	parent.remove(guild.xml_element)
 

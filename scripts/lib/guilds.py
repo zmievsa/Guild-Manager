@@ -1,5 +1,6 @@
 from lib.commands import database, api, group_id, my_id
 from lib.wiki_pages import updateGuild, refreshGuilds
+from lib.topics import Player, Guild
 import lxml.etree as XML
 
 
@@ -17,8 +18,8 @@ def createGuild(players, name, head, vice, requirements, about, logo, banner):
 		("banner", banner))
 	enterIntoDatabase(fields, xml_element)
 	createGuildPlayers(players, guild_id)
+	updateGuild(Guild(guild_id))
 	database.rewrite()
-	updateGuild(database.getById("guilds", guild_id))
 	refreshGuilds()
 
 
@@ -35,11 +36,11 @@ def getGuildId():
 
 def createGuildPlayers(players, guild_id):
 	for player in players:
-		existing_player = database.getById(kind="players", id=str(id))
+		existing_player = Player(id=player.id)
 		if existing_player is None:
 			createPlayer(id=player.id, name=player.name, guild=guild_id)
 		else:
-			existing_player.find("guild").text = guild_id
+			existing_player.set("guild", guild_id)
 
 
 def makeGuildPage(name):
