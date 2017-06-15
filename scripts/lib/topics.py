@@ -2,6 +2,7 @@
 
 from lib.commands import api, database, vkCap
 from lib.wiki_pages import updateGuild
+from lib.guilds import Player
 from lib.errors import *
 from re import search
 
@@ -17,102 +18,6 @@ class Image(object):
 failure_image = Image("photo98216156_456240031")	# Ссылка на фото, когда бот нашел ошибку
 succeed_image = Image("photo98216156_456240030")	# Ссылка на фото, когда бот успешно все поменял
 text_division = '_' * 27							# Разделение текста игрока и админа
-
-
-class DatabaseElement(object):
-	def find(self, name):
-		return self.xml_element.find(name)
-
-	def get(self, name):
-		return self.find(name).text
-
-	def set(self, name, value):
-		self.find(name).text = value
-
-	def getElement(self, id, name):
-		if id is not None:
-			return database.getById(self.parent, id)
-		elif name is not None:
-			return database.getByField(self.parent, "name", name)
-		else:
-			raise Exception("DatabaseElement: ты не указал id или имя")
-
-
-class Player(DatabaseElement):
-	parent = "players"
-
-	def __init__(self, id=None, name=None):
-		self.name = name
-		self.id = id
-		self.xml_element = self.getElement(id, name)
-		self.exists = self.xml_element is not None
-		self.guild = self.getGuild()
-		self.rank = self.getRank()
-		self.inguild = self.rank > 0
-
-	def getGuild(self):
-		if self.exists:
-			guild_id = self.get("guild")
-			if guild_id != "0":
-				return Guild(guild_id)
-
-	def getRank(self):
-		if self.guild is not None:
-			if self.id in self.guild.heads:
-				return 3
-			elif self.id in self.guild.vices:
-				return 2
-			else:
-				return 1
-		else:
-			return 0
-
-
-class Guild(DatabaseElement):
-	parent = "guilds"
-
-	def __init__(self, id=None, name=None):
-		self.xml_element = self.getElement(id, name)
-		self.exists = self.xml_element is not None
-
-	@property
-	def heads(self):
-		head = self.get("head")
-		return self.getNonEmptyField(head)
-
-	@property
-	def vices(self):
-		vice = self.get("vice")
-		return self.getNonEmptyField(vice)
-
-	@staticmethod
-	def getNonEmptyField(field):
-		if field is None:
-			return []
-		else:
-			return field.split(" ")
-
-	def setPosition(self, player_id, position):
-		player_id = str(player_id)
-		self._removePlayerFromOldPosition(player_id)
-		if position != "player":
-			self._putPlayerIntoNewPosition(player_id, position)
-
-	def _removePlayerFromOldPosition(self, player_id):
-		heads, vices = self.heads, self.vices
-		if player_id in heads:
-			heads.remove(player_id)
-			self.set("head", " ".join(heads))
-		elif player_id in self.vices:
-			vices.remove(player_id)
-			self.set("vice", " ".join(vices))
-
-	def _putPlayerIntoNewPosition(self, player_id, position):
-		if position == "head":
-			element = self.find("head")
-		elif position == "vice":
-			element = self.find("head")
-		element.text = "{} {}".format(element.text, player_id)
 
 
 class Request(object):

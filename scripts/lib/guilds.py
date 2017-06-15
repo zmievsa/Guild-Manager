@@ -1,7 +1,102 @@
 from lib.commands import database, api, group_id, my_id
 from lib.wiki_pages import updateGuild, refreshGuilds
-from lib.topics import Player, Guild
 import lxml.etree as XML
+
+
+class DatabaseElement(object):
+	def find(self, name):
+		return self.xml_element.find(name)
+
+	def get(self, name):
+		return self.find(name).text
+
+	def set(self, name, value):
+		self.find(name).text = value
+
+	def getElement(self, id, name):
+		if id is not None:
+			return database.getById(self.parent, id)
+		elif name is not None:
+			return database.getByField(self.parent, "name", name)
+		else:
+			raise Exception("DatabaseElement: ты не указал id или имя")
+
+
+class Player(DatabaseElement):
+	parent = "players"
+
+	def __init__(self, id=None, name=None):
+		self.name = name
+		self.id = id
+		self.xml_element = self.getElement(id, name)
+		self.exists = self.xml_element is not None
+		self.guild = self.getGuild()
+		self.rank = self.getRank()
+		self.inguild = self.rank > 0
+
+	def getGuild(self):
+		if self.exists:
+			guild_id = self.get("guild")
+			if guild_id != "0":
+				return Guild(guild_id)
+
+	def getRank(self):
+		if self.guild is not None:
+			if self.id in self.guild.heads:
+				return 3
+			elif self.id in self.guild.vices:
+				return 2
+			else:
+				return 1
+		else:
+			return 0
+
+
+class Guild(DatabaseElement):
+	parent = "guilds"
+
+	def __init__(self, id=None, name=None):
+		self.xml_element = self.getElement(id, name)
+		self.exists = self.xml_element is not None
+
+	@property
+	def heads(self):
+		head = self.get("head")
+		return self._getNonEmptyField(head)
+
+	@property
+	def vices(self):
+		vice = self.get("vice")
+		return self._getNonEmptyField(vice)
+
+	@staticmethod
+	def _getNonEmptyField(field):
+		if field is None:
+			return []
+		else:
+			return field.split(" ")
+
+	def setPosition(self, player_id, position):
+		player_id = str(player_id)
+		self._removePlayerFromOldPosition(player_id)
+		if position != "player":
+			self._putPlayerIntoNewPosition(player_id, position)
+
+	def _removePlayerFromOldPosition(self, player_id):
+		heads, vices = self.heads, self.vices
+		if player_id in heads:
+			heads.remove(player_id)
+			self.set("head", " ".join(heads))
+		elif player_id in self.vices:
+			vices.remove(player_id)
+			self.set("vice", " ".join(vices))
+
+	def _putPlayerIntoNewPosition(self, player_id, position):
+		if position == "head":
+			element = self.find("head")
+		elif position == "vice":
+			element = self.find("head")
+		element.text = "{} {}".format(element.text, player_id)
 
 
 def createGuild(players, name, head, vice, requirements, about, logo, banner):
@@ -12,8 +107,8 @@ def createGuild(players, name, head, vice, requirements, about, logo, banner):
 	fields = (
 		("id", guild_id), ("name", name),
 		("page", page),   ("head", head),
-		("vice", vice),   ("wins", "0"), 
-		("loses", "0"),   ("requirements", requirements), 
+		("vice", vice),   ("wins", "0"),
+		("loses", "0"),   ("requirements", requirements),
 		("about", about), ("logo", logo),
 		("banner", banner))
 	enterIntoDatabase(fields, xml_element)

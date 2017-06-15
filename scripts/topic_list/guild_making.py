@@ -1,6 +1,6 @@
-from lib.topics import Hyperlink, Player, Guild
+from lib.guilds import createGuild, Player, Guild
 from lib.commands import group_id, getBanned
-from lib.guilds import createGuild
+from lib.topics import Hyperlink
 from lib.errors import GMError
 from re import search
 

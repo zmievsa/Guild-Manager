@@ -1,6 +1,6 @@
 from lib.errors import GB_wrong_request, GB_guild_not_found
 from lib.commands import test_id
-from lib.topics import Guild
+from lib.guilds import Guild
 
 
 id = 35465123

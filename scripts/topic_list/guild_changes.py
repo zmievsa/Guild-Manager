@@ -1,8 +1,8 @@
 from re import search
 from lib.errors import *
-from lib.guilds import createPlayer
+from lib.guilds import createPlayer, Player
+from lib.topics import Hyperlink, checkNicknameFormat
 from lib.commands import group_id, database, getBanned
-from lib.topics import Player, Hyperlink, checkNicknameFormat
 
 
 id = 29901188
