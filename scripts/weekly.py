@@ -10,8 +10,13 @@ def generate():
 	days = getPlannedPosts()
 	challenge = getNewChallenge()
 	setThisWeekChallenge(challenge)
+	makePosts(days, challenge)
+
+
+def makePosts(days, challenge):
+	folder = "../../Data/week_posts/"
 	for day in days:
-		with open("../../Data/week_posts/" + day, encoding="utf-8") as file:
+		with open(folder + day, encoding="utf-8") as file:
 			file = editPost(file.read(), challenge)
 			digit = int(day[0])
 			post_time = getPostTime(digit)

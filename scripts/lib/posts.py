@@ -31,8 +31,7 @@ def post(post_text, post_time):
 			message=post_text,
 			publish_date=post_time)
 	except:
-		post_id = post(post_text, post_time + 120)
-		return post_id
+		return post(post_text, post_time + 120)
 	else:
 		return post_id['post_id']
 
