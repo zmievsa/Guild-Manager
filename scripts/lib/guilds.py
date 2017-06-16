@@ -7,7 +7,7 @@ class DatabaseElement(object):
 		return self.xml_element.find(name)
 
 	def get(self, name):
-		return self.find(name).text
+		return self.find(name).text or ""
 
 	def set(self, name, value):
 		self.find(name).text = value
@@ -23,6 +23,13 @@ class DatabaseElement(object):
 			return database.getByField(self.parent, "name", name)
 		else:
 			raise Exception("DatabaseElement: ты не указал id или имя")
+
+
+class Eweek(DatabaseElement):
+	parent = "eweeks"
+
+	def __init__(self, id):
+		self.xml_element = self.getElement(id)
 
 
 class Avatar(DatabaseElement):

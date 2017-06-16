@@ -457,6 +457,19 @@
       <banner>photo-64867627_431636128</banner>
     </guild>
     <guild>
+      <id>3</id>
+      <name>Astrum</name>
+      <page>52667751</page>
+      <head>367876238</head>
+      <vice>207189536</vice>
+      <wins>2</wins>
+      <loses>5</loses>
+      <requirements>Определенных требований к уровню игры нет, главное, чтобы Вы были адекватным и активным. Ну и хотя бы просто имели какое-то понятие о игре.</requirements>
+      <about>Сборище алкоголиков, туниядцев, наркоманов, даунов, мазахистов, садистов и прочего дерьма, в общем, просто отбитых людей. А так мы все вполне дружелюбные, хоть и сначала может показаться не так.</about>
+      <logo>photo-64867627_456239543</logo>
+      <banner>photo-64867627_456239542</banner>
+    </guild>
+    <guild>
       <id>4</id>
       <name>Fighter jets titans</name>
       <page>50285040</page>
@@ -522,16 +535,29 @@
       <banner>photo-64867627_456239375</banner>
     </guild>
     <guild>
+      <id>10</id>
+      <name>Norges Forsvar</name>
+      <page>52786094</page>
+      <head>317853822</head>
+      <vice>418567744</vice>
+      <wins>0</wins>
+      <loses>0</loses>
+      <requirements>Особо требований нет, можно спокойно вступить.</requirements>
+      <about>Здесь все адыкватные люди, мы любим Норвегию и в честь неё мы сделали эту гильдию. Наши имена должны все знать! &gt;:3</about>
+      <logo>photo-64867627_456239657</logo>
+      <banner>photo-64867627_456239658</banner>
+    </guild>
+    <guild>
       <id>11</id>
       <name>Existence</name>
       <page>52830169</page>
-      <head>355994568 323989909 241240727</head>
+      <head>355994568 323989909</head>
       <vice/>
       <wins>0</wins>
       <loses>0</loses>
       <requirements>Условий по критерию мастерства игры как таковых нет, для нас главное - сам человек. Люди с высоким самомнением и зазнавшиеся не принимаются, также не приветствуется агрессия в любых формах её проявления, разведение срачей и унижения согильдийцев. ~</requirements>
-      <about>Дружелюбные и адекватные ребята, по крайней мере большинство. Стараемся всеми силами поддерживать уютную атмосферу</about>
-      <logo>photo-64867627_456239785</logo>
+      <about>Все в гильдии дружелюбные, не зазнавшиеся и не коршуны, стараемся всеми силами поддерживать дружелюбную атмосферу. Есть Мамка, которая всех воспитывает,Батя и Сенпай, который всегда пинает балду, но поможет в трудных ситуациях.</about>
+      <logo>photo-64867627_456239677</logo>
       <banner>photo-64867627_456239678</banner>
     </guild>
     <guild>
@@ -586,19 +612,6 @@
       <logo>photo-64867627_456239778</logo>
       <banner>photo-64867627_456239779</banner>
     </guild>
-    <guild>
-      <id>16</id>
-      <name>Catcher Of Dreams</name>
-      <page>53010405</page>
-      <head>323989909</head>
-      <vice>216811479</vice>
-      <wins>0</wins>
-      <loses>0</loses>
-      <requirements>адекватность (хоть немного).</requirements>
-      <about>веселые ребята, всегда готовые прийти на помощь. Также прилагается сенсей, который научит всему, что сам знает, + батя, всегда готовый дать леща) Проще говоря: у нас не скучно :D</about>
-      <logo>photo-64867627_456239816</logo>
-      <banner>photo-64867627_456239815</banner>
-    </guild>
   </guilds>
   <players>
     <player>
@@ -615,8 +628,8 @@
     </player>
     <player>
       <id>140781469</id>
-      <name>JustlPain</name>
-      <guild>0</guild>
+      <name>Petuh3</name>
+      <guild>1</guild>
       <avatar>9</avatar>
     </player>
     <player>
@@ -712,19 +725,19 @@
     <player>
       <id>144123798</id>
       <name>Artas</name>
-      <guild>0</guild>
+      <guild>3</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>358724255</id>
       <name>Azazel</name>
-      <guild>0</guild>
+      <guild>3</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>180251938</id>
       <name>Cherry</name>
-      <guild>14</guild>
+      <guild>3</guild>
       <avatar>34</avatar>
     </player>
     <player>
@@ -736,25 +749,25 @@
     <player>
       <id>128030185</id>
       <name>Light_JokeR</name>
-      <guild>0</guild>
+      <guild>3</guild>
       <avatar>23</avatar>
     </player>
     <player>
       <id>207189536</id>
       <name>Shinon</name>
-      <guild>0</guild>
+      <guild>3</guild>
       <avatar>50</avatar>
     </player>
     <player>
       <id>367876238</id>
       <name>Skam</name>
-      <guild>5</guild>
+      <guild>3</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>387416865</id>
       <name>Stalin</name>
-      <guild>0</guild>
+      <guild>3</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -766,13 +779,13 @@
     <player>
       <id>214529824</id>
       <name>WINNER</name>
-      <guild>0</guild>
+      <guild>3</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>236256733</id>
       <name>WoW</name>
-      <guild>0</guild>
+      <guild>3</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -790,7 +803,7 @@
     <player>
       <id>378934146</id>
       <name>Asuka</name>
-      <guild>0</guild>
+      <guild>4</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -802,7 +815,7 @@
     <player>
       <id>361574854</id>
       <name>ClearCut</name>
-      <guild>0</guild>
+      <guild>4</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -964,7 +977,7 @@
     <player>
       <id>299048716</id>
       <name>Psyho</name>
-      <guild>5</guild>
+      <guild>0</guild>
       <avatar>39</avatar>
     </player>
     <player>
@@ -1155,7 +1168,7 @@
     </player>
     <player>
       <id>420833867</id>
-      <name>Petuh9</name>
+      <name>Alecto</name>
       <guild>1</guild>
       <avatar>5</avatar>
     </player>
@@ -1233,50 +1246,50 @@
     </player>
     <player>
       <id>98216156</id>
-      <name>bobrokot</name>
+      <name>Zelda</name>
       <guild>5</guild>
       <avatar>83</avatar>
     </player>
     <player>
       <id>317853822</id>
       <name>Anko</name>
-      <guild>0</guild>
+      <guild>10</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>418567744</id>
       <name>LifeIsPain</name>
-      <guild>0</guild>
+      <guild>10</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>214751753</id>
       <name>nafan9</name>
-      <guild>0</guild>
+      <guild>10</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>374402937</id>
       <name>Petrarka</name>
-      <guild>0</guild>
+      <guild>10</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>184795199</id>
       <name>Tevton</name>
-      <guild>0</guild>
+      <guild>10</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>136959144</id>
       <name>Yrod_47</name>
-      <guild>0</guild>
+      <guild>10</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>323989909</id>
       <name>DreAmeR</name>
-      <guild>16</guild>
+      <guild>0</guild>
       <avatar>51</avatar>
     </player>
     <player>
@@ -1336,7 +1349,7 @@
     <player>
       <id>356556558</id>
       <name>Libearium</name>
-      <guild>0</guild>
+      <guild>15</guild>
       <avatar>10</avatar>
     </player>
     <player>
@@ -1528,7 +1541,7 @@
     <player>
       <id>339487780</id>
       <name>Sweet_Madness</name>
-      <guild>0</guild>
+      <guild>3</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1639,76 +1652,10 @@
       <guild>15</guild>
       <avatar>29</avatar>
     </player>
-    <player>
-      <id>229819160</id>
-      <name>Melhauzer</name>
-      <guild>15</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>185492188</id>
-      <name>YUKIO</name>
-      <guild>15</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>419801494</id>
-      <name>twelve</name>
-      <guild>16</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>346760575</id>
-      <name>Seijuro</name>
-      <guild>16</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>420745015</id>
-      <name>Gwest</name>
-      <guild>16</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>323989909</id>
-      <name>DreAmeR</name>
-      <guild>16</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>216811479</id>
-      <name>Daisy</name>
-      <guild>16</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>297808015</id>
-      <name>cloudycarateli</name>
-      <guild>16</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>230986896</id>
-      <name>Adlet</name>
-      <guild>8</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>248911923</id>
-      <name>Shinokuro</name>
-      <guild>12</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>180653908</id>
-      <name>Hermit</name>
-      <guild>7</guild>
-      <avatar>29</avatar>
-    </player>
   </players>
-  <eweeks>
-    <this_week>2</this_week>
-    <eweek>
+  <challenges>
+    <this_week>6</this_week>
+    <challenge>
       <id>1</id>
       <map>Forest III</map>
       <diff>Hard</diff>
@@ -1717,8 +1664,8 @@
       <ch2>70</ch2>
       <ch3>40</ch3>
       <settings/>
-    </eweek>
-    <eweek>
+    </challenge>
+    <challenge>
       <id>2</id>
       <map>Forest III</map>
       <diff>Hard</diff>
@@ -1727,8 +1674,8 @@
       <ch2>35000</ch2>
       <ch3>10000</ch3>
       <settings/>
-    </eweek>
-    <eweek>
+    </challenge>
+    <challenge>
       <id>3</id>
       <map>Forest III</map>
       <diff>Hard</diff>
@@ -1737,8 +1684,8 @@
       <ch2>120</ch2>
       <ch3>80</ch3>
       <settings/>
-    </eweek>
-    <eweek>
+    </challenge>
+    <challenge>
       <id>4</id>
       <map>Forest III</map>
       <diff>Normal</diff>
@@ -1747,8 +1694,8 @@
       <ch2>3000</ch2>
       <ch3>2000</ch3>
       <settings>(Size 3-3, 100% Normal titans)</settings>
-    </eweek>
-    <eweek>
+    </challenge>
+    <challenge>
       <id>5</id>
       <map>Racing Akina</map>
       <diff/>
@@ -1757,8 +1704,8 @@
       <ch2>90</ch2>
       <ch3>120</ch3>
       <settings>(Лучший результат из двух гонок)</settings>
-    </eweek>
-    <eweek>
+    </challenge>
+    <challenge>
       <id>6</id>
       <map>Forest III</map>
       <diff>Hard</diff>
@@ -1767,6 +1714,6 @@
       <ch2>20</ch2>
       <ch3>30</ch3>
       <settings>(В челленджах указано количество урона, которого не хватает до тысячи)</settings>
-    </eweek>
-  </eweeks>
+    </challenge>
+  </challenges>
 </contents>
