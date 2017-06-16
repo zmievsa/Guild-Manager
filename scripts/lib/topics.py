@@ -44,7 +44,7 @@ class Request(object):
 		""" Завершает обработку и вносит изменения """
 		database.rewrite()
 		if self.asker.guild is not None:
-			updateGuild(self.asker.guild.xml_element)
+			updateGuild(self.asker.get("guild"))
 		self.addMessageToComment(self.message)
 		self.editComment()
 

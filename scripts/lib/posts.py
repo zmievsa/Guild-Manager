@@ -6,10 +6,10 @@
 
 """
 
-from time import sleep
-from pytz import timezone
-from datetime import datetime, timedelta
 from lib.commands import api, group_id, sleep_time
+from datetime import datetime, timedelta
+from pytz import timezone
+from time import sleep
 
 __version__ = '2.0.0'
 

@@ -1,5 +1,4 @@
 from lib.commands import database, api, group_id, my_id
-from lib.wiki_pages import updateGuild, refreshGuilds
 import lxml.etree as XML
 
 
@@ -13,7 +12,11 @@ class DatabaseElement(object):
 	def set(self, name, value):
 		self.find(name).text = value
 
-	def getElement(self, id, name):
+	@property
+	def exists(self):
+		return self.xml_element is not None
+
+	def getElement(self, id=None, name=None):
 		if id is not None:
 			return database.getById(self.parent, id)
 		elif name is not None:
@@ -22,17 +25,26 @@ class DatabaseElement(object):
 			raise Exception("DatabaseElement: ты не указал id или имя")
 
 
+class Avatar(DatabaseElement):
+	parent = "avatars"
+
+	def __init__(self, id):
+		self.xml_element = self.getElement(id)
+
+	def __repr__(self):
+		return self.get("link")
+
+
 class Player(DatabaseElement):
 	parent = "players"
 
 	def __init__(self, id=None, name=None):
-		self.name = name
-		self.id = id
 		self.xml_element = self.getElement(id, name)
-		self.exists = self.xml_element is not None
 		self.guild = self.getGuild()
 		self.rank = self.getRank()
 		self.inguild = self.rank > 0
+		self.name = name
+		self.id = id
 
 	def getGuild(self):
 		if self.exists:
@@ -42,9 +54,10 @@ class Player(DatabaseElement):
 
 	def getRank(self):
 		if self.guild is not None:
-			if self.id in self.guild.heads:
+			id = self.get("id")
+			if id in self.guild.heads:
 				return 3
-			elif self.id in self.guild.vices:
+			elif id in self.guild.vices:
 				return 2
 			else:
 				return 1
@@ -57,7 +70,6 @@ class Guild(DatabaseElement):
 
 	def __init__(self, id=None, name=None):
 		self.xml_element = self.getElement(id, name)
-		self.exists = self.xml_element is not None
 
 	@property
 	def heads(self):
@@ -113,9 +125,7 @@ def createGuild(players, name, head, vice, requirements, about, logo, banner):
 		("banner", banner))
 	enterIntoDatabase(fields, xml_element)
 	createGuildPlayers(players, guild_id)
-	updateGuild(Guild(guild_id))
 	database.rewrite()
-	refreshGuilds()
 
 
 def getGuildId():
