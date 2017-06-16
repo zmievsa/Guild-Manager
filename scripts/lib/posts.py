@@ -11,8 +11,6 @@ from datetime import datetime, timedelta
 from pytz import timezone
 from time import sleep
 
-__version__ = '2.0.0'
-
 
 def post(post_text, post_time):
 	""" Кидает пост в отложку
@@ -45,7 +43,6 @@ def getPostTime(digit=None):
 		после вызова функции.
 
 		returns int
-
 	"""
 	assert type(digit) is not str
 	day = datetime.now(timezone('Europe/Moscow'))
@@ -82,30 +79,27 @@ def getText(file_name):
 		return phrase.strip()
 
 
-def editPost(text, challenge=None):
-	""" text (str), challenge (lxml.etree.Element) """
+def editPost(text, eweek=None):
 	if "[текст]" in text:
 		text = text.replace("[текст]", getText("other"))
 
 	if "[условия]" in text:
-		ch1 = challenge.find("ch1").text
-		ch2 = challenge.find("ch2").text
-		ch3 = challenge.find("ch3").text
-		map = challenge.find("map").text
-		diff = challenge.find("diff").text
-		goal = challenge.find("goal").text
-		settings = challenge.find("settings").text
-		if not settings:
-			settings = ""
-		if not goal:
-			goal = ""
-		if not diff:
-			diff = ""
-		string = "{} {}, {} {}".format(map, diff, goal, settings)
-		if not goal:
-			string = string.replace(",", "")
-		text = text.replace("[условия]", string)
+		ch1, ch2, ch3 = getEweekChallenges(eweek)
+		rules = getEweekRules(eweek)
+		text = text.replace("[условия]", rules)
 		text = text.replace("[1]", ch1)
 		text = text.replace("[2]", ch2)
 		text = text.replace("[3]", ch3)
 	return text
+
+
+def getEweekChallenges(eweek):
+	return eweek.get("ch1", "ch2", "ch3")
+
+
+def getEweekRules(eweek):
+	config = eweek.get("map", "diff", "goal", "settings")
+	rules = "{} {}, {} {}".format(*config)
+	if not config[2]: # Нет цели = запятая не нужна :3
+		rules = rules.replace(",", "")
+	return rules

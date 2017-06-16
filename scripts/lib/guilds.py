@@ -6,8 +6,9 @@ class DatabaseElement(object):
 	def find(self, name):
 		return self.xml_element.find(name)
 
-	def get(self, name):
-		return self.find(name).text or ""
+	def get(self, *names):
+		names = [self.find(n).text or "" for n in names]
+		return names if len(names) > 1 else names[0]
 
 	def set(self, name, value):
 		self.find(name).text = value
