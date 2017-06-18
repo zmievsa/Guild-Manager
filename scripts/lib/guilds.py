@@ -19,11 +19,17 @@ class DatabaseElement(object):
 
 	def getElement(self, id=None, name=None):
 		if id is not None:
+			self._checkid(id)
 			return database.getById(self.parent, id)
 		elif name is not None:
 			return database.getByField(self.parent, "name", name)
 		else:
 			raise Exception("DatabaseElement: ты не указал id или имя")
+
+	@staticmethod
+	def _checkid(id):
+		if type(id) is not str and type(id) is not int:
+			raise Exception("ID error: value:{}, type:{}".format(id, type(id)))
 
 
 class Eweek(DatabaseElement):
@@ -50,9 +56,25 @@ class Player(DatabaseElement):
 		self.xml_element = self.getElement(id, name)
 		self.guild = self.getGuild()
 		self.rank = self.getRank()
-		self.inguild = self.rank > 0
 		self.name = name
 		self.id = id
+
+	def __repr__(self):
+		if self.exists or (self.id and self.name):
+			if self.exists:
+				id, name = self.get("id", "name")
+			else:
+				id, name = self.id, self.name
+			return "[id{}|{}]".format(id, name)
+		elif self.name:
+			return self.name
+
+	@property
+	def inguild(self):
+		return self.rank > 0
+
+	def recreate(self, id, name):
+		self.__init__(id, name)
 
 	def getGuild(self):
 		if self.exists:
