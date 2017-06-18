@@ -104,10 +104,16 @@ def checkGuildInfo(guild):
 
 
 def checkPlayers(players):
+	checkNumberOfPlayers(players)
 	for player in players:
 		checkPlayerUniqueness(player)
 		checkIfPlayerHasGuild(player)
 		checkIfPlayerInBan(player)
+
+
+def checkNumberOfPlayers(players):
+	if len(players) < 5:
+		raise GMError("В гильдии меньше 5 игроков.")
 
 
 def checkPlayerUniqueness(player):
