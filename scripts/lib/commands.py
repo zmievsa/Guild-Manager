@@ -4,11 +4,15 @@
 Эта библиотека содержит набор средств для упрощённой работы с гильдменеджером
 """
 
+from vk.exceptions import VkAPIError
+from vk import Session, API
+
+from os.path import realpath
+from os import chdir
+
 from lib.database import Database
 from traceback import format_exc
 from time import sleep
-import vk
-import os
 
 """ Константы """
 group_id = 64867627  # id основной группы
@@ -24,8 +28,8 @@ def getApi():
 	with open(token_path, 'r') as token:
 		token = token.read()
 		token.rstrip()
-		session = vk.Session(access_token=token)
-		api = vk.API(session, v='5.52', lang='ru')
+		session = Session(access_token=token)
+		api = API(session, v='5.52', lang='ru')
 		return api
 
 
@@ -54,7 +58,7 @@ def vkCap(method, **kwargs):
 	try:
 		sleep(sleep_time)
 		return method(**kwargs)
-	except vk.exceptions.VkAPIError:
+	except VkAPIError:
 		sleep(10)
 		return vkCap(method, **kwargs)
 
@@ -66,10 +70,10 @@ def getBanned():
 
 
 def setCurrentDirectory():
-	path = os.path.realpath(__file__)
+	path = realpath(__file__)
 	index = path.rfind("/")
 	path = path[:index]
-	os.chdir(path)
+	chdir(path)
 
 
 setCurrentDirectory()

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from time import strftime
-from shutil import copyfile
 from lib.commands import error
+from shutil import copyfile
+from time import strftime
 
 
 def backup():

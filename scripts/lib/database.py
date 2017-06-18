@@ -1,4 +1,4 @@
-import lxml.etree as ET
+from lxml.etree import ElementTree, SubElement, XMLParser, parse
 
 
 class Database(object):
@@ -6,8 +6,8 @@ class Database(object):
 		self.parse(path)
 
 	def parse(self, path):
-		parser = ET.XMLParser(remove_blank_text=True, encoding="UTF-8")
-		self.contents = ET.parse(path, parser).getroot()
+		parser = XMLParser(remove_blank_text=True, encoding="UTF-8")
+		self.contents = parse(path, parser).getroot()
 		self.path = path
 
 	def find(self, string):
@@ -20,7 +20,7 @@ class Database(object):
 			для того, чтобы сработал pretty_print
 
 		"""
-		tree = ET.ElementTree(self.contents)
+		tree = ElementTree(self.contents)
 		tree.write(self.path, pretty_print=True, encoding="UTF-8")
 		if recursion:
 			database = Database(self.path)
@@ -99,7 +99,7 @@ class Database(object):
 		"""
 		challenge_ids = self.getAll(kind="challenges", field="id")
 		challenges = self.contents.find("challenges")
-		challenge = ET.SubElement(challenges, "challenge")
+		challenge = SubElement(challenges, "challenge")
 		if challenge_ids:
 			challenge_ids = (int(id) for id in challenge_ids)
 			id = max(challenge_ids) + 1
@@ -109,7 +109,7 @@ class Database(object):
 		keys = ("id", "map", "diff", "goal",
 			"ch1", "ch2", "ch3", "settings")
 		for key in keys:
-			new_element = ET.SubElement(challenge, key)
+			new_element = SubElement(challenge, key)
 			new_element.text = kwargs[key]
 
 	def createAvatar(self, link):
@@ -120,8 +120,8 @@ class Database(object):
 		else:
 			id = 1
 		avatars = self.find("avatars")
-		avatar = ET.SubElement(avatars, "avatar")
-		id_element = ET.SubElement(avatar, "id")
+		avatar = SubElement(avatars, "avatar")
+		id_element = SubElement(avatar, "id")
 		id_element.text = str(id)
-		link_element = ET.SubElement(avatar, "link")
+		link_element = SubElement(avatar, "link")
 		link_element.text = link

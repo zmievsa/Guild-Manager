@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from os import listdir
-from lib.commands import error, database
 from lib.posts import editPost, getPostTime, post
+from lib.commands import error, database
+from os import listdir
 
 
 def generate():

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-from topic_list import guild_changes, guild_battles, guild_making
 from lib.topics import Request, failure_image, succeed_image, getComments
 from lib.wiki_pages import refreshGuilds
 from lib.commands import error
+
+from topic_list import guild_changes, guild_battles, guild_making
 
 
 def main():

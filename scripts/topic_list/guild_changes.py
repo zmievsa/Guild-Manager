@@ -40,8 +40,8 @@ def getMessage(text, asker):
 		guild_name = asker.guild.get("name")
 		message = "Гильдия: {}".format(guild_name)
 	elif any(s in text for s in player_type):
-		player_id, player_name = asker.get("id"), asker.get("name")
-		message = "Игрок: [id{}|{}]".format(player_id, player_name)
+		id, name = asker.get("id", "name")
+		message = "Игрок: [id{}|{}]".format(id, name)
 	return message
 
 

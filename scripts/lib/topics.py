@@ -109,11 +109,10 @@ class Hyperlink(object):
 
 def checkNicknameFormat(name):
 	if name is not None:
-		nickname_format = GMError("Ник {} содержит недопустимые символы.".format(name))
 		pattern = r"^[A-Za-z_\d]+$"
 		match = search(pattern, name)
 		if match is None:
-			raise nickname_format
+			raise GMError("Ник {} содержит недопустимые символы.".format(name))
 		elif not 20 >= len(name) >= 3:
 			raise nickname_length
 	else:
