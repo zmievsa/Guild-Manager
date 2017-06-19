@@ -38,9 +38,11 @@ def getGuildInfo(text):
 	guild = dict()
 	for line in text:
 		line_lower = line.lower()
-		stripped_line = line[line.index(":") + 1:].strip()
+		if ":" not in line:
+			continue
+		stripped_line = line[line.find(":") + 1:].strip()
 		if "баннер" in line_lower or "лого" in line_lower:
-			photo_line = stripped_line[stripped_line.index("photo"):]
+			photo_line = stripped_line[stripped_line.find("photo"):]
 		if "название:" in line_lower:
 			guild['name'] = stripped_line
 		elif "глава:" in line_lower:
