@@ -2,6 +2,7 @@
 
 from lib.posts import editPost, getPostTime, post
 from lib.commands import error, database
+from lib.guilds import Eweek
 from os import listdir
 
 
@@ -36,16 +37,16 @@ def getNewChallenge():
 	old_challenge = int(xml_field.text)
 	highest_id = getHighestChallengeId()
 	new_challenge_id = getNextChallenge(old_challenge, highest_id)
-	challenge = getChallengeElement(new_challenge_id)
+	challenge = getChallenge(new_challenge_id)
 	return challenge
 
 
 def getWeeklyChallengeField():
-	return database.find("challenges").find("this_week")
+	return database.find("eweeks").find("this_week")
 
 
 def getHighestChallengeId():
-	challenges = database.getAll(kind="challenges", field="id")
+	challenges = database.getAll(kind="eweeks", field="id")
 	all_ids = [int(c) for c in challenges]
 	return max(all_ids)
 
@@ -57,13 +58,13 @@ def getNextChallenge(old_challenge, highest_possible):
 		return str(old_challenge + 1)
 
 
-def getChallengeElement(challenge_id):
-	return database.getById(kind="challenges", id=challenge_id)
+def getChallenge(challenge_id):
+	return Eweek(challenge_id)
 
 
 def setThisWeekChallenge(challenge):
 	xml_field = getWeeklyChallengeField()
-	challenge_id = challenge.find("id").text
+	challenge_id = challenge.get("id")
 	xml_field.text = challenge_id
 	database.rewrite()
 
