@@ -23,14 +23,19 @@ def getMessage(text, asker):
 
 
 def makeGuild(request):
-	guild = getGuildInfo(request.text)
-	checkMissingFields(guild)
-	addMissingFields(guild)
-	makeHyperlinks(guild)
-	editHeadsAndVices(guild)
-	if not guildAlreadyExists(guild):
-		checkGuildInfo(guild)
-		guild = createGuild(**guild)
+	if not ismessage(request.text):
+		guild = getGuildInfo(request.text)
+		checkMissingFields(guild)
+		addMissingFields(guild)
+		makeHyperlinks(guild)
+		editHeadsAndVices(guild)
+		if not guildAlreadyExists(guild):
+			checkGuildInfo(guild)
+			guild = createGuild(**guild)
+
+
+def ismessage(text):
+	return len(text) < 130
 
 
 def getGuildInfo(text):
