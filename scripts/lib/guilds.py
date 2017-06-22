@@ -113,7 +113,7 @@ class Guild(DatabaseElement):
 
 	@staticmethod
 	def _getNonEmptyField(field):
-		if field is None:
+		if not field:
 			return []
 		else:
 			return field.split(" ")
