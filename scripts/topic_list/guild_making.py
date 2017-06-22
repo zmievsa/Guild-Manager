@@ -8,7 +8,7 @@ from re import search
 id = 29891323
 group = group_id
 ban_list = getBanned()
-comment_amount = 2
+comment_amount = 5
 
 
 def getAction(text):
