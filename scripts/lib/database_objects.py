@@ -1,6 +1,6 @@
-from lxml import etree as XML
-from lib.guilds import Player
 from lib.commands import api, database, group_id, my_id
+from lib.guilds import Player
+from lxml import etree as XML
 
 
 class StandardObjectCreation:

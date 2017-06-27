@@ -1,6 +1,7 @@
 from lib.commands import group_id, database, getBanned
 from lib.topics import Hyperlink, checkNicknameFormat
-from lib.guilds import createPlayer, Player
+from lib.database_objects import createPlayer
+from lib.guilds import Player
 from lib.errors import *
 from re import search
 
