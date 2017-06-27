@@ -522,30 +522,17 @@
       <banner>photo-64867627_456239375</banner>
     </guild>
     <guild>
-      <id>11</id>
-      <name>Existence</name>
-      <page>52830169</page>
-      <head>355994568 323989909 241240727</head>
-      <vice/>
-      <wins>0</wins>
-      <loses>0</loses>
-      <requirements>Условий по критерию мастерства игры как таковых нет, для нас главное - сам человек. Люди с высоким самомнением и зазнавшиеся не принимаются, также не приветствуется агрессия в любых формах её проявления, разведение срачей и унижения согильдийцев. ~</requirements>
-      <about>Дружелюбные и адекватные ребята, по крайней мере большинство. Стараемся всеми силами поддерживать уютную атмосферу</about>
-      <logo>photo-64867627_456239785</logo>
-      <banner>photo-64867627_456239678</banner>
-    </guild>
-    <guild>
       <id>12</id>
       <name>Eden</name>
       <page>52949909</page>
-      <head>193904391</head>
+      <head>193904391 241240727 356519885</head>
       <vice>174501574</vice>
       <wins>0</wins>
       <loses>0</loses>
       <requirements>Самое главное быть активным в беседе и в самой игре AottG.</requirements>
       <about>У нас в гильдии добрые участники и глава добрый. Будем проводить вместе тренировки, совместные RP(мб), будем в скайпе сидеть вместе. Мы ждём вас, дорогие новички.</about>
-      <logo>photo-64867627_456239754</logo>
-      <banner>photo-64867627_456239757</banner>
+      <logo>photo-64867627_456239844</logo>
+      <banner>photo-64867627_456239845</banner>
     </guild>
     <guild>
       <id>13</id>
@@ -562,29 +549,29 @@
     </guild>
     <guild>
       <id>14</id>
-      <name>My name is</name>
+      <name>Black Rose Merger</name>
       <page>52965800</page>
-      <head>347294060</head>
-      <vice>111802911</vice>
+      <head>111802911 347294060</head>
+      <vice/>
       <wins>3</wins>
       <loses>1</loses>
       <requirements>Сесть на бутылку</requirements>
-      <about>Хуем по ебалу</about>
-      <banner>photo-64867627_456239809</banner>
-      <logo>photo-64867627_456239775</logo>
+      <about>Хуем по ебалу. Группа в вк https://vk.com/blackrosemergers</about>
+      <banner>photo-64867627_456239838</banner>
+      <logo>photo-64867627_456239839</logo>
     </guild>
     <guild>
       <id>15</id>
       <name>[L]egion</name>
       <page>52983478</page>
-      <head>412678780</head>
-      <vice>147002763 254484509</vice>
+      <head>254484509 356556558</head>
+      <vice/>
       <wins>0</wins>
       <loses>1</loses>
-      <requirements>Условия для вступления полностью отсутствуют, просто напишите любому участнику гильдии и вас добавят в беседу</requirements>
-      <about>Всего лишь сборище веселых тунеядцев</about>
-      <logo>photo-64867627_456239778</logo>
-      <banner>photo-64867627_456239779</banner>
+      <requirements>По поводу вступления, писать ему  - Libearium.</requirements>
+      <about> </about>
+      <logo>photo-64867627_456239841</logo>
+      <banner>photo-64867627_456239840</banner>
     </guild>
     <guild>
       <id>16</id>
@@ -616,7 +603,7 @@
     <player>
       <id>140781469</id>
       <name>JustlPain</name>
-      <guild>0</guild>
+      <guild>15</guild>
       <avatar>9</avatar>
     </player>
     <player>
@@ -628,7 +615,7 @@
     <player>
       <id>142336776</id>
       <name>Petuh5</name>
-      <guild>1</guild>
+      <guild>12</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -778,7 +765,7 @@
     <player>
       <id>246893496</id>
       <name> Zavarka</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -796,7 +783,7 @@
     <player>
       <id>185008446</id>
       <name>bikyzi</name>
-      <guild>4</guild>
+      <guild>2</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1210,7 +1197,7 @@
     <player>
       <id>356519885</id>
       <name>Makoto_Hagiwara</name>
-      <guild>0</guild>
+      <guild>12</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1228,13 +1215,13 @@
     <player>
       <id>368280465</id>
       <name>Shoshi</name>
-      <guild>5</guild>
+      <guild>12</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>98216156</id>
       <name>bobrokot</name>
-      <guild>5</guild>
+      <guild>14</guild>
       <avatar>83</avatar>
     </player>
     <player>
@@ -1282,43 +1269,43 @@
     <player>
       <id>264988619</id>
       <name>Cyan</name>
-      <guild>11</guild>
+      <guild>0</guild>
       <avatar>67</avatar>
     </player>
     <player>
       <id>236277809</id>
       <name>Grizli</name>
-      <guild>11</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>355994568</id>
       <name>willkod</name>
-      <guild>11</guild>
+      <guild>0</guild>
       <avatar>40</avatar>
     </player>
     <player>
       <id>71093434</id>
       <name>xDD</name>
-      <guild>11</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>189798771</id>
       <name>Mumei</name>
-      <guild>11</guild>
+      <guild>0</guild>
       <avatar>65</avatar>
     </player>
     <player>
       <id>230739190</id>
       <name>KIZARU</name>
-      <guild>11</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>275013517</id>
       <name>ApeLsiN23</name>
-      <guild>11</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1336,7 +1323,7 @@
     <player>
       <id>356556558</id>
       <name>Libearium</name>
-      <guild>0</guild>
+      <guild>15</guild>
       <avatar>10</avatar>
     </player>
     <player>
@@ -1390,7 +1377,7 @@
     <player>
       <id>293501519</id>
       <name>Ace</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1408,7 +1395,7 @@
     <player>
       <id>290934985</id>
       <name>KiriLL</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1510,7 +1497,7 @@
     <player>
       <id>241240727</id>
       <name>Savage</name>
-      <guild>11</guild>
+      <guild>12</guild>
       <avatar>42</avatar>
     </player>
     <player>
@@ -1522,7 +1509,7 @@
     <player>
       <id>426218798</id>
       <name>Reb</name>
-      <guild>11</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1534,13 +1521,13 @@
     <player>
       <id>412678780</id>
       <name>Darkness</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>147002763</id>
       <name>Drakon4ik</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1558,25 +1545,25 @@
     <player>
       <id>286449539</id>
       <name>Kafka</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>136607187</id>
       <name>SaraHikka</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>188199443</id>
       <name>DrFeniks</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>237906069</id>
       <name>ITS_A_ME</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1588,7 +1575,7 @@
     <player>
       <id>251119455</id>
       <name>Danon</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1600,31 +1587,31 @@
     <player>
       <id>326446372</id>
       <name>Sad</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>136749662</id>
       <name>Hikka</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>128738282</id>
       <name>Mango</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>180074718</id>
       <name>Soreyha</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>170448035</id>
       <name>Rey</name>
-      <guild>11</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1635,20 +1622,20 @@
     </player>
     <player>
       <id>358307051</id>
-      <name>KaRaPuZiK</name>
+      <name>Kysaebishe</name>
       <guild>15</guild>
-      <avatar>29</avatar>
+      <avatar>101</avatar>
     </player>
     <player>
       <id>229819160</id>
       <name>Melhauzer</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>185492188</id>
       <name>YUKIO</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1703,11 +1690,65 @@
       <id>180653908</id>
       <name>Hermit</name>
       <guild>7</guild>
+      <avatar>2</avatar>
+    </player>
+    <player>
+      <id>433605604</id>
+      <name>Hieroglyphics</name>
+      <guild>14</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>288446969</id>
+      <name>Ayko</name>
+      <guild>12</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>176273934</id>
+      <name>Ministr195</name>
+      <guild>12</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>177934596</id>
+      <name>Eliid</name>
+      <guild>12</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>255424255</id>
+      <name>Senpai</name>
+      <guild>12</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>415419432</id>
+      <name>Jean</name>
+      <guild>0</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>404181497</id>
+      <name>Chris</name>
+      <guild>12</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>152690861</id>
+      <name>Uniko</name>
+      <guild>15</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>272901876</id>
+      <name>Makiro_Satzuki</name>
+      <guild>2</guild>
       <avatar>29</avatar>
     </player>
   </players>
   <eweeks>
-    <this_week>2</this_week>
+    <this_week>4</this_week>
     <eweek>
       <id>1</id>
       <map>Forest III</map>
