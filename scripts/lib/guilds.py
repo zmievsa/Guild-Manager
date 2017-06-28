@@ -48,6 +48,17 @@ class Avatar(DatabaseElement):
 		return self.get("link")
 
 
+class Achi(DatabaseElement):
+	parent = "achis"
+
+	def __init__(self, id=None, name=None):
+		self.xml_element = self.getElement(id, name)
+
+	@property
+	def completion_pics(self):
+		return self.get("completion_pics").split(" ")
+
+
 class Player(DatabaseElement):
 	parent = "players"
 
