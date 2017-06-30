@@ -19,11 +19,7 @@ def getMessage(text, asker):
 def addWinsOrLoses(request):
 	result = getResult(request.text)
 	guild = getGuild(request.text, result)
-	if result == "поражение":
-		xml = guild.find("loses") 
-	elif result == "победа":
-		xml = guild.find("wins")
-	xml.text = str(int(xml.text) + 1)
+	addPoints(guild, result)
 	request.asker.guild = guild
 
 
@@ -44,3 +40,11 @@ def getGuild(text, result):
 		return guild
 	else:
 		raise GB_guild_not_found
+
+
+def addPoints(guild, result):
+	if result == "поражение":
+		xml = guild.find("loses") 
+	elif result == "победа":
+		xml = guild.find("wins")
+	xml.text = str(int(xml.text) + 1)
