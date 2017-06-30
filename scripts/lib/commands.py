@@ -10,17 +10,10 @@ from vk import Session, API
 from os.path import realpath
 from os import chdir
 
+from lib.config import my_id, group_id, sleep_time, token_path, database_path
 from lib.database import Database
 from traceback import format_exc
 from time import sleep
-
-""" Константы """
-group_id = 64867627  # id основной группы
-test_id = 77675108   # id группы 'тест'
-my_id = 98216156	 # id аккаунта
-sleep_time = 0.5     # Время ожидания
-database_path = "../Data/database.xml"
-token_path = "../Data/token.txt"
 
 
 class ErrorManager:
@@ -39,7 +32,7 @@ class ErrorManager:
 
 def getApi():
 	""" Логинится в вк и возвращает готовую к работе сессию """
-	with open(token_path, 'r') as token:
+	with open(token_path) as token:
 		token = token.read()
 		token.rstrip()
 		session = Session(access_token=token)
