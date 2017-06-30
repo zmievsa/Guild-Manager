@@ -20,9 +20,10 @@ def addWinsOrLoses(request):
 	result = getResult(request.text)
 	guild = getGuild(request.text, result)
 	if result == "поражение":
-		guild.loses = guild.loses + 1
+		xml = guild.find("loses") 
 	elif result == "победа":
-		guild.wins = guild.wins + 1
+		xml = guild.find("wins")
+	xml.text = str(int(xml.text) + 1)
 	request.asker.guild = guild
 
 
