@@ -23,6 +23,19 @@ database_path = "../../Data/database.xml"
 token_path = "../../Data/token.txt"
 
 
+class ErrorManager:
+	def __init__(self, name):
+		self.name = name
+
+	def __enter__(self):
+		pass
+
+	def __exit__(self, *args):
+		exception = format_exc()
+		message = "{}:\n{}".format(self.name, exception)
+		api.messages.send(user_id=my_id, message=message)
+
+
 def getApi():
 	""" Логинится в вк и возвращает готовую к работе сессию """
 	with open(token_path, 'r') as token:
@@ -43,14 +56,6 @@ def getToken():
 	url += "client_id={}&{}&scope={}".format(
 		client_id, other_stuff, scope)
 	wb.open(url, new=2)
-
-
-def error(string):
-	""" Присылает текст ошибки и string на заданный id """
-	exception = format_exc()
-	my_id = 98216156
-	message = "{}:\n{}".format(string, exception)
-	api.messages.send(user_id=my_id, message=message)
 
 
 def vkCap(method, **kwargs):

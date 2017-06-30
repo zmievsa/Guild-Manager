@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from lib.posts import editPost, getPostTime, post
-from lib.commands import error, database
+from lib.commands import database, ErrorManager
 from lib.guilds import Eweek
 from os import listdir
 
@@ -70,7 +70,5 @@ def setThisWeekChallenge(challenge):
 
 
 if __name__ == "__main__":
-	try:
+	with ErrorManager("weekly"):
 		generate()
-	except Exception as e:
-		error("weekly")

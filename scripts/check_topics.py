@@ -2,7 +2,7 @@
 
 from lib.topics import Request, failure_image, succeed_image, getComments
 from lib.wiki_pages import refreshGuilds
-from lib.commands import error
+from lib.commands import ErrorManager
 
 from topic_list import guild_changes, guild_battles, guild_making
 
@@ -54,7 +54,5 @@ def commentWasAlreadyChecked(attachments):
 
 
 if __name__ == "__main__":
-	try:
+	with ErrorManager("topics"):
 		main()
-	except:
-		error("topics")

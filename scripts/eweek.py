@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from lib.commands import api, group_id, test_id, vkCap, error, database
+from lib.commands import api, group_id, test_id, vkCap, database, ErrorManager
 from lib.posts import getPostTime, getText, post
 from lib.guilds import Eweek, Player
 from re import search
@@ -189,7 +189,5 @@ def getPairRow(compare, score, ch1, ch2, ch3):
 
 
 if __name__ == "__main__":
-	try:
+	with ErrorManager("eweek"):
 		make()
-	except:
-		error("eweek")

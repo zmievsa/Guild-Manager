@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from lib.commands import error
+from lib.commands import ErrorManager
 from shutil import copyfile
 from time import strftime
 
@@ -12,7 +12,5 @@ def backup():
 
 
 if __name__ == "__main__":
-	try:
+	with ErrorManager("backup"):
 		backup()
-	except:
-		error("backup")

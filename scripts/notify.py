@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from lib.commands import api, group_id, sleep_time, getBanned, error
+from lib.commands import api, group_id, sleep_time, getBanned, ErrorManager
 from time import sleep
 
 
@@ -43,7 +43,5 @@ def sendMessages(users, message):
 
 
 if __name__ == "__main__":
-	try:
+	with ErrorManager("notify"):
 		notify()
-	except:
-		error("notify")
