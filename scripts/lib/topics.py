@@ -118,3 +118,28 @@ def checkNicknameFormat(name):
 			raise nickname_length
 	else:
 		raise nickname_format
+
+
+def getFields(text, keys):
+	text = text.splitlines()
+	fields = dict()
+	for line in text:
+		if ":" in line:
+			lower_line = line.lower()
+			stripped_line = line[line.index(":") + 1:].strip()
+			for key in keys:
+				if key + ":" in lower_line:
+					fields[key] = stripped_line
+	return fields
+
+
+def checkMandatoryFields(fields, keys):
+	for key in keys:
+		if key not in fields:
+			raise GMError("Поле '{}' не найдено.".format(key))
+
+
+def fillOptionalFields(fields, keys):
+	for key in keys:
+		if key not in fields:
+			fields[key] = ""
