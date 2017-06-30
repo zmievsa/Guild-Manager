@@ -19,8 +19,8 @@ group_id = 64867627  # id основной группы
 test_id = 77675108   # id группы 'тест'
 my_id = 98216156	 # id аккаунта
 sleep_time = 0.5     # Время ожидания
-database_path = "../../Data/database.xml"
-token_path = "../../Data/token.txt"
+database_path = "../Data/database.xml"
+token_path = "../Data/token.txt"
 
 
 class ErrorManager:
@@ -31,9 +31,10 @@ class ErrorManager:
 		pass
 
 	def __exit__(self, *args):
-		exception = format_exc()
-		message = "{}:\n{}".format(self.name, exception)
-		api.messages.send(user_id=my_id, message=message)
+		if args[0] is not None:
+			exception = format_exc()
+			message = "{}:\n{}".format(self.name, exception)
+			api.messages.send(user_id=my_id, message=message)
 
 
 def getApi():
@@ -76,7 +77,7 @@ def getBanned():
 
 def setCurrentDirectory():
 	path = realpath(__file__)
-	index = path.rfind("/")
+	index = path.index("/lib") - 1
 	path = path[:index]
 	chdir(path)
 
