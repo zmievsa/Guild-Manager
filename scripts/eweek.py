@@ -103,9 +103,9 @@ def getChallenges():
 
 def sortPlayers(players, ch1, ch2, ch3):
 	if ch1 > ch2:
-		reverse = True
-	else:
 		reverse = False
+	else:
+		reverse = True
 	players.sort(key=lambda x: x[0].score, reverse=reverse)
 	return players
 
