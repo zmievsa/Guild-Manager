@@ -34,7 +34,7 @@ def getAction(text):
 			return action
 
 
-def getMessage(text, asker):
+def getResponse(text, asker):
 	""" Возвращает сообщение, которое должен получить игрок """
 	guild_type = ("баннер", "лого", "название", "описание",
 	"вступлени", "распустить", "исключи", "зачисли", "статус")

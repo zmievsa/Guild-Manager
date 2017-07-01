@@ -24,7 +24,7 @@ class Request(object):
 			self.message = e
 			self.picture = failure_image.link
 		else:
-			self.message = self.topic.getMessage(self.text.lower(), self.asker)
+			self.message = self.topic.getResponse(self.text.lower(), self.asker)
 			self.picture = succeed_image.link
 
 	def finish(self):

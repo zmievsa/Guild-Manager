@@ -16,7 +16,7 @@ def getAction(request):
 	return main
 
 
-# def getMessage(text, asker):
+# def getResponse(text, asker):
 # 	guild_name, page_id = asker.guild.get("name", "page")
 # 	link = "https://vk.com/page-{}_{}".format(group_id, page_id)
 # 	guild_line = "Гильдия: {} ({})".format(guild_name, link)

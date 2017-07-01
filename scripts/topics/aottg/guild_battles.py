@@ -12,7 +12,7 @@ def getAction(text):
 	return addWinsOrLoses
 
 
-def getMessage(text, asker):
+def getResponse(text, asker):
 	return "Гильдия: {}".format(asker.guild.get("name"))
 
 
