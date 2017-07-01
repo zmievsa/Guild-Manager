@@ -10,24 +10,9 @@ from vk import Session, API
 from os.path import realpath
 from os import chdir
 
-from lib.config import my_id, group_id, sleep_time, token_path, database_path
+from lib.config import sleep_time, token_path, database_path
 from lib.database import Database
-from traceback import format_exc
 from time import sleep
-
-
-class ErrorManager:
-	def __init__(self, name):
-		self.name = name
-
-	def __enter__(self):
-		pass
-
-	def __exit__(self, *args):
-		if args[0] is not None:
-			exception = format_exc()
-			message = "{}:\n{}".format(self.name, exception)
-			api.messages.send(user_id=my_id, message=message)
 
 
 def getApi():
@@ -62,7 +47,7 @@ def vkCap(method, **kwargs):
 		return vkCap(method, **kwargs)
 
 
-def getBanned():
+def getBanned(group_id):
 	bans = api.groups.getBanned(group_id=group_id)['items']
 	banned = [user['id'] for user in bans]
 	return banned
