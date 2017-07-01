@@ -2,10 +2,10 @@
 
 from lib.errors import ErrorManager, sendErrorMessage
 from lib.config import failure_image, succeed_image
-from topics.lib import Request, getComments
 from lib.wiki_pages import refreshGuilds
 
-from topic_list import guild_changes, guild_battles, guild_making
+from topics.aottg import guild_changes, guild_battles, guild_making
+from topics.lib import Request, getComments
 
 
 def main():
