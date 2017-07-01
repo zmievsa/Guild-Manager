@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from lib.config import group_id, sleep_time
-from lib.commands import api, getBanned
+from lib.commands import api, ban_list
 from lib.errors import ErrorManager
 from time import sleep
 
@@ -10,7 +10,6 @@ def notify(test=False):
 	""" Оповещает игроков о начале сервера или еженедельника """
 	message = getMessage(test)
 	users = getEweekPlayers()
-	ban_list = getBanned()
 	users = {user for user in users if user not in ban_list}
 	sendMessages(users, message)
 

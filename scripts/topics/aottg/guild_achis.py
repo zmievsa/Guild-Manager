@@ -2,13 +2,12 @@ from topics.lib import getFields, checkMissingFields
 from topics.errors import GMError
 
 from lib.guilds import Player, Guild, Achi
-from lib.commands import getBanned
+from lib.commands import ban_list
 from lib.config import group_id
 
 
 # id = 29901188
 group = group_id
-ban_list = getBanned()
 comment_amount = 15
 
 
@@ -73,7 +72,7 @@ def checkParticipants(players, guild):
 			raise GMError(not_in_guild)
 		elif player.get("guild") != guild.get("id"):
 			raise GMError(not_in_guild)
-		elif player.get("id") in ban_list:
+		elif int(player.get("id")) in ban_list:
 			raise GMError(isbanned)
 
 

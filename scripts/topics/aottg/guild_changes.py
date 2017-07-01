@@ -1,5 +1,5 @@
 from lib.database_objects import createPlayer
-from lib.commands import database, getBanned
+from lib.commands import database, ban_list
 from lib.config import group_id
 from lib.guilds import Player
 
@@ -10,7 +10,6 @@ from re import search
 
 id = 29901188
 group = group_id
-ban_list = getBanned()
 comment_amount = 30
 
 

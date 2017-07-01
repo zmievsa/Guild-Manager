@@ -1,6 +1,6 @@
 from lib.database_objects import createGuild
 from lib.guilds import Player, Guild
-from lib.commands import getBanned
+from lib.commands import ban_list
 from lib.config import group_id
 
 from topics.errors import GMError
@@ -10,7 +10,6 @@ from re import search
 
 id = 29891323
 group = group_id
-ban_list = getBanned()
 comment_amount = 5
 
 
