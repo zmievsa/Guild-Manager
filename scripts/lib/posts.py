@@ -6,8 +6,9 @@
 
 """
 
-from lib.commands import api, group_id, sleep_time
+from lib.config import group_id, sleep_time
 from datetime import datetime, timedelta
+from lib.commands import api
 from pytz import timezone
 from time import sleep
 

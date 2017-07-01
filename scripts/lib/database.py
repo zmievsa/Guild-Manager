@@ -1,4 +1,4 @@
-from lxml.etree import ElementTree, SubElement, XMLParser, parse
+from lxml.etree import ElementTree, XMLParser, parse
 
 
 class Database(object):

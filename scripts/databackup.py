@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-from lib.commands import ErrorManager
+from lib.errors import ErrorManager
 from shutil import copyfile
 from time import strftime
 
 
 def backup():
 	title = strftime("database_backups/%d.%m.%Y.xml")
-	path = "../../Data/"
+	path = "../Data/"
 	copyfile(path + "database.xml", path + title)
 
 

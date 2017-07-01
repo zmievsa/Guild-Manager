@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-from lib.commands import api, group_id, sleep_time, getBanned, ErrorManager
+from lib.config import group_id, sleep_time
+from lib.commands import api, getBanned
+from lib.errors import ErrorManager
 from time import sleep
 
 

@@ -1,4 +1,5 @@
-from lib.commands import api, group_id, vkCap, database
+from lib.commands import api, vkCap, database
+from lib.config import group_id
 import lxml.etree as ET
 
 
@@ -114,6 +115,7 @@ def genPlayers(guilds):
 				avatar = database.getByField(kind="avatars", field="link", value=avatar)
 				avatar = avatar.find("id").text
 				database.createPlayer(id=p_id, name=p_name, avatar=avatar, guild=g_id)
+
 
 def genAvatars():
 	if database.find("avatars") is not None:

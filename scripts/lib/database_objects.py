@@ -1,4 +1,5 @@
-from lib.commands import api, database, group_id, my_id
+from lib.commands import api, database
+from lib.config import group_id, my_id
 from lib.guilds import Player
 from lxml import etree as XML
 

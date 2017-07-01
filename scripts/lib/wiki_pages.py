@@ -1,5 +1,6 @@
-from lib.commands import database, group_id, my_id, api, vkCap
+from lib.commands import database, api, vkCap
 from lib.guilds import Guild, Player, Avatar
+from lib.config import group_id, my_id
 
 
 class updateGuild(object):

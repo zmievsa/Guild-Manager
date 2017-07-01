@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 from lib.posts import editPost, getPostTime, post
-from lib.commands import database, ErrorManager
+from lib.errors import ErrorManager
+from lib.commands import database
 from lib.guilds import Eweek
 from os import listdir
 

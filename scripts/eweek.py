@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
-from lib.commands import api, group_id, test_id, vkCap, database, ErrorManager
 from lib.posts import getPostTime, getText, post
+from lib.commands import api, vkCap, database
+from lib.config import group_id, test_id
 from lib.guilds import Eweek, Player
+from lib.errors import ErrorManager
 from re import search
 
 
