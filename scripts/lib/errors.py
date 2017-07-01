@@ -4,14 +4,23 @@ from lib.commands import api
 
 
 class ErrorManager:
-	def __init__(self, name):
+	def __init__(self, name, suspended=False):
 		self.name = name
+		self.suspended = suspended
+		self.errors = []
 
 	def __enter__(self):
 		pass
 
 	def __exit__(self, *args):
 		if args[0] is not None:
+			error = exc_info()[1]
+			self.errors.append(error)
+			if not self.suspended:
+				self.finish()
+
+	def finish(self):
+		for error in self.errors:
 			error(self.name)
 
 
