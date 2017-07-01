@@ -1,6 +1,6 @@
+from lib.config import group_id, my_id, achi_is_active
+from lib.guilds import Guild, Player, Avatar, Achi
 from lib.commands import database, api, vkCap
-from lib.guilds import Guild, Player, Avatar
-from lib.config import group_id, my_id
 
 
 class updateGuild(object):
@@ -28,6 +28,8 @@ class updateGuild(object):
 		attr['stats'] = self.getStats()
 		attr['players'] = self.getPlayerList(players)
 		attr['numberofplayers'] = len(players)
+		if achi_is_active:
+			attr['achi'] = self.getAchi()
 		return attr
 
 	def getAttributes(self):
@@ -109,6 +111,20 @@ class updateGuild(object):
 					player_list += a
 		return player_list
 
+	def getAchi(self):
+		guild_achi_keys = self.guild.get("achi").split(" ")
+		page = "<br><center>'''[[page-64867627_49895049|Испытания]]'''</center>"
+		for index, result in enumerate(guild_achi_keys):
+			achi = Achi(id=index)
+			name, icon, waves = achi.get("name", "icon", "waves")
+			waves = waves.split(" ")
+			wave = waves[result]
+			title_line = "\n=={}==".format(name)
+			icon_pic = "[[{}|125px;noborder| ]]".format(icon)
+			wave_pic = "[[{}|400x70px;noborder;nolink| ]]".format(wave)
+			main_line = "\n{}{}".format(icon_pic, wave_pic)
+		return page
+
 
 class refreshGuilds(object):
 	def __init__(self):
@@ -131,16 +147,53 @@ class refreshGuilds(object):
 	def getGuildList(self):
 		guilds = database.find("guilds")
 		guilds = list(guilds.iterchildren())
+		guilds = [Guild(g) for g in guilds]
 		return self.makeFancyGuildList(guilds), len(guilds)
 
 	def makeFancyGuildList(self, guilds):
-		line = "\n<center>[[{}|450px;noborder|page-64867627_{}]]</center>\n"
-		guild_list = ""
+		page, id_line, guild_line = self.getGuildLineTemplates()
+		total_waves = self.getTotalAmountOfWaves()
+		self.makeGuildPercentages(guilds, total_waves)
+		self.sortGuilds(guilds)
 		for guild in guilds:
-			banner = guild.find('banner').text
-			page = guild.find('page').text
-			guild_list += line.format(banner, page)
-		return guild_list
+			page += id_line.format(guild.percent)
+			banner = guild.get('banner')
+			page = guild.get('page')
+			page += guild_line.format(banner, page)
+		if achi_is_active:
+			page += "\n|}"
+		return page
+
+	def getGuildLineTemplates(self):
+		if achi_is_active:
+			page = "{|\n|-\n!<center>Рейтинг</center>\n!<center>Гильдия</center>\n|-"
+			id_line = "\n!<center>{}%</center>"
+			guild_line = "\n|<center>[[{}|450px;noborder|page-64867627_{}]]</center>\n|-"
+		else:
+			page = "{|\n|-\n!<center>ID</center>\n!<center>Гильдия</center>\n|-"
+			id_line = "\n!<center>{}</center>"
+			guild_line = "\n<center>[[{}|450px;noborder|page-64867627_{}]]</center>"
+		return page, id_line, guild_line
+
+	def getTotalAmountOfWaves():
+		if achi_is_active:
+			all_achi_waves = database.getAll("achis", "waves")
+			all_achi_waves = [len(w.split(" ")) - 1 for w in all_achi_waves]
+			return sum(all_achi_waves)
+		
+	def makeGuildPercentages(guilds, total_waves):
+		for guild in guilds:
+			if achi_is_active:
+				achi_results = guild.get("achi").split(" ")
+				achi_results = [int(r) for r in achi_results]
+				complete_waves = sum(achi_results)
+				percent = complete_waves / total_waves
+				guild.percent = round(percent)
+			else:
+				guild.percent = int(guild.get("id"))
+
+	def sortGuilds(self, guilds):
+		guilds.sort(key=lambda g: g.percent)
 
 	def getPlayerCount(self):
 		all_players = database.find("players").iterchildren()
