@@ -11,11 +11,11 @@ group = group_id
 comment_amount = 15
 
 
-def getAction(request):
+def getAction(text):
 	return main
 
 
-# def getResponse(text, asker):
+# def getResponse(request):
 # 	guild_name, page_id = asker.guild.get("name", "page")
 # 	link = "https://vk.com/page-{}_{}".format(group_id, page_id)
 # 	guild_line = "Гильдия: {} ({})".format(guild_name, link)

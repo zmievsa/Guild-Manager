@@ -12,8 +12,8 @@ def getAction(text):
 	return addWinsOrLoses
 
 
-def getResponse(text, asker):
-	return "Гильдия: {}".format(asker.guild.get("name"))
+def getResponse(request):
+	return "Гильдия: {}".format(request.asker.guild.get("name"))
 
 
 def addWinsOrLoses(request):

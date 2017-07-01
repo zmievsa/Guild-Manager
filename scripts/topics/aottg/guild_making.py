@@ -17,8 +17,8 @@ def getAction(text):
 	return makeGuild
 
 
-def getResponse(text, asker):
-	player = Player(asker.get("id"))
+def getResponse(request):
+	player = Player(request.asker.get("id"))
 	guild_name, page_id = player.guild.get("name", "page")
 	link = "https://vk.com/page-{}_{}".format(group_id, page_id)
 	return "Гильдия: {} ({})".format(guild_name, link)
