@@ -1,23 +1,26 @@
 #!/usr/bin/env python3
 
+from lib.errors import ErrorManager, sendErrorMessage
 from lib.config import failure_image, succeed_image
 from topics.lib import Request, getComments
 from lib.wiki_pages import refreshGuilds
-from lib.errors import ErrorManager
 
 from topic_list import guild_changes, guild_battles, guild_making
 
 
 def main():
-	lst = (guild_changes, guild_battles, guild_making)
-	Manager = ErrorManager(name="topics", suspended=True)
-	for topic in lst:
-		with Manager:
-			comments = getComments(topic, topic.comment_amount)
-			parseChanges(comments, topic)
-	Manager.finish()
+	topic_list = (guild_changes, guild_battles, guild_making)
+	parseTopics(topic_list)
 	refreshGuilds()
 
+
+def parseTopics(topic_list):
+	for topic in lst:
+		comments = getComments(topic, topic.comment_amount)
+		try:
+			parseChanges(comments, topic)
+		except Exception as e:
+			sendErrorMessage("topics", e)
 
 
 def parseChanges(comments, topic):
