@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
 
-from lib.topics import Request, failure_image, succeed_image, getComments
+from lib.config import failure_image, succeed_image
+from topics.lib import Request, getComments
 from lib.wiki_pages import refreshGuilds
-from lib.commands import ErrorManager
+from lib.errors import ErrorManager
 
 from topic_list import guild_changes, guild_battles, guild_making
 
 
 def main():
 	lst = (guild_changes, guild_battles, guild_making)
+	Manager = ErrorManager(name="topics", suspended=True)
 	for topic in lst:
-		comments = getComments(topic, topic.comment_amount)
-		parseChanges(comments, topic)
+		with Manager:
+			comments = getComments(topic, topic.comment_amount)
+			parseChanges(comments, topic)
+	Manager.finish()
 	refreshGuilds()
+
 
 
 def parseChanges(comments, topic):
