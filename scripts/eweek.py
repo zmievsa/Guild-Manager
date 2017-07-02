@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from lib.posts import getPostTime, getText, post
+from lib.commands import vk, api, database
 from lib.config import group_id, test_id
-from lib.commands import api, vkCap, database
 from lib.guilds import Eweek, Player
 from lib.errors import ErrorManager
 from re import search
@@ -28,9 +28,9 @@ def getPlayers():
 
 
 def getEweekPostComments():
-	search_results = api.wall.search(owner_id=-group_id, query="#aottg83_reg", count=1)
+	search_results = vk(api.wall.search, owner_id=-group_id, query="#aottg83_reg", count=1)
 	post_id = search_results['items'][0]['id']
-	comments = api.wall.getComments(owner_id=-group_id, post_id=post_id, count=30)
+	comments = vk(api.wall.getComments, owner_id=-group_id, post_id=post_id, count=30)
 	return comments['items']
 
 
@@ -49,7 +49,7 @@ def getParticipantsFromComments(comments):
 def getCommentsFromResultTopic():
 	""" Result topic -- тот, где мы пишем результаты участников """
 	topic_id = 35693273
-	response = api.board.getComments(
+	response = vk(api.board.getComments,
 		topic_id=topic_id,
 		group_id=test_id,
 		count=50)
@@ -112,10 +112,10 @@ def sortPlayers(players, ch1, ch2, ch3):
 
 def getMessages():
 	""" Возвращает список словарей-сообщений с результатами ежа """
-	peer_id = vkCap(api.messages.search, q="#AoTTG_Eweek", count=1)
+	peer_id = vk(api.messages.search, q="#AoTTG_Eweek", count=1)
 	peer_id = peer_id['items'][0]['chat_id']
 	peer_id += 2000000000
-	messages = vkCap(api.messages.getHistory, peer_id=peer_id, count=50)['items']
+	messages = vk(api.messages.getHistory, peer_id=peer_id, count=50)['items']
 	return messages
 
 

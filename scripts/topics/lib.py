@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from lib.config import failure_image, succeed_image, text_division
-from lib.commands import api, database, vkCap
+from lib.commands import vk, api, vkCap, database
 from lib.guilds import Player
 from topics.errors import *
 from re import search
@@ -57,7 +57,7 @@ def getComments(topic, amount):
 	"""
 	offset = 0
 	for parse in range(2):
-		response = api.board.getComments(
+		response = vk(api.board.getComments,
 			group_id=topic.group,
 			topic_id=topic.id,
 			offset=offset,

@@ -281,7 +281,7 @@ def endGuild(request):
 
 
 def removePlayersFromGuild(guild_id):
-	players = database.find("players").iterchildren()
+	players = database.getAll("players")
 	for player in players:
 		if player.find("guild").text == guild_id:
 			player.find("guild").text = "0"
