@@ -55,7 +55,7 @@ def getBanned(group_id):
 
 def setCurrentDirectory():
 	path = realpath(__file__)
-	index = path.index("/lib") - 1
+	index = path.index("/lib")
 	path = path[:index]
 	chdir(path)
 
