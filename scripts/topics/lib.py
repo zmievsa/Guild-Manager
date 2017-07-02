@@ -2,7 +2,6 @@
 
 from lib.config import failure_image, succeed_image, text_division
 from lib.commands import api, database, vkCap
-from lib.wiki_pages import updateGuild
 from lib.guilds import Player
 from topics.errors import *
 from re import search
@@ -31,8 +30,7 @@ class Request(object):
 	def finish(self):
 		""" Завершает обработку и вносит изменения """
 		database.rewrite()
-		if self.asker.guild is not None:
-			updateGuild(self.asker.get("guild"))
+		self.topic.finish(self)
 		self.addMessageToComment(self.message)
 		self.editComment()
 

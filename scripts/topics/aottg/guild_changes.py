@@ -1,5 +1,6 @@
 from lib.database_objects import createPlayer
 from lib.commands import database, ban_list
+from lib.wiki_pages import updateGuild
 from lib.config import aottg_main
 from lib.guilds import Player
 
@@ -11,6 +12,7 @@ from re import search
 id = 29901188
 group = aottg_main
 comment_amount = 30
+guilds_to_update = []
 
 
 def getAction(text):
@@ -46,6 +48,13 @@ def getResponse(request):
 		id, name = asker.get("id", "name")
 		message = "Игрок: [id{}|{}]".format(id, name)
 	return message
+
+
+def finish(request):
+	if request.asker.guild is not None:
+		updateGuild(request.asker.get("guild"))
+	for guild in guilds_to_update:
+		updateGuild(guild.get("id"))
 
 
 def changeNick(request):
@@ -243,6 +252,7 @@ def excludeFromGuild(request):
 		raise not_in_guild
 	asker = request.asker
 	guild = asker.guild
+	guilds_to_update.append(guild)
 	if "меня" in request.text:
 		if asker.rank == 3 and len(guild.heads) == 1:
 			raise head_must_present

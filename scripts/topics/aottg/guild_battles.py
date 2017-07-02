@@ -1,4 +1,5 @@
 from topics.errors import GB_wrong_request, GB_guild_not_found
+from lib.wiki_pages import updateGuild
 from lib.config import aottg_admin
 from lib.guilds import Guild
 
@@ -14,6 +15,10 @@ def getAction(text):
 
 def getResponse(request):
 	return "Гильдия: {}".format(request.asker.guild.get("name"))
+
+
+def finish(request):
+	updateGuild(request.guild_to_update.get("id"))
 
 
 def addWinsOrLoses(request):

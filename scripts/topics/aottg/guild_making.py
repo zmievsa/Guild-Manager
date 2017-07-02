@@ -24,6 +24,10 @@ def getResponse(request):
 	return "Гильдия: {} ({})".format(guild_name, link)
 
 
+def finish(request):
+	pass
+
+
 def makeGuild(request):
 	guild = getGuildInfo(request.text)
 	checkMissingFields(guild)
@@ -32,7 +36,7 @@ def makeGuild(request):
 	editHeadsAndVices(guild)
 	if not guildAlreadyExists(guild):
 		checkGuildInfo(guild)
-		guild = createGuild(**guild)
+		createGuild(**guild)
 
 
 def getGuildInfo(text):

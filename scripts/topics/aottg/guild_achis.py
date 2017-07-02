@@ -2,6 +2,7 @@ from topics.lib import getFields, checkMissingFields
 from topics.errors import GMError
 
 from lib.guilds import Player, Guild, Achi
+from lib.wiki_pages import updateGuild
 from lib.commands import ban_list
 from lib.config import aottg_main
 
@@ -19,6 +20,10 @@ def getResponse(request):
 	return "Гильдия: " + request.asker.guild.get("name")
 
 
+def finish(request):
+	updateGuild(request.guild_to_update)
+
+
 def main(request):
 	keys = "гильдия", "испытание", "участники", "волны"
 	fields = getFields(request.text, keys)
@@ -26,7 +31,7 @@ def main(request):
 	editFields(fields)
 	checkFields(fields)
 	addAchiPoints(fields)
-	request.asker.guild = fields['гильдия']
+	request.guild_to_update = fields['гильдия'].get("id")
 
 
 def editFields(fields):
