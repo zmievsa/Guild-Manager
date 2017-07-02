@@ -67,7 +67,7 @@ def getText(file_name):
 		returns str
 
 	"""
-	file_name = "../../Data/texts/{}.txt".format(file_name)
+	file_name = "../Data/texts/{}.txt".format(file_name)
 	with open(file_name, "r+") as file:
 		new_file = file.readlines()
 		phrase = "\n" + new_file[0].strip()
