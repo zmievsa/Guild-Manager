@@ -21,7 +21,7 @@ class DatabaseElement(object):
 			self._checkid(id)
 			return database.getById(self.parent, id)
 		elif name is not None:
-			return database.getByField(self.parent, "name", name)
+			return database.getByName(self.parent, name)
 		else:
 			raise Exception("DatabaseElement: ты не указал id или имя")
 

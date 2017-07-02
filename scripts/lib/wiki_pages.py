@@ -40,7 +40,7 @@ class updateGuild(object):
 		return attributes
 
 	def getPlayers(self):
-		all_players = database.find("players").iterchildren()
+		all_players = database.getAll("players")
 		guild_id = self.guild.get('id')
 		guild_players = []
 		for player in all_players:
@@ -197,7 +197,7 @@ class refreshGuilds(object):
 		guilds.sort(key=lambda g: g.percent)
 
 	def getPlayerCount(self):
-		all_players = database.find("players").iterchildren()
+		all_players = database.getAll("players")
 		counter = 0
 		for player in all_players:
 			if player.find("guild").text != "0":
