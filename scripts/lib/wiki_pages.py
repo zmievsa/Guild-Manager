@@ -125,6 +125,7 @@ class updateGuild(object):
 			icon_pic = "[[{}|125px;noborder| ]]".format(icon)
 			wave_pic = "[[{}|400x70px;noborder;nolink| ]]".format(wave)
 			main_line = "\n{}{}".format(icon_pic, wave_pic)
+			page += title_line + main_line
 		return page
 
 
