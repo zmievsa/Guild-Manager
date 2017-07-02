@@ -1,4 +1,4 @@
-from lib.config import group_id, my_id, achi_is_active
+from lib.config import aottg_main, my_id, achi_is_active
 from lib.guilds import Guild, Player, Avatar, Achi
 from lib.commands import database, api, vkCap
 
@@ -207,7 +207,7 @@ class refreshGuilds(object):
 
 
 def getPageTemplate(file_name):
-	folder = "../../Data/page_templates/"
+	folder = "../Data/page_templates/"
 	path = folder + file_name
 	with open(path) as file:
 		return file.read()
@@ -221,7 +221,7 @@ def editPageTemplate(attributes, template):
 	return template
 
 
-def saveWikiPage(page, page_id, group=group_id):
+def saveWikiPage(page, page_id, group=aottg_main):
 	vkCap(api.pages.save,
 		text=page,
 		user_id=my_id,

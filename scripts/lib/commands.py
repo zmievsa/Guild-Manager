@@ -10,7 +10,7 @@ from vk import Session, API
 from os.path import realpath
 from os import chdir
 
-from lib.config import sleep_time, token_path, database_path, group_id
+from lib.config import sleep_time, token_path, database_path, aottg_main
 from lib.database import Database
 from time import sleep
 
@@ -62,5 +62,5 @@ def setCurrentDirectory():
 
 setCurrentDirectory()
 api = getApi()
-ban_list = getBanned(group_id)
+ban_list = getBanned(aottg_main)
 database = Database(database_path)

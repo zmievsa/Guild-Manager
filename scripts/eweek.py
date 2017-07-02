@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from lib.posts import getPostTime, getText, post
+from lib.config import aottg_main, aottg_admin
 from lib.commands import api, vkCap, database
-from lib.config import group_id, test_id
 from lib.guilds import Eweek, Player
 from lib.errors import ErrorManager
 from re import search
@@ -28,9 +28,9 @@ def getPlayers():
 
 
 def getEweekPostComments():
-	search_results = api.wall.search(owner_id=-group_id, query="#aottg83_reg", count=1)
+	search_results = api.wall.search(owner_id=-aottg_main, query="#aottg83_reg", count=1)
 	post_id = search_results['items'][0]['id']
-	comments = api.wall.getComments(owner_id=-group_id, post_id=post_id, count=30)
+	comments = api.wall.getComments(owner_id=-aottg_main, post_id=post_id, count=30)
 	return comments['items']
 
 
@@ -51,7 +51,7 @@ def getCommentsFromResultTopic():
 	topic_id = 35693273
 	response = api.board.getComments(
 		topic_id=topic_id,
-		group_id=test_id,
+		group_id=aottg_admin,
 		count=50)
 	return response['items']
 

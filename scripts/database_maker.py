@@ -1,5 +1,5 @@
 from lib.commands import api, vkCap, database
-from lib.config import group_id
+from lib.config import aottg_main as group_id
 import lxml.etree as ET
 
 
