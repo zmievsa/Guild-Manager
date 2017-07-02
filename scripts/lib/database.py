@@ -87,4 +87,4 @@ class Database(object):
 						lst.append(subelement.text)
 				return lst
 			else:
-				return [o for o in iterator]
+				return list(iterator)
