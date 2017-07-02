@@ -1,4 +1,4 @@
-from lib.config import group_id, my_id, achi_is_active
+from lib.config import group_id, my_id, achi_is_active, data_path
 from lib.guilds import Guild, Player, Avatar, Achi
 from lib.commands import database, api, vk
 
@@ -206,7 +206,7 @@ class refreshGuilds(object):
 
 
 def getPageTemplate(file_name):
-	folder = "../Data/page_templates/"
+	folder = data_path + "page_templates/"
 	path = folder + file_name
 	with open(path) as file:
 		return file.read()

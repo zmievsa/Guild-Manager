@@ -6,7 +6,7 @@
 
 """
 
-from lib.config import group_id, sleep_time
+from lib.config import group_id, sleep_time, data_path
 from datetime import datetime, timedelta
 from lib.commands import api, vk
 from pytz import timezone
@@ -66,7 +66,7 @@ def getText(file_name):
 		returns str
 
 	"""
-	file_name = "../Data/texts/{}.txt".format(file_name)
+	file_name = data_path + "texts/{}.txt".format(file_name)
 	with open(file_name, "r+") as file:
 		new_file = file.readlines()
 		phrase = "\n" + new_file[0].strip()
