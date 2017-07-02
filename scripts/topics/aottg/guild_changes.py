@@ -37,7 +37,7 @@ def getAction(text):
 
 def getResponse(request):
 	""" Возвращает сообщение, которое должен получить игрок """
-	text, asker = request.text, request.asker
+	text, asker = request.text.lower(), request.asker
 	guild_type = ("баннер", "лого", "название", "описание",
 	"вступлени", "распустить", "исключи", "зачисли", "статус")
 	player_type = ("ник", "ссылку", "аватар")
