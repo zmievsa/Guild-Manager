@@ -26,3 +26,4 @@
 
 <center>'''Список участников ([numberofplayers])'''</center>
 [players]
+[achi]
