@@ -74,6 +74,13 @@ class createAvatar(StandardObjectCreation):
 		self.make(link=link)
 
 
+class createAchi(StandardObjectCreation):
+	keys = "id", "name", "icon", "waves"
+
+	def __init__(self, **kwargs):
+		self.make(**kwargs)
+
+
 def createPlayer(id, name, guild="0"):
 	""" Добавляет игрока в базу данных """
 	xml_element = makeXMLElement("players")
