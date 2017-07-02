@@ -1,11 +1,11 @@
 from topics.errors import GB_wrong_request, GB_guild_not_found
 from lib.wiki_pages import updateGuild
-from lib.config import group_id
+from lib.config import test_id
 from lib.guilds import Guild
 
 
 id = 35465123
-group = group_id
+group = test_id
 comment_amount = 25
 
 
