@@ -10,8 +10,8 @@ class ErrorManager:
 	def __enter__(self):
 		pass
 
-	def __exit__(*args):
-		if args[1] is not None:
+	def __exit__(self, *args):
+		if args[0] is not None:
 			sendErrorMessage(self.name)
 
 
