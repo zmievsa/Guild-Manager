@@ -55,8 +55,8 @@ class Achi(DatabaseElement):
 		self.xml_element = self.getElement(id, name)
 
 	@property
-	def completion_pics(self):
-		return self.get("completion_pics").split(" ")
+	def waves(self):
+		return self.get("waves").split(" ")
 
 
 class Player(DatabaseElement):
