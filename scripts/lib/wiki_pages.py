@@ -181,8 +181,8 @@ class refreshGuilds(object):
 			all_achi_waves = database.getAll("achis", "waves")
 			all_achi_waves = [len(w.split(" ")) - 1 for w in all_achi_waves]
 			return sum(all_achi_waves)
-		
-	def makeGuildPercentages(guilds, total_waves):
+
+	def makeGuildPercentages(self, guilds, total_waves):
 		for guild in guilds:
 			if achi_is_active:
 				achi_results = guild.get("achi").split(" ")
