@@ -30,6 +30,8 @@ class updateGuild(object):
 		attr['numberofplayers'] = len(players)
 		if achi_is_active:
 			attr['achi'] = self.getAchi()
+		else:
+			self.template = self.template.replace("[achi]", "")
 		return attr
 
 	def getAttributes(self):
