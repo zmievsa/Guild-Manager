@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from lib.config import failure_image, succeed_image
 from lib.commands import api, database, vkCap
 from lib.wiki_pages import updateGuild
 from lib.guilds import Player
