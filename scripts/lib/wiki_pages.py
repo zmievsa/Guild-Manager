@@ -176,7 +176,7 @@ class refreshGuilds(object):
 			guild_line = "\n<center>[[{}|450px;noborder|page-64867627_{}]]</center>"
 		return page, id_line, guild_line
 
-	def getTotalAmountOfWaves():
+	def getTotalAmountOfWaves(self):
 		if achi_is_active:
 			all_achi_waves = database.getAll("achis", "waves")
 			all_achi_waves = [len(w.split(" ")) - 1 for w in all_achi_waves]
