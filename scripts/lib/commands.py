@@ -28,8 +28,8 @@ def getApi():
 def getToken():
 	""" Создает токен для заданного приложения """
 	import webbrowser as wb
-	client_id = str(5747467)    # Id приложения
-	scope = str(2047391)        # Код доступа, который мы запрашиваем
+	client_id = 5747467    # Id приложения
+	scope = 2047391        # Код доступа, который мы запрашиваем
 	other_stuff = "display=page&redirect_uri=http://vk.com&response_type=token&v=5.60"
 	url = "https://oauth.vk.com/authorize?"
 	url += "client_id={}&{}&scope={}".format(
@@ -37,18 +37,23 @@ def getToken():
 	wb.open(url, new=2)
 
 
+def vk(method, **kwargs):
+	""" Делает запрос к апи, ожидая необходимое время """
+	sleep(sleep_time)
+	return method(**kwargs)
+
+
 def vkCap(method, **kwargs):
 	""" Не позволяет программе вылететь, когда вк просит ввести капчу """
 	try:
-		sleep(sleep_time)
-		return method(**kwargs)
+		return vk(method, **kwargs)
 	except VkAPIError:
 		sleep(10)
 		return vkCap(method, **kwargs)
 
 
 def getBanned(group_id):
-	bans = api.groups.getBanned(group_id=group_id)['items']
+	bans = vk(api.groups.getBanned, group_id=group_id)['items']
 	banned = [user['id'] for user in bans]
 	return banned
 
@@ -63,4 +68,4 @@ def setCurrentDirectory():
 setCurrentDirectory()
 api = getApi()
 ban_list = getBanned(group_id)
-database = Database(database_path)
+database = Database(data_path)
