@@ -6,7 +6,7 @@ from lib.guilds import Guild
 
 id = 35465123
 group = test_id
-comment_amount = 25
+comment_amount = 83
 
 
 def getAction(text):

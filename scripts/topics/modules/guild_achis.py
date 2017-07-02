@@ -9,7 +9,7 @@ from lib.config import group_id
 
 # id = 29901188
 group = group_id
-comment_amount = 15
+comment_amount = 83
 
 
 def getAction(text):

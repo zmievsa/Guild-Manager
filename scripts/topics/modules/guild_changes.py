@@ -11,7 +11,7 @@ from re import search
 
 id = 29901188
 group = group_id
-comment_amount = 30
+comment_amount = 83
 guilds_to_update = []
 
 
