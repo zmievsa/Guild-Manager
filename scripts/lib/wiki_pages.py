@@ -1,6 +1,6 @@
 from lib.config import group_id, my_id, achi_is_active
 from lib.guilds import Guild, Player, Avatar, Achi
-from lib.commands import database, api, vkCap
+from lib.commands import database, api, vk
 
 
 class updateGuild(object):
@@ -221,7 +221,7 @@ def editPageTemplate(attributes, template):
 
 
 def saveWikiPage(page, page_id, group=group_id):
-	vkCap(api.pages.save,
+	vk(api.pages.save,
 		text=page,
 		user_id=my_id,
 		page_id=page_id,

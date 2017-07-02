@@ -1,6 +1,6 @@
 from traceback import format_exception, format_exc
+from lib.commands import vk, api
 from lib.config import my_id
-from lib.commands import api
 
 
 class ErrorManager:
@@ -18,7 +18,7 @@ class ErrorManager:
 def sendErrorMessage(name, exception=None):
 	exception = format_error(exception)
 	message = "{}:\n{}".format(name, exception)
-	api.messages.send(user_id=my_id, message=message)
+	vk(api.messages.send, user_id=my_id, message=message)
 
 
 def format_error(error):

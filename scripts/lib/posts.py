@@ -8,7 +8,7 @@
 
 from lib.config import group_id, sleep_time
 from datetime import datetime, timedelta
-from lib.commands import api
+from lib.commands import api, vk
 from pytz import timezone
 from time import sleep
 
@@ -22,9 +22,8 @@ def post(post_text, post_time, group_id=group_id):
 		returns int post_id
 
 	"""
-	sleep(sleep_time)
 	try:
-		post_id = api.wall.post(
+		post_id = vk(api.wall.post,
 			owner_id=-group_id,
 			from_group=1,
 			message=post_text,
