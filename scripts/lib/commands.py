@@ -10,12 +10,12 @@ from vk import Session, API
 from os.path import realpath
 from os import chdir
 
-from lib.config import sleep_time, token_path, database_path, group_id
+from lib.config import sleep_time, group_id, data_path
 from lib.database import Database
 from time import sleep
 
 
-def getApi():
+def getApi(token_path):
 	""" Логинится в вк и возвращает готовую к работе сессию """
 	with open(token_path) as token:
 		token = token.read()
@@ -66,6 +66,6 @@ def setCurrentDirectory():
 
 
 setCurrentDirectory()
-api = getApi()
+api = getApi(data_path + "token.txt")
 ban_list = getBanned(group_id)
-database = Database(data_path)
+database = Database(data_path + "database.xml")
