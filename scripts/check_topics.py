@@ -15,7 +15,7 @@ def main():
 
 
 def parseTopics(topic_list):
-	for topic in lst:
+	for topic in topic_list:
 		comments = getComments(topic, topic.comment_amount)
 		try:
 			parseChanges(comments, topic)
