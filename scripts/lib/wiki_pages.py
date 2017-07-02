@@ -159,8 +159,8 @@ class refreshGuilds(object):
 		for guild in guilds:
 			page += id_line.format(guild.percent)
 			banner = guild.get('banner')
-			page = guild.get('page')
-			page += guild_line.format(banner, page)
+			link = guild.get('page')
+			page += guild_line.format(banner, link)
 		if achi_is_active:
 			page += "\n|}"
 		return page
@@ -169,11 +169,10 @@ class refreshGuilds(object):
 		if achi_is_active:
 			page = "{|\n|-\n!<center>Рейтинг</center>\n!<center>Гильдия</center>\n|-"
 			id_line = "\n!<center>{}%</center>"
-			guild_line = "\n|<center>[[{}|450px;noborder|page-64867627_{}]]</center>\n|-"
 		else:
 			page = "{|\n|-\n!<center>ID</center>\n!<center>Гильдия</center>\n|-"
 			id_line = "\n!<center>{}</center>"
-			guild_line = "\n<center>[[{}|450px;noborder|page-64867627_{}]]</center>"
+		guild_line = "\n|<center>[[{}|450px;noborder|page-64867627_{}]]</center>\n|-"
 		return page, id_line, guild_line
 
 	def getTotalAmountOfWaves(self):
