@@ -129,3 +129,12 @@ def fillOptionalFields(fields, keys):
 	for key in keys:
 		if key not in fields:
 			fields[key] = ""
+
+
+def getPhoto(text):
+	pattern = r"photo-\d+_\d+"
+	match = search(pattern, text)
+	if match is not None:
+		return match.group()
+	else:
+		raise GMError("Некорректная ссылка на изображение.")
