@@ -3,8 +3,8 @@ from lib.guilds import Player, Guild
 from lib.commands import ban_list
 from lib.config import group_id
 
+from topics.lib import Hyperlink, getPhoto, getFields, checkMandatoryFields, fillOptionalFields
 from topics.errors import GMError
-from topics.lib import Hyperlink
 from re import search
 
 
@@ -29,65 +29,29 @@ def finish(request):
 
 
 def makeGuild(request):
-	guild = getGuildInfo(request.text)
-	checkMissingFields(guild)
-	addMissingFields(guild)
-	makeHyperlinks(guild)
-	editHeadsAndVices(guild)
-	if not guildAlreadyExists(guild):
-		checkGuildInfo(guild)
-		createGuild(**guild)
+	all_keys, mandatory_keys, optional_keys = getKeys()
+	fields = getFields(request.text, all_keys)
+	checkMandatoryFields(fields, mandatory_keys)
+	fillOptionalFields(fields, optional_keys)
+	editFields(fields)
+	makeHyperlinks(fields)
+	editHeadsAndVices(fields)
+	if not guildAlreadyExists(fields):
+		checkGuildInfo(fields)
+		createGuild(**fields)
 
 
-def getGuildInfo(text):
-	text = text.splitlines()
-	guild = dict()
-	for line in text:
-		line_lower = line.lower()
-		if ":" not in line:
-			continue
-		stripped_line = line[line.find(":") + 1:].strip()
-		if "баннер" in line_lower or "лого" in line_lower:
-			photo_line = stripped_line[stripped_line.find("photo"):]
-		if "название:" in line_lower:
-			guild['name'] = stripped_line
-		elif "глава:" in line_lower:
-			guild['head'] = stripped_line
-		elif "зам:" in line_lower:
-			guild['vice'] = stripped_line
-		elif "состав:" in line_lower:
-			guild['players'] = stripped_line
-		elif "требования:" in line_lower:
-			guild['requirements'] = stripped_line
-		elif "описание:" in line_lower:
-			guild['about'] = stripped_line
-		elif "баннер:" in line_lower:
-			guild['banner'] = photo_line
-		elif "лого:" in line_lower:
-			guild['logo'] = photo_line
-	return guild
+def getKeys():
+	mandatory_keys = ("баннер", "название", "глава", "состав",
+					"требования", "описание", "баннер", "лого")
+	optional_keys = ("зам",)
+	all_keys = mandatory_keys + optional_keys
+	return all_keys, mandatory_keys, optional_keys
 
 
-def checkMissingFields(guild):
-	mandatory_fields = {
-	"head":"Глава",
-	"name":"Название",
-	"players":"Состав",
-	"requirements":"Требования",
-	"about":"Описание",
-	"banner":"Баннер",
-	"logo":"Лого"}
-	for field in mandatory_fields:
-		if field not in guild:
-			field_name = mandatory_fields[field]
-			raise GMError("Поле '{}' не найдено.".format(field_name))
-
-
-def addMissingFields(guild):
-	field_list = "vice",
-	for field in field_list:
-		if field not in guild:
-			guild[field] = ""
+def editFields(fields):
+	fields['баннер'] = getPhoto(fields['баннер'])
+	fields['лого'] = getPhoto(fields['лого'])
 
 
 def makeHyperlinks(guild):
