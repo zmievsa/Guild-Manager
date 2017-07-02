@@ -147,8 +147,7 @@ class refreshGuilds(object):
 		return attr
 
 	def getGuildList(self):
-		guilds = database.find("guilds")
-		guilds = list(guilds.iterchildren())
+		guilds = database.getAll("guilds", "id")
 		guilds = [Guild(g) for g in guilds]
 		return self.makeFancyGuildList(guilds), len(guilds)
 
