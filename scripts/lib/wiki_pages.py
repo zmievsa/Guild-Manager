@@ -194,7 +194,8 @@ class refreshGuilds(object):
 				guild.percent = int(guild.get("id"))
 
 	def sortGuilds(self, guilds):
-		guilds.sort(key=lambda g: g.percent)
+		reverse = achi_is_active or False
+		guilds.sort(key=lambda g: g.percent, reverse=reverse)
 
 	def getPlayerCount(self):
 		all_players = database.getAll("players")
