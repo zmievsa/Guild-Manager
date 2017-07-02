@@ -33,6 +33,7 @@ def makeGuild(request):
 	fields = getFields(request.text, all_keys)
 	checkMandatoryFields(fields, mandatory_keys)
 	fillOptionalFields(fields, optional_keys)
+	fields = makeFieldsEnglish(fields, all_keys)
 	editFields(fields)
 	makeHyperlinks(fields)
 	editHeadsAndVices(fields)
@@ -42,16 +43,26 @@ def makeGuild(request):
 
 
 def getKeys():
-	mandatory_keys = ("баннер", "название", "глава", "состав",
-					"требования", "описание", "баннер", "лого")
-	optional_keys = ("зам",)
-	all_keys = mandatory_keys + optional_keys
+	mandatory_keys = {
+		"баннер":"banner", "название":"name", "глава":"head",
+		"состав":"players", "требования":"requirements",
+		"описание":"about", "баннер":"banner", "лого":"logo"}
+	optional_keys = {"зам":"vice",}
+	all_keys = dict(mandatory_keys, **optional_keys)
 	return all_keys, mandatory_keys, optional_keys
 
 
 def editFields(fields):
-	fields['баннер'] = getPhoto(fields['баннер'])
-	fields['лого'] = getPhoto(fields['лого'])
+	fields['banner'] = getPhoto(fields['banner'])
+	fields['logo'] = getPhoto(fields['logo'])
+
+
+def makeFieldsEnglish(fields, keys):
+	new_fields = {}
+	for russian_key in keys:
+		english_key = keys[russian_key]
+		new_fields[english_key] = fields[russian_key]
+	return new_fields
 
 
 def makeHyperlinks(guild):
