@@ -6,14 +6,14 @@
 
 """
 
-from lib.config import aottg_main, sleep_time
+from lib.config import group_id, sleep_time
 from datetime import datetime, timedelta
 from lib.commands import api
 from pytz import timezone
 from time import sleep
 
 
-def post(post_text, post_time, group_id=aottg_main):
+def post(post_text, post_time, group_id=group_id):
 	""" Кидает пост в отложку
 
 		str post_text

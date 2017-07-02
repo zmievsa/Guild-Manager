@@ -1,7 +1,7 @@
 from lib.database_objects import createPlayer
 from lib.commands import database, ban_list
 from lib.wiki_pages import updateGuild
-from lib.config import aottg_main
+from lib.config import group_id
 from lib.guilds import Player
 
 from topics.lib import Hyperlink, checkNicknameFormat
@@ -10,7 +10,7 @@ from re import search
 
 
 id = 29901188
-group = aottg_main
+group = group_id
 comment_amount = 30
 guilds_to_update = []
 

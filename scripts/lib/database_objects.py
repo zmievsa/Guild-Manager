@@ -1,4 +1,4 @@
-from lib.config import aottg_main, my_id
+from lib.config import group_id, my_id
 from lib.commands import api, database
 from lib.guilds import Player
 from lxml import etree as XML
@@ -34,7 +34,7 @@ class createGuild(StandardObjectCreation):
 		self.createGuildPlayers(kw['players'], kw['id'])
 
 	def getPage(self, name):
-		page = api.pages.save(text="", title=name, group_id=aottg_main, user_id=my_id)
+		page = api.pages.save(text="", title=name, group_id=group_id, user_id=my_id)
 		return str(page)
 
 	def createGuildPlayers(self, players, guild_id):

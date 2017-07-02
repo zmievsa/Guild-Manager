@@ -1,7 +1,7 @@
 from lib.database_objects import createGuild
 from lib.guilds import Player, Guild
 from lib.commands import ban_list
-from lib.config import aottg_main
+from lib.config import group_id
 
 from topics.errors import GMError
 from topics.lib import Hyperlink
@@ -9,7 +9,7 @@ from re import search
 
 
 id = 29891323
-group = aottg_main
+group = group_id
 comment_amount = 5
 
 

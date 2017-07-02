@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from lib.config import aottg_main, sleep_time
+from lib.config import group_id, sleep_time
 from lib.commands import api, ban_list
 from lib.errors import ErrorManager
 from time import sleep
@@ -25,10 +25,10 @@ def getMessage(test):
 
 
 def getEweekPlayers():
-	post = api.wall.search(owner_id=-aottg_main, query="#aottg83_reg", count=1)
+	post = api.wall.search(owner_id=-group_id, query="#aottg83_reg", count=1)
 	post_id = post['items'][0]['id']
 	comments = api.wall.getComments(
-		owner_id=-aottg_main, post_id=post_id, count=30)['items']
+		owner_id=-group_id, post_id=post_id, count=30)['items']
 	users = {comment['from_id'] for comment in comments}
 	return users
 

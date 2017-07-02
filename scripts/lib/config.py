@@ -1,7 +1,5 @@
-aottg_main = 64867627					# id группы aottg 4k
-aottg_admin = 77675108					# id группы тест
-aot_main = 57828226						# id группы aotg 7k
-aot_admin = 114995030					# id группы ts_files
+group_id = 64867627						# id группы aottg 4k
+test_id = 77675108						# id группы тест
 my_id = 98216156						# id аккаунта владельца
 sleep_time = 0.5						# Время ожидания sleep()
 database_path = "../Data/database.xml"	# путь к базе данных
