@@ -3,11 +3,11 @@ from topics.errors import GMError
 
 from lib.guilds import Player, Guild, Achi
 from lib.commands import ban_list
-from lib.config import group_id
+from lib.config import aottg_main
 
 
 # id = 29901188
-group = group_id
+group = aottg_main
 comment_amount = 15
 
 

@@ -1,10 +1,10 @@
 from topics.errors import GB_wrong_request, GB_guild_not_found
-from lib.config import test_id
+from lib.config import aottg_admin
 from lib.guilds import Guild
 
 
 id = 35465123
-group = test_id
+group = aottg_admin
 comment_amount = 25
 
 

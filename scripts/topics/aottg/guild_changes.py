@@ -1,6 +1,6 @@
 from lib.database_objects import createPlayer
 from lib.commands import database, ban_list
-from lib.config import group_id
+from lib.config import aottg_main
 from lib.guilds import Player
 
 from topics.lib import Hyperlink, checkNicknameFormat
@@ -9,7 +9,7 @@ from re import search
 
 
 id = 29901188
-group = group_id
+group = aottg_main
 comment_amount = 30
 
 
@@ -179,7 +179,7 @@ def getPhoto(text):
 		raise photo_not_found
 	else:
 		photo = photo.group()[4:]
-	if str(group_id) not in photo:
+	if str(aottg_main) not in photo:
 		raise need_photo_uploaded
 	return photo
 

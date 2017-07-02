@@ -1,7 +1,7 @@
 from lib.database_objects import createGuild
 from lib.guilds import Player, Guild
 from lib.commands import ban_list
-from lib.config import group_id
+from lib.config import aottg_main
 
 from topics.errors import GMError
 from topics.lib import Hyperlink
@@ -9,7 +9,7 @@ from re import search
 
 
 id = 29891323
-group = group_id
+group = aottg_main
 comment_amount = 5
 
 
@@ -20,7 +20,7 @@ def getAction(text):
 def getResponse(request):
 	player = Player(request.asker.get("id"))
 	guild_name, page_id = player.guild.get("name", "page")
-	link = "https://vk.com/page-{}_{}".format(group_id, page_id)
+	link = "https://vk.com/page-{}_{}".format(aottg_main, page_id)
 	return "Гильдия: {} ({})".format(guild_name, link)
 
 
