@@ -26,9 +26,9 @@ def parseTopics(topic_list):
 def parseChanges(comments, topic):
 	""" Парсинг обсуждения и внесение изменений """
 	for comment in comments:
-		from_id, string, comment_already_checked = breakUpComment(comment)
+		from_id, text, comment_already_checked = breakUpComment(comment)
 		if not comment_already_checked:
-			request = Request(string, from_id, comment['id'], topic)
+			request = Request(text, from_id, comment['id'], topic)
 			request.process()
 			request.finish()
 
@@ -36,10 +36,10 @@ def parseChanges(comments, topic):
 def breakUpComment(comment):
 	""" Возвращает нужные нам поля из комментария """
 	from_id = str(comment['from_id'])
-	string = comment['text'].strip()
+	text = comment['text'].strip()
 	attachments = comment.get('attachments')
 	comment_already_checked = commentWasAlreadyChecked(attachments)
-	return from_id, string, comment_already_checked
+	return from_id, text, comment_already_checked
 
 
 def commentWasAlreadyChecked(attachments):

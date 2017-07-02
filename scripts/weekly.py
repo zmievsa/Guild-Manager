@@ -3,16 +3,17 @@
 from lib.posts import editPost, getPostTime, post
 from lib.errors import ErrorManager
 from lib.commands import database
+from lib.config import data_path
 from lib.guilds import Eweek
 from os import listdir
 
 
 def generate():
 	""" Генерирует посты на неделю """
-	days = getPlannedPosts()
+	post_templates = getPlannedPosts()
 	challenge = getNewChallenge()
 	setThisWeekChallenge(challenge)
-	makePosts(days, challenge)
+	makePosts(post_templates, challenge)
 
 
 def makePosts(days, challenge):
