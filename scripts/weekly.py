@@ -16,7 +16,7 @@ def generate():
 
 
 def makePosts(days, challenge):
-	folder = "../../Data/week_posts/"
+	folder = "../Data/week_posts/"
 	for day in days:
 		with open(folder + day, encoding="utf-8") as file:
 			file = editPost(file.read(), challenge)
@@ -26,7 +26,7 @@ def makePosts(days, challenge):
 
 
 def getPlannedPosts():
-	days = listdir("../../Data/week_posts/")
+	days = listdir("../Data/week_posts/")
 	return [d for d in days if ".txt" in d]
 
 
