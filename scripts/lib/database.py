@@ -46,6 +46,9 @@ class Database(object):
 	def getById(self, kind, id):
 		return self.getByField(kind, "id", id)
 
+	def getByName(self, kind, name):
+		return self.getByField(kind, "name", name)
+
 	def getField(self, kind, id, field):
 		""" Возвращает атрибут объекта по id
 
