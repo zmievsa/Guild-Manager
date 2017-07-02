@@ -2,8 +2,7 @@ group_id = 64867627						# id группы aottg 4k
 test_id = 77675108						# id группы тест
 my_id = 98216156						# id аккаунта владельца
 sleep_time = 0.5						# Время ожидания sleep()
-database_path = "../Data/database.xml"	# путь к базе данных
-token_path = "../Data/token.txt" 		# путь к токену
+data_path = "../Data/"					# Путь к папке Data
 achi_is_active = False					# Работают ли ачи в этот момент времени
 
 
