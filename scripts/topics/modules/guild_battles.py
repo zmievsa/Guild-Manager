@@ -49,7 +49,7 @@ def getGuild(text, result):
 
 def addPoints(guild, result):
 	if result == "поражение":
-		xml = guild.find("loses") 
+		xml = guild.find("loses")
 	elif result == "победа":
 		xml = guild.find("wins")
 	xml.text = str(int(xml.text) + 1)

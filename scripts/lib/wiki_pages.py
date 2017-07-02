@@ -194,6 +194,8 @@ class refreshGuilds(object):
 				guild.percent = int(guild.get("id"))
 
 	def sortGuilds(self, guilds):
+		""" Если ачи -- то наибольший рейтинг сверху
+			Если нет ачей -- наибольший ID сверху """
 		reverse = achi_is_active or False
 		guilds.sort(key=lambda g: g.percent, reverse=reverse)
 
