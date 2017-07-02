@@ -66,7 +66,7 @@ class Database(object):
 		field = self.getField(kind, id, field)
 		field.text = value
 
-	def getAll(self, kind, field):
+	def getAll(self, kind, field=None):
 		""" Возвращает список атрибутов одного типа объектов
 
 			Args:
@@ -79,9 +79,12 @@ class Database(object):
 		iterator = self.find(kind)
 		if iterator is not None and list(iterator.iterchildren()) != []:
 			iterator = iterator.iterchildren()
-			lst = []
-			for element in iterator:
-				subelement = element.find(field)
-				if subelement is not None:
-					lst.append(subelement.text)
-			return lst
+			if field is not None:
+				lst = []
+				for element in iterator:
+					subelement = element.find(field)
+					if subelement is not None:
+						lst.append(subelement.text)
+				return lst
+			else:
+				return [o for o in iterator]
