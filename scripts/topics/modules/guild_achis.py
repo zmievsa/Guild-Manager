@@ -1,5 +1,5 @@
-from topics.lib import getFields, checkMissingFields
 from topics.errors import GMError
+from topics.lib import Fields
 
 from lib.guilds import Player, Guild, Achi
 from lib.wiki_pages import updateGuild
@@ -7,7 +7,7 @@ from lib.commands import ban_list
 from lib.config import group_id
 
 
-# id = 29901188
+# id = 29901188 	# TODO
 group = group_id
 comment_amount = 83
 
@@ -25,9 +25,8 @@ def finish(request):
 
 
 def main(request):
-	keys = "гильдия", "испытание", "участники", "волны"
-	fields = getFields(request.text, keys)
-	checkMissingFields(fields, keys)
+	mandatory_keys = "гильдия", "испытание", "участники", "волны"
+	fields = Fields(request.text, mandatory_keys)
 	editFields(fields)
 	checkFields(fields)
 	addAchiPoints(fields)

@@ -3,7 +3,7 @@ from lib.guilds import Player, Guild
 from lib.commands import ban_list
 from lib.config import group_id
 
-from topics.lib import Hyperlink, getPhoto, getFields, checkMandatoryFields, fillOptionalFields
+from topics.lib import Hyperlink, getPhoto, Fields
 from topics.errors import GMError
 from re import search
 
@@ -29,11 +29,8 @@ def finish(request):
 
 
 def makeGuild(request):
-	all_keys, mandatory_keys, optional_keys = getKeys()
-	fields = getFields(request.text, all_keys)
-	checkMandatoryFields(fields, mandatory_keys)
-	fillOptionalFields(fields, optional_keys)
-	fields = makeFieldsEnglish(fields, all_keys)
+	mandatory_keys, optional_keys = getKeys()
+	fields = Fields(request.text, mandatory_keys, optional_keys)
 	editFields(fields)
 	makeHyperlinks(fields)
 	editHeadsAndVices(fields)
@@ -48,21 +45,12 @@ def getKeys():
 		"состав":"players", "требования":"requirements",
 		"описание":"about", "баннер":"banner", "лого":"logo"}
 	optional_keys = {"зам":"vice",}
-	all_keys = dict(mandatory_keys, **optional_keys)
-	return all_keys, mandatory_keys, optional_keys
+	return mandatory_keys, optional_keys
 
 
 def editFields(fields):
 	fields['banner'] = getPhoto(fields['banner'])
 	fields['logo'] = getPhoto(fields['logo'])
-
-
-def makeFieldsEnglish(fields, keys):
-	new_fields = {}
-	for russian_key in keys:
-		english_key = keys[russian_key]
-		new_fields[english_key] = fields[russian_key]
-	return new_fields
 
 
 def makeHyperlinks(guild):
