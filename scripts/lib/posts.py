@@ -84,17 +84,13 @@ def editPost(text, eweek=None):
 		text = text.replace("[текст]", getText("other"))
 
 	if "[условия]" in text:
-		ch1, ch2, ch3 = getEweekChallenges(eweek)
+		ch1, ch2, ch3 = eweek.challenges
 		rules = getEweekRules(eweek)
 		text = text.replace("[условия]", rules)
 		text = text.replace("[1]", ch1)
 		text = text.replace("[2]", ch2)
 		text = text.replace("[3]", ch3)
 	return text
-
-
-def getEweekChallenges(eweek):
-	return eweek.get("ch1", "ch2", "ch3")
 
 
 def getEweekRules(eweek):

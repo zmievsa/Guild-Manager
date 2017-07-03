@@ -57,11 +57,11 @@ class createEweek(StandardObjectCreation):
 		str goal = Цель игры
 		str map = Название карты
 		str settings = доп. условия
-		str ch1, ch2, ch3 = челленджи
+		str challenges = челленджи через пробел
 	"""
 	parent = "eweeks"
 	keys = ("id", "map", "diff", "goal",
-	"ch1", "ch2", "ch3", "settings")
+	"challenges", "settings")
 
 	def __init__(self, **kwargs):
 		self.make(kwargs)

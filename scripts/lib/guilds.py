@@ -37,6 +37,10 @@ class Eweek(DatabaseElement):
 	def __init__(self, id):
 		self.xml_element = self.getElement(id)
 
+	@property
+	def challenges(self):
+		return self.get("challenges").split(" ")
+
 
 class Avatar(DatabaseElement):
 	parent = "avatars"

@@ -96,8 +96,7 @@ def makePlayers(results, participants):
 
 def getChallenges():
 	eweek_id = database.find("eweeks").find("this_week").text
-	eweek = Eweek(eweek_id)
-	challenges = eweek.get("ch1", "ch2", "ch3")
+	challenges = Eweek(eweek_id).challenges
 	return [int(ch) for ch in challenges]
 
 
