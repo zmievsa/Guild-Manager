@@ -20,7 +20,7 @@ def finish(request):
 
 
 def main(request):
-	mandatory_keys = {"name":"название",}
+	mandatory_keys = {"название":"name",}
 	optional_keys = {}
 	fields = Fields(request.text, mandatory_keys, optional_keys)
 	editFields(fields)
