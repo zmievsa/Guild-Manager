@@ -106,29 +106,51 @@ def checkNicknameFormat(name):
 		raise nickname_format
 
 
-def getFields(text, keys):
-	text = text.splitlines()
-	fields = dict()
-	for line in text:
-		if ":" in line:
-			lower_line = line.lower()
-			stripped_line = line[line.index(":") + 1:].strip()
-			for key in keys:
-				if key + ":" in lower_line:
-					fields[key] = stripped_line
-	return fields
+class Fields(dict):
+	def __init__(self, text, mandatory_keys, optional_keys=[]):
+		super().__init__()
+		self.text = text
+		self.mandatory_keys = mandatory_keys
+		self.optional_keys = optional_keys
+		self.getAllKeys(mandatory_keys, optional_keys)
+		self.makeFields()
+		self.checkMandatoryFields()
+		self.fillOptionalFields()
+		if type(all_keys) is dict:
+			self.translate()
 
+	def getAllKeys(self, mand_keys, opt_keys):
+		if type(mand_keys) is dict is type(opt_keys):
+			self.all_keys = dict(mand_keys, **opt_keys)
+		else:
+			self.all_keys = mand_keys + opt_keys
 
-def checkMandatoryFields(fields, keys):
-	for key in keys:
-		if key not in fields:
-			raise GMError("Поле '{}' не найдено.".format(key))
+	def makeFields(self):
+		text = self.text.splitlines()
+		for line in text:
+			if ":" in line:
+				lower_line = line.lower()
+				stripped_line = line[line.index(":") + 1:].strip()
+				for key in self.all_keys:
+					if key + ":" in lower_line:
+						self[key] = stripped_line
 
+	def checkMandatoryFields(self):
+		for key in self.mandatory_keys:
+			if key not in self:
+				raise GMError("Поле '{}' не найдено.".format(key))
 
-def fillOptionalFields(fields, keys):
-	for key in keys:
-		if key not in fields:
-			fields[key] = ""
+	def fillOptionalFields(self):
+		for key in self.optional_keys:
+			if key not in self:
+				self[key] = ""
+
+	def translate(self):
+		keys = self.all_keys
+		for russian_key in keys:
+			english_key = keys[russian_key]
+			self[english_key] = self[russian_key]
+			self.pop(russian_key)
 
 
 def getPhoto(text):
