@@ -55,9 +55,9 @@ def getText(file_name):
 	file_name = data_folder + "texts/{}.txt".format(file_name)
 	with open(file_name, "r") as file:
 		contents = file.readlines()
-		phrase = "\n" + contents[0].strip()
-		contents.pop(0)
-		contents.append(phrase)
+	phrase = "\n" + contents[0].strip()
+	contents.pop(0)
+	contents.append(phrase)
 	with open(file_name, "w") as file:
 		for line in contents:
 			file.write(line)
