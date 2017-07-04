@@ -64,7 +64,7 @@ class createEweek(StandardObjectCreation):
 	"challenges", "settings")
 
 	def __init__(self, **kwargs):
-		self.make(kwargs)
+		self.make(**kwargs)
 
 
 class createAvatar(StandardObjectCreation):
