@@ -66,6 +66,8 @@ def getComments(topic, amount):
 		offset = response['count']
 		if offset >= amount:
 			offset -= amount
+		else:
+			offset = 0
 	return comments
 
 
