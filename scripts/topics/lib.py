@@ -118,7 +118,7 @@ class Fields(dict):
 		self.makeFields()
 		self.checkMandatoryFields()
 		self.fillOptionalFields()
-		if type(all_keys) is dict:
+		if type(self.all_keys) is dict:
 			self.translate()
 
 	def getAllKeys(self, mand_keys, opt_keys):
