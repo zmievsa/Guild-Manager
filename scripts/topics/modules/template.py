@@ -3,7 +3,7 @@ from lib.config import group_id, test_id
 
 
 id = 000
-group_id = test_id
+group = test_id
 comment_amount = 83
 
 

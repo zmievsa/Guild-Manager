@@ -4,7 +4,7 @@ from topics.lib import Fields
 
 
 id = 35748154
-group_id = test_id
+group = test_id
 comment_amount = 83
 
 
