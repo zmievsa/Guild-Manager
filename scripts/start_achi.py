@@ -3,6 +3,7 @@
 from lib.errors import ErrorManager
 from lib.guilds import Guild, Achi
 from lib.commands import database
+from lib.achi import getAchiField
 
 
 def main():
@@ -35,12 +36,6 @@ def resetAchiProgress():
 	achi_field = getAchiField()
 	for guild in guilds:
 		guild.set("achi", achi_field)
-
-
-def getAchiField():
-	quantity = len(database.getAll("achis"))
-	progress =  ["0"] * achi_quantity
-	return " ".join(progress)
 
 
 def getGuilds():

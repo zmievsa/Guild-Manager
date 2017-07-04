@@ -62,6 +62,12 @@ class Achi(DatabaseElement):
 	def waves(self):
 		return self.get("waves").split(" ")
 
+	@staticmethod
+	def getEmptyField():
+		quantity = len(database.getAll("achis"))
+		progress =  ["0"] * quantity
+		return " ".join(progress)
+
 
 class Player(DatabaseElement):
 	parent = "players"

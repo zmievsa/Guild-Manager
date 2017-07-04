@@ -1,6 +1,6 @@
 from lib.config import group_id, my_id
 from lib.commands import vk, api, database
-from lib.guilds import Player
+from lib.guilds import Player, Achi
 from lxml import etree as XML
 
 
@@ -24,10 +24,11 @@ class StandardObjectCreation:
 class createGuild(StandardObjectCreation):
 	parent = "guilds"
 	keys = ("id", "name", "page", "head", "vice",
-		"wins", "loses", "requirements",
-		"about", "logo", "banner")
+		"wins", "loses", "requirements", "about",
+		"logo", "banner", "achi")
 
 	def __init__(self, **kw):
+		kw['achi'] = Achi.getEmptyField()
 		kw['wins'], kw['loses'] = "0", "0"
 		kw['page'] = self.getPage(kw['name'])
 		self.make(**kw)
