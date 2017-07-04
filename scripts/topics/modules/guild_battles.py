@@ -25,7 +25,7 @@ def addWinsOrLoses(request):
 	result = getResult(request.text)
 	guild = getGuild(request.text, result)
 	addPoints(guild, result)
-	request.asker.guild = guild
+	request.guild_to_update = guild
 
 
 def getResult(text):
