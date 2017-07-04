@@ -8,7 +8,6 @@ id = 35465123
 group = test_id
 comment_amount = 83
 
-
 def getAction(text):
 	return addWinsOrLoses
 
@@ -18,14 +17,14 @@ def getResponse(request):
 
 
 def finish(request):
-	updateGuild(request.guild_to_update.get("id"))
+	pass
 
 
 def addWinsOrLoses(request):
 	result = getResult(request.text)
 	guild = getGuild(request.text, result)
 	addPoints(guild, result)
-	request.guild_to_update = guild
+	request.guilds_to_update.append(guild)
 
 
 def getResult(text):

@@ -21,7 +21,7 @@ def getResponse(request):
 
 
 def finish(request):
-	updateGuild(request.guild_to_update)
+	pass
 
 
 def main(request):
@@ -30,7 +30,7 @@ def main(request):
 	editFields(fields)
 	checkFields(fields)
 	addAchiPoints(fields)
-	request.guild_to_update = fields['гильдия'].get("id")
+	request.guilds_to_update.append(fields['гильдия'])
 
 
 def editFields(fields):

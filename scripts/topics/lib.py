@@ -2,6 +2,7 @@
 
 from lib.config import failure_image, succeed_image, text_division
 from lib.commands import vk, api, vkCap, database
+from lib.wiki_pages import updateGuild
 from lib.guilds import Player
 from topics.errors import *
 from re import search
@@ -14,6 +15,7 @@ class Request(object):
 		self.text = post_text
 		self.asker = Player(post_owner)
 		self.action = self.topic.getAction(self.text.lower())
+		self.guilds_to_update = []
 
 	def process(self):
 		""" Обрабатывает запрос """
@@ -31,12 +33,17 @@ class Request(object):
 		""" Завершает обработку и вносит изменения """
 		database.rewrite()
 		self.topic.finish(self)
+		self.updateGuilds()
 		self.addMessageToComment(self.message)
 		self.editComment()
 
 	def checkActionExistence(self):
 		if self.action is None:
 			raise wrong_request
+
+	def updateGuilds(self):
+		for guild in self.guilds_to_update:
+			updateGuild(guild.get("id"))
 
 	def addMessageToComment(self, message):
 		self.text = "{}\n{}\n{}".format(self.text, text_division, message)

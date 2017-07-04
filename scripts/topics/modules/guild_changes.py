@@ -12,7 +12,6 @@ from re import search
 id = 29901188
 group = group_id
 comment_amount = 83
-guilds_to_update = []
 
 
 def getAction(text):
@@ -53,8 +52,6 @@ def getResponse(request):
 def finish(request):
 	if request.asker.guild is not None:
 		updateGuild(request.asker.get("guild"))
-	for guild in guilds_to_update:
-		updateGuild(guild.get("id"))
 
 
 def changeNick(request):
@@ -252,7 +249,7 @@ def excludeFromGuild(request):
 		raise not_in_guild
 	asker = request.asker
 	guild = asker.guild
-	guilds_to_update.append(guild)
+	request.guilds_to_update.append(guild)
 	if "меня" in request.text:
 		if asker.rank == 3 and len(guild.heads) == 1:
 			raise head_must_present
