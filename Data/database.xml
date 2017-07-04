@@ -620,8 +620,8 @@
     </player>
     <player>
       <id>144087092</id>
-      <name>Petuh4</name>
-      <guild>1</guild>
+      <name>SAvitO</name>
+      <guild>14</guild>
       <avatar>88</avatar>
     </player>
     <player>
@@ -1233,7 +1233,7 @@
     <player>
       <id>98216156</id>
       <name>bobrokot</name>
-      <guild>14</guild>
+      <guild>5</guild>
       <avatar>83</avatar>
     </player>
     <player>
@@ -1472,7 +1472,7 @@
     </player>
     <player>
       <id>111802911</id>
-      <name>Nagato</name>
+      <name>Crowley</name>
       <guild>14</guild>
       <avatar>48</avatar>
     </player>
@@ -1581,7 +1581,7 @@
     <player>
       <id>307747650</id>
       <name>Opor</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1653,7 +1653,7 @@
     <player>
       <id>419801494</id>
       <name>twelve</name>
-      <guild>16</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1748,7 +1748,7 @@
     </player>
     <player>
       <id>152690861</id>
-      <name>Uniko</name>
+      <name>RoAmiro</name>
       <guild>15</guild>
       <avatar>29</avatar>
     </player>
@@ -1758,68 +1758,80 @@
       <guild>2</guild>
       <avatar>29</avatar>
     </player>
+    <player>
+      <id>435100193</id>
+      <name>EIENNIKANASHIDESU</name>
+      <guild>14</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>417430963</id>
+      <name>Ren</name>
+      <guild>16</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>180747713</id>
+      <name>XEON</name>
+      <guild>12</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>423101572</id>
+      <name>levikunika</name>
+      <guild>12</guild>
+      <avatar>29</avatar>
+    </player>
   </players>
   <eweeks>
-    <this_week>4</this_week>
+    <this_week>6</this_week>
     <eweek>
       <id>1</id>
       <map>Forest III</map>
       <diff>Hard</diff>
       <goal>Kills</goal>
-      <ch1>100</ch1>
-      <ch2>70</ch2>
-      <ch3>40</ch3>
       <settings/>
+      <challenges>100 70 40</challenges>
     </eweek>
     <eweek>
       <id>2</id>
       <map>Forest III</map>
       <diff>Hard</diff>
       <goal>Total Damage</goal>
-      <ch1>75000</ch1>
-      <ch2>35000</ch2>
-      <ch3>10000</ch3>
       <settings/>
+      <challenges>75000 35000 10000</challenges>
     </eweek>
     <eweek>
       <id>3</id>
       <map>Forest III</map>
       <diff>Hard</diff>
       <goal>Баланс</goal>
-      <ch1>200</ch1>
-      <ch2>120</ch2>
-      <ch3>80</ch3>
       <settings/>
+      <challenges>200 120 80</challenges>
     </eweek>
     <eweek>
       <id>4</id>
       <map>Forest III</map>
       <diff>Normal</diff>
       <goal>Max Damage</goal>
-      <ch1>4500</ch1>
-      <ch2>3000</ch2>
-      <ch3>2000</ch3>
       <settings>(Size 3-3, 100% Normal titans)</settings>
+      <challenges>4500 3000 2000</challenges>
     </eweek>
     <eweek>
       <id>5</id>
       <map>Racing Akina</map>
       <diff/>
       <goal/>
-      <ch1>60</ch1>
-      <ch2>90</ch2>
-      <ch3>120</ch3>
       <settings>(Лучший результат из двух гонок)</settings>
+      <challenges>60 90 120</challenges>
     </eweek>
     <eweek>
       <id>6</id>
       <map>Forest III</map>
       <diff>Hard</diff>
       <goal>Урон, близкий к 1000</goal>
-      <ch1>6</ch1>
-      <ch2>20</ch2>
-      <ch3>30</ch3>
       <settings>(В челленджах указано количество урона, которого не хватает до тысячи)</settings>
+      <challenges>6 20 30</challenges>
     </eweek>
   </eweeks>
 </contents>
