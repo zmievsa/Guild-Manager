@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 
 from lib.errors import ErrorManager, sendErrorMessage
-from lib.config import failure_image, succeed_image
 from lib.wiki_pages import refreshGuilds
 
-from topics.modules import guild_changes, guild_battles, guild_making, make_eweek
+from topics.modules import guild_changes, guild_battles, make_guild, make_eweek, make_achi
 from topics.lib import Request, getComments
 
 
 def main():
-	topic_list = guild_changes, guild_battles, guild_making, make_eweek
+	topic_list = guild_changes, guild_battles, make_guild, make_eweek, make_achi
 	parseTopics(topic_list)
 	refreshGuilds()
 
@@ -34,7 +33,7 @@ def parseChanges(comments, topic):
 
 
 def breakUpComment(comment):
-	""" Возвращает нужные нам поля из комментария """
+	""" Возвращает нужные нам атрибуты комментария """
 	from_id = str(comment['from_id'])
 	text = comment['text'].strip()
 	attachments = comment.get('attachments')

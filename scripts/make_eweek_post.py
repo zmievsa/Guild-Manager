@@ -28,6 +28,7 @@ def getPlayers():
 
 
 def getEweekPostComments():
+	""" Возвращает список комментариев зарегистрировавшихся на еженедельник игроков """
 	search_results = vk(api.wall.search, owner_id=-group_id, query="#aottg83_reg", count=1)
 	post_id = search_results['items'][0]['id']
 	comments = vk(api.wall.getComments, owner_id=-group_id, post_id=post_id, count=30)
@@ -47,7 +48,7 @@ def getParticipantsFromComments(comments):
 
 
 def getCommentsFromResultTopic():
-	""" Result topic -- тот, где мы пишем результаты участников """
+	""" Берет комменты из обсуждения, где мы пишем результаты участников """
 	topic_id = 35693273
 	response = vk(api.board.getComments,
 		topic_id=topic_id,
@@ -85,7 +86,7 @@ def makePlayers(results, participants):
 			if player.name in participants:
 				name = player.name
 				id = participants[player.name]
-				player.recreate(id, name)
+				player.recreate(id, name) # костыль
 				if player.guild:
 					guild = player.guild.get("name")
 					player.guild = "[" + guild + "]"
@@ -107,15 +108,6 @@ def sortPlayers(players, ch1, ch2, ch3):
 		reverse = True
 	players.sort(key=lambda x: x[0].score, reverse=reverse)
 	return players
-
-
-def getMessages():
-	""" Возвращает список словарей-сообщений с результатами ежа """
-	peer_id = vk(api.messages.search, q="#AoTTG_Eweek", count=1)
-	peer_id = peer_id['items'][0]['chat_id']
-	peer_id += 2000000000
-	messages = vk(api.messages.getHistory, peer_id=peer_id, count=50)['items']
-	return messages
 
 
 def createPost(players, challenges):

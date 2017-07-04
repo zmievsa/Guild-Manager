@@ -1,3 +1,5 @@
+""" Изменения в гильдиях """
+
 from lib.database_objects import createPlayer
 from lib.commands import database, ban_list
 from lib.wiki_pages import updateGuild
@@ -110,7 +112,7 @@ def checkAvatar(avatar_id):
 
 
 def getHighestAvatarId():
-	all_avatars = database.getAll(kind="avatars", field="id")
+	all_avatars = database.getAll("avatars", "id")
 	all_avatars = (int(a) for a in all_avatars)
 	return max(all_avatars)
 

@@ -1,7 +1,10 @@
+""" Набор абстракций над базой данных """
+
 from lib.commands import database
 
 
 class DatabaseElement(object):
+	""" Стандартный набор методов работы с объектами """
 	def find(self, name):
 		return self.xml_element.find(name)
 
@@ -17,6 +20,7 @@ class DatabaseElement(object):
 		return self.xml_element is not None
 
 	def getElement(self, id=None, name=None):
+		""" Поиск элемента в базе данных """
 		if id is not None:
 			self._checkid(id)
 			return database.getById(self.parent, id)
@@ -27,46 +31,60 @@ class DatabaseElement(object):
 
 	@staticmethod
 	def _checkid(id):
-		if type(id) is not str and type(id) is not int:
-			raise Exception("ID error: value:{}, type:{}".format(id, type(id)))
+		if str is not type(id) is not int:
+			raise Exception("Неверный ID: Значение: {}, Тип: {}".format(id, type(id)))
 
 
-class Eweek(DatabaseElement):
-	parent = "eweeks"
-
-	def __init__(self, id):
-		self.xml_element = self.getElement(id)
-
-	@property
-	def challenges(self):
-		return self.get("challenges").split(" ")
-
-
-class Avatar(DatabaseElement):
-	parent = "avatars"
-
-	def __init__(self, id):
-		self.xml_element = self.getElement(id)
-
-	def __repr__(self):
-		return self.get("link")
-
-
-class Achi(DatabaseElement):
-	parent = "achis"
+class Guild(DatabaseElement):
+	parent = "guilds"
 
 	def __init__(self, id=None, name=None):
 		self.xml_element = self.getElement(id, name)
 
 	@property
-	def waves(self):
-		return self.get("waves").split(" ")
+	def heads(self):
+		head = self.get("head")
+		return self._getNonEmptyField(head)
+
+	@property
+	def vices(self):
+		vice = self.get("vice")
+		return self._getNonEmptyField(vice)
 
 	@staticmethod
-	def getEmptyField():
-		quantity = len(database.getAll("achis"))
-		progress =  ["0"] * quantity
-		return " ".join(progress)
+	def _getNonEmptyField(field):
+		""" Почти пустое поле могло бы некорректно отобразиться """
+		if field:
+			return field.split(" ")
+		else:
+			return []
+
+	def setPosition(self, player_id, position):
+		""" Меняет статус игрока в гильдии
+
+			Возможные аргументы:
+			"player", "vice", "head"
+		"""
+		player_id = str(player_id)
+		self._removePlayerFromOldPosition(player_id)
+		if position != "player":
+			self._putPlayerIntoNewPosition(player_id, position)
+
+	def _removePlayerFromOldPosition(self, player_id):
+		heads, vices = self.heads, self.vices
+		if player_id in heads:
+			heads.remove(player_id)
+			self.set("head", " ".join(heads))
+		elif player_id in self.vices:
+			vices.remove(player_id)
+			self.set("vice", " ".join(vices))
+
+	def _putPlayerIntoNewPosition(self, player_id, position):
+		if position == "head":
+			element = self.find("head")
+		elif position == "vice":
+			element = self.find("head")
+		element.text = "{} {}".format(element.text, player_id)
 
 
 class Player(DatabaseElement):
@@ -80,6 +98,7 @@ class Player(DatabaseElement):
 		self.id = id
 
 	def __repr__(self):
+		""" Удобно в еженедельниках """
 		if self.exists or (self.id and self.name):
 			if self.exists:
 				id, name = self.get("id", "name")
@@ -88,12 +107,15 @@ class Player(DatabaseElement):
 			return "[id{}|{}]".format(id, name)
 		elif self.name:
 			return self.name
+		else:
+			return self.id
 
 	@property
 	def inguild(self):
 		return self.rank > 0
 
 	def recreate(self, id, name):
+		""" Костыль для еженедельника """
 		self.__init__(id, name)
 
 	def getGuild(self):
@@ -115,47 +137,60 @@ class Player(DatabaseElement):
 			return 0
 
 
-class Guild(DatabaseElement):
-	parent = "guilds"
+class Eweek(DatabaseElement):
+	parent = "eweeks"
+
+	def __init__(self, id):
+		self.xml_element = self.getElement(id)
+
+	def __repr__(self):
+		return self.formatRules()
+
+	@property
+	def challenges(self):
+		return self.get("challenges").split(" ")
+
+	def formatRules(self):
+		""" Генерирует правила еженедельника """
+		map_, diff, goal, settings = self.get(
+			"map", "diff", "goal", "settings")
+		text = "{} {}, {} ({})"
+		if not goal:
+			text = text.replace(", ", "")
+		if not settings:
+			text = text.replace(" (", "")
+			text = text.replace(")", "")
+		return text.format(map_, diff, goal, settings)
+
+
+class Achi(DatabaseElement):
+	parent = "achis"
 
 	def __init__(self, id=None, name=None):
 		self.xml_element = self.getElement(id, name)
 
 	@property
-	def heads(self):
-		head = self.get("head")
-		return self._getNonEmptyField(head)
-
-	@property
-	def vices(self):
-		vice = self.get("vice")
-		return self._getNonEmptyField(vice)
+	def waves(self):
+		return self.get("waves").split(" ")
 
 	@staticmethod
-	def _getNonEmptyField(field):
-		if not field:
-			return []
-		else:
-			return field.split(" ")
+	def getEmptyField():
+		""" Выводит поле ачей для гильдий
 
-	def setPosition(self, player_id, position):
-		player_id = str(player_id)
-		self._removePlayerFromOldPosition(player_id)
-		if position != "player":
-			self._putPlayerIntoNewPosition(player_id, position)
+			Используется при создании гильдии
+			или при перезапуске ачей, чтобы
+			обозначить, что все ачи не пройдены
+		"""
+		quantity = len(database.getAll("achis"))
+		progress = ["0"] * quantity
+		return " ".join(progress)
 
-	def _removePlayerFromOldPosition(self, player_id):
-		heads, vices = self.heads, self.vices
-		if player_id in heads:
-			heads.remove(player_id)
-			self.set("head", " ".join(heads))
-		elif player_id in self.vices:
-			vices.remove(player_id)
-			self.set("vice", " ".join(vices))
 
-	def _putPlayerIntoNewPosition(self, player_id, position):
-		if position == "head":
-			element = self.find("head")
-		elif position == "vice":
-			element = self.find("head")
-		element.text = "{} {}".format(element.text, player_id)
+class Avatar(DatabaseElement):
+	parent = "avatars"
+
+	def __init__(self, id):
+		self.xml_element = self.getElement(id)
+
+	def __repr__(self):
+		return self.get("link")

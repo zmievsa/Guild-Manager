@@ -1,8 +1,9 @@
+""" Испытания """
+
 from topics.errors import GMError
 from topics.lib import Fields
 
 from lib.guilds import Player, Guild, Achi
-from lib.wiki_pages import updateGuild
 from lib.commands import ban_list
 from lib.config import group_id
 

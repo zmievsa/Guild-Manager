@@ -1,3 +1,6 @@
+""" Ошибки, возвращаемые пользователю, который написал запрос в обсуждении """
+
+
 class GMError(Exception):
 	def __init__(self, message):
 		self.message = message

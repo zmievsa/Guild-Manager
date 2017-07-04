@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-
-"""
-Эта библиотека содержит набор средств для упрощённой работы с гильдменеджером
-"""
+""" Набор средств для упрощенной работы с вконтакте """
 
 from vk.exceptions import VkAPIError
 from vk import Session, API
@@ -10,7 +6,7 @@ from vk import Session, API
 from os.path import realpath
 from os import chdir
 
-from lib.config import sleep_time, group_id, data_path
+from lib.config import sleep_time, group_id, data_folder
 from lib.database import Database
 from time import sleep
 
@@ -18,8 +14,7 @@ from time import sleep
 def getApi(token_path):
 	""" Логинится в вк и возвращает готовую к работе сессию """
 	with open(token_path) as token:
-		token = token.read()
-		token.rstrip()
+		token = token.read().strip()
 		session = Session(access_token=token)
 		api = API(session, v='5.52', lang='ru')
 		return api
@@ -30,35 +25,41 @@ def getToken():
 	import webbrowser as wb
 	client_id = 5747467    # Id приложения
 	scope = 2047391        # Код доступа, который мы запрашиваем
-	other_stuff = "display=page&redirect_uri=http://vk.com&response_type=token&v=5.60"
+	standard_config = "display=page&redirect_uri=http://vk.com&response_type=token&v=5.60"
 	url = "https://oauth.vk.com/authorize?"
 	url += "client_id={}&{}&scope={}".format(
-		client_id, other_stuff, scope)
+		client_id, standard_config, scope)
 	wb.open(url, new=2)
 
 
 def vk(method, **kwargs):
-	""" Делает запрос к апи, ожидая необходимое время """
+	""" Делает запрос к вк, ожидая необходимое время """
 	sleep(sleep_time)
 	return method(**kwargs)
 
 
-def vkCap(method, **kwargs):
+def vkCaptcha(method, **kwargs):
 	""" Не позволяет программе вылететь, когда вк просит ввести капчу """
 	try:
 		return vk(method, **kwargs)
 	except VkAPIError:
 		sleep(10)
-		return vkCap(method, **kwargs)
+		return vkCaptcha(method, **kwargs)
 
 
 def getBanned(group_id):
+	""" Возвращает список забаненных в сообществе пользователей """
 	bans = vk(api.groups.getBanned, group_id=group_id)['items']
 	banned = [user['id'] for user in bans]
 	return banned
 
 
 def setCurrentDirectory():
+	""" Требуется при вызове скрипта не из его директории
+
+		Меняет директорию на GM4/scripts вне зависимости
+		от того, где они находятся, и где был вызван скрипт
+	"""
 	path = realpath(__file__)
 	index = path.index("/lib")
 	path = path[:index]
@@ -66,6 +67,6 @@ def setCurrentDirectory():
 
 
 setCurrentDirectory()
-api = getApi(data_path + "token.txt")
+api = getApi(data_folder + "token.txt")
 ban_list = getBanned(group_id)
-database = Database(data_path + "database.xml")
+database = Database(data_folder + "database.xml")

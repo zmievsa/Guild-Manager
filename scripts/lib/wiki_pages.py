@@ -1,9 +1,19 @@
-from lib.config import group_id, my_id, achi_is_active, data_path
+""" Инструменты для работы с вики-страницами
+
+	Обновление страниц осуществляется в четыре шага:
+		Получение шаблона вики-страницы
+		Получение атрибутов
+		Внесение атрибутов в шаблон
+		Сохранение вики-страницы
+"""
+
+from lib.config import group_id, my_id, achi_is_active, data_folder
 from lib.guilds import Guild, Player, Avatar, Achi
 from lib.commands import database, api, vk
 
 
 class updateGuild(object):
+	""" Обновляет вики-страницу гильдии """
 	def __init__(self, guild_id):
 		self.guild = Guild(guild_id)
 		if self.guild.exists:
@@ -66,6 +76,7 @@ class updateGuild(object):
 		self.template = "\n".join(template)
 
 	def makeFancyList(self, ids):
+		""" Список замов или глав """
 		players = [Player(p) for p in ids]
 		formatted_list = []
 		for player in players:
@@ -76,6 +87,7 @@ class updateGuild(object):
 		return ", ".join(formatted_list)
 
 	def getStats(self):
+		""" Получение процента побед """
 		wins = self.guild.get("wins")
 		loses = self.guild.get("loses")
 		wins, loses = int(wins), int(loses)
@@ -88,8 +100,8 @@ class updateGuild(object):
 	def getPlayerList(self, players):
 		""" Составляет список игроков для вики-страницы
 
-			Args: Player[] players
-			returns str
+			Можно просто забить. Лично я не хочу разбираться
+			в том, как это работает. Сорян.
 		"""
 		player_list = "{|\n|-\n"
 		new_row = "|-\n"
@@ -114,6 +126,7 @@ class updateGuild(object):
 		return player_list
 
 	def getAchi(self):
+		""" Создает отображение списка ачей """
 		guild_achi_keys = self.guild.get("achi").split(" ")
 		page = "<br><center>'''[[page-64867627_49895049|Испытания]]'''</center>"
 		for index, result in enumerate(guild_achi_keys):
@@ -130,6 +143,7 @@ class updateGuild(object):
 
 
 class refreshGuilds(object):
+	""" Обновляет страницу гильдий """
 	def __init__(self):
 		page_id = 47292063
 		self.preparePage()
@@ -153,6 +167,7 @@ class refreshGuilds(object):
 		return self.makeFancyGuildList(guilds), len(guilds)
 
 	def makeFancyGuildList(self, guilds):
+		""" Создает список гильдий """
 		page, id_line, guild_line = self.getGuildLineTemplates()
 		total_waves = self.getTotalAmountOfWaves()
 		self.makeGuildPercentages(guilds, total_waves)
@@ -167,6 +182,7 @@ class refreshGuilds(object):
 		return page
 
 	def getGuildLineTemplates(self):
+		""" Базовые шаблоны, которыми наполняется список гильдий """
 		if achi_is_active:
 			page = "{|\n|-\n!<center>Рейтинг</center>\n!<center>Гильдия</center>\n|-"
 			id_line = "\n!<center>{}%</center>"
@@ -177,12 +193,14 @@ class refreshGuilds(object):
 		return page, id_line, guild_line
 
 	def getTotalAmountOfWaves(self):
+		""" Получение всех волн всех ачей для подсчета прохождения """
 		if achi_is_active:
 			all_achi_waves = database.getAll("achis", "waves")
 			all_achi_waves = [len(w.split(" ")) - 1 for w in all_achi_waves]
 			return sum(all_achi_waves)
 
 	def makeGuildPercentages(self, guilds, total_waves):
+		""" Проценты прохождения ачей """
 		for guild in guilds:
 			if achi_is_active:
 				achi_results = guild.get("achi").split(" ")
@@ -195,11 +213,12 @@ class refreshGuilds(object):
 
 	def sortGuilds(self, guilds):
 		""" Если ачи -- то наибольший рейтинг сверху
-			Если нет ачей -- наибольший ID сверху """
-		reverse = achi_is_active or False
+			Если нет ачей -- наименьший ID сверху """
+		reverse = achi_is_active
 		guilds.sort(key=lambda g: g.percent, reverse=reverse)
 
 	def getPlayerCount(self):
+		""" Возвращает только игроков с гильдией """
 		all_players = database.getAll("players")
 		counter = 0
 		for player in all_players:
@@ -209,13 +228,14 @@ class refreshGuilds(object):
 
 
 def getPageTemplate(file_name):
-	folder = data_path + "page_templates/"
+	folder = data_folder + "page_templates/"
 	path = folder + file_name
 	with open(path) as file:
 		return file.read()
 
 
 def editPageTemplate(attributes, template):
+	""" Заменяет поля в шаблоне значениями атрибутов """
 	for key, value in attributes.items():
 		key = "[{}]".format(key)
 		value = str(value)

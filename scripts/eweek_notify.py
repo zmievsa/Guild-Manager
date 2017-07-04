@@ -6,7 +6,7 @@ from lib.config import group_id
 
 
 def notify():
-	""" Оповещает игроков о начале сервера или еженедельника """
+	""" Оповещает игроков о начале еженедельника """
 	message = getMessage()
 	users = getEweekPlayers()
 	users = {user for user in users if user not in ban_list}
@@ -21,6 +21,7 @@ def getMessage():
 
 
 def getEweekPlayers():
+	""" Получение id записавшихся """
 	post_id = getEweekPostId()
 	comments = getPostComments(post_id)
 	users = {comment['from_id'] for comment in comments}

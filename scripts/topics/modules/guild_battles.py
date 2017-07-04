@@ -1,5 +1,6 @@
+""" Гильдбои """
+
 from topics.errors import GB_wrong_request, GB_guild_not_found
-from lib.wiki_pages import updateGuild
 from lib.config import test_id
 from lib.guilds import Guild
 
@@ -8,8 +9,9 @@ id = 35465123
 group = test_id
 comment_amount = 83
 
+
 def getAction(text):
-	return addWinsOrLoses
+	return main
 
 
 def getResponse(request):
@@ -20,7 +22,7 @@ def finish(request):
 	pass
 
 
-def addWinsOrLoses(request):
+def main(request):
 	result = getResult(request.text)
 	guild = getGuild(request.text, result)
 	addPoints(guild, result)

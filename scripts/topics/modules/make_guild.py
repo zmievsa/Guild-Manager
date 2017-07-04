@@ -1,4 +1,6 @@
-from lib.database_objects import createGuild
+""" Создание гильдий """
+
+from lib.object_creation import createGuild
 from lib.guilds import Player, Guild
 from lib.commands import ban_list
 from lib.config import group_id
@@ -20,7 +22,7 @@ def getAction(text):
 def getResponse(request):
 	player = Player(request.asker.get("id"))
 	guild_name, page_id = player.guild.get("name", "page")
-	link = "https://vk.com/page-{}_{}".format(aottg_main, page_id)
+	link = "https://vk.com/page-{}_{}".format(group_id, page_id)
 	return "Гильдия: {} ({})".format(guild_name, link)
 
 

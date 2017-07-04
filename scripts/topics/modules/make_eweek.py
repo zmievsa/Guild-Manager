@@ -1,4 +1,6 @@
-from lib.database_objects import createEweek
+""" Создание еженедельников """
+
+from lib.object_creation import createEweek
 from lib.config import test_id
 from topics.lib import Fields
 

@@ -1,7 +1,14 @@
+""" Абстракция над lxml для упрощенной работы с базой данных """
+
 from lxml.etree import ElementTree, XMLParser, parse
 
 
 class Database(object):
+	""" Необходимо использовать как singleton
+
+		Иначе может произойти потеря данных при
+		использовании двумя разными скриптами
+	"""
 	def __init__(self, path):
 		self.parse(path)
 
@@ -26,68 +33,47 @@ class Database(object):
 			database = Database(self.path)
 			database.rewrite(recursion=False)
 
-	def getByField(self, kind, field, value):
+	def getByField(self, parent, field, value):
 		""" Ищет элемент в базе данных по одному из полей
 
-			Args:
-			str kind = вид элемента (players, guilds, challenges)
-			str/int field = одно из полей элемента, который мы ищем
-
 			returns Element
-
 		"""
 		value = str(value).lower()
-		iterator = self.find(kind).iterchildren()
-		for element in iterator:
+		elements = self.getAll(parent)
+		for element in elements:
 			subelement = element.find(field)
 			if subelement is not None and subelement.text.lower() == value:
 				return element
 
-	def getById(self, kind, id):
-		return self.getByField(kind, "id", id)
+	def getById(self, parent, id):
+		return self.getByField(parent, "id", id)
 
-	def getByName(self, kind, name):
-		return self.getByField(kind, "name", name)
+	def getByName(self, parent, name):
+		return self.getByField(parent, "name", name)
 
-	def getField(self, kind, id, field):
-		""" Возвращает атрибут объекта по id
-
-			Args:
-			str kind = вид элемента (player, guild, challenge)
-			str/int id = id элемента
-			str field = название атрибута
-
-			returns Element
-
-		"""
-		element = self.getById(kind, id)
-		if element is not None:
-			return element.find(field)
-
-	def editField(self, kind, id, field, value):
-		""" Изменить один из атрибутов объекта """
-		field = self.getField(kind, id, field)
-		field.text = value
-
-	def getAll(self, kind, field=None):
-		""" Возвращает список атрибутов одного типа объектов
+	def getAll(self, parent, field=None):
+		""" Возвращает список объектов или значения их атрибутов
 
 			Args:
-			str kind = вид элемента (player, guild, challenge)
-			str field = название атрибута
+				str parent = контейнер (players, guilds, etc)
+				str field = название атрибута
 
-			returns Element[]
+			returns Element[] or str[]
 
 		"""
-		iterator = self.find(kind)
-		if iterator is not None and list(iterator.iterchildren()) != []:
-			iterator = iterator.iterchildren()
-			if field is not None:
-				lst = []
-				for element in iterator:
-					subelement = element.find(field)
-					if subelement is not None:
-						lst.append(subelement.text)
-				return lst
-			else:
-				return list(iterator)
+		parent = self.find(parent)
+		if parent is not None:
+			iterator = parent.iterchildren()
+			if list(iterator) != []:
+				if field is not None:
+					_getFields(field, iterator)
+				else:
+					return list(iterator)
+
+	def _getFields(field, iterator):
+		fields = []
+		for element in iterator:
+			subelement = element.find(field)
+			if subelement is not None:
+				fields.append(subelement.text)
+		return fields

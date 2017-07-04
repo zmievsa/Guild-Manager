@@ -2,8 +2,8 @@
 
 from lib.posts import editPost, getPostTime, post
 from lib.errors import ErrorManager
+from lib.config import data_folder
 from lib.commands import database
-from lib.config import data_path
 from lib.guilds import Eweek
 from os import listdir
 
@@ -11,64 +11,57 @@ from os import listdir
 def generate():
 	""" Генерирует посты на неделю """
 	post_templates = getPlannedPosts()
-	challenge = getNewChallenge()
-	setThisWeekChallenge(challenge)
-	makePosts(post_templates, challenge)
+	eweek = getNewEweek()
+	setThisWeekEweek(eweek)
+	makePosts(post_templates, eweek)
+	database.rewrite()
 
 
-def makePosts(days, challenge):
-	folder = data_path + "week_posts/"
+def makePosts(days, eweek):
+	""" Названия файлов соответствуют дням недели """
+	folder = data_folder + "week_posts/"
 	for day in days:
 		with open(folder + day, encoding="utf-8") as file:
-			file = editPost(file.read(), challenge)
+			file = editPost(file.read(), eweek)
 			digit = int(day[0])
 			post_time = getPostTime(digit)
 			post(file, post_time)
 
 
 def getPlannedPosts():
-	days = listdir(data_path + "week_posts/")
+	days = listdir(data_folder + "week_posts/")
 	return [d for d in days if ".txt" in d]
 
 
-def getNewChallenge():
-	""" Возвращает следующий в базе данных челлендж и вносит его в БД
-		returns XML
-	"""
-	xml_field = getWeeklyChallengeField()
-	old_challenge = int(xml_field.text)
-	highest_id = getHighestChallengeId()
-	new_challenge_id = getNextChallenge(old_challenge, highest_id)
-	challenge = getChallenge(new_challenge_id)
-	return challenge
+def getNewEweek():
+	""" Возвращает следующий в базе данных еженедельник и вносит его в базу данных """
+	xml_field = getWeeklyEweekField()
+	old_eweek = int(xml_field.text)
+	highest_id = getHighestEweekId()
+	new_eweek_id = getNextEweek(old_eweek, highest_id)
+	return Eweek(new_eweek_id)
 
 
-def getWeeklyChallengeField():
+def getWeeklyEweekField():
 	return database.find("eweeks").find("this_week")
 
 
-def getHighestChallengeId():
-	challenges = database.getAll(kind="eweeks", field="id")
-	all_ids = [int(c) for c in challenges]
+def getHighestEweekId():
+	eweeks = database.getAll(kind="eweeks", field="id")
+	all_ids = [int(e) for e in eweeks]
 	return max(all_ids)
 
 
-def getNextChallenge(old_challenge, highest_possible):
-	if old_challenge == highest_possible:
+def getNextEweek(old_eweek, highest_possible):
+	if old_eweek == highest_possible:
 		return "1"
 	else:
-		return str(old_challenge + 1)
+		return str(old_eweek + 1)
 
 
-def getChallenge(challenge_id):
-	return Eweek(challenge_id)
-
-
-def setThisWeekChallenge(challenge):
-	xml_field = getWeeklyChallengeField()
-	challenge_id = challenge.get("id")
-	xml_field.text = challenge_id
-	database.rewrite()
+def setThisWeekEweek(eweek):
+	xml_field = getWeeklyEweekField()
+	xml_field.text = eweek.get("id")
 
 
 if __name__ == "__main__":

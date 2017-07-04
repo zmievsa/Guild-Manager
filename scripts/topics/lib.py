@@ -1,14 +1,15 @@
-#!/usr/bin/env python3
+""" Библиотека для работы с обсуждениями """
 
 from lib.config import failure_image, succeed_image, text_division
-from lib.commands import vk, api, vkCap, database
+from lib.commands import vk, api, vkCaptcha, database
 from lib.wiki_pages import updateGuild
 from lib.guilds import Player
-from topics.errors import *
+from topics import errors
 from re import search
 
 
 class Request(object):
+	""" Запрос пользователя к гильдменеджеру """
 	def __init__(self, post_text, post_owner, comment_id, topic):
 		self.id = comment_id
 		self.topic = topic
@@ -22,7 +23,7 @@ class Request(object):
 		try:
 			self.checkActionExistence()
 			self.action(self)
-		except GMError as e:
+		except errors.GMError as e:
 			self.message = e
 			self.picture = failure_image.link
 		else:
@@ -39,7 +40,7 @@ class Request(object):
 
 	def checkActionExistence(self):
 		if self.action is None:
-			raise wrong_request
+			raise errors.wrong_request
 
 	def updateGuilds(self):
 		for guild in self.guilds_to_update:
@@ -50,7 +51,7 @@ class Request(object):
 
 	def editComment(self):
 		""" Оповещает игрока о результатах обработки заявки """
-		vkCap(api.board.editComment,
+		vkCaptcha(api.board.editComment,
 			group_id=self.topic.group,
 			topic_id=self.topic.id,
 			comment_id=self.id,
@@ -59,30 +60,29 @@ class Request(object):
 
 
 def getComments(topic, amount):
-	""" Получение последних комментариев в обсуждении topic
-		returns dict[]
-	"""
-	offset = 0
-	for parse in range(2):
-		response = vk(api.board.getComments,
-			group_id=topic.group,
-			topic_id=topic.id,
-			offset=offset,
-			count=amount)
-		comments = response['items']
-		offset = response['count']
-		if offset >= amount:
-			offset -= amount
-		else:
-			offset = 0
-	return comments
+	""" Получение последних комментариев в обсуждении topic """
+	count = vk(api.board.getComments,
+		group_id=topic.group,
+		topic_id=topic.id,
+		count=amount)['count']
+	if count >= amount:
+		offset = count - amount
+	else:
+		offset = 0
+	response = vk(api.board.getComments,
+		group_id=topic.group,
+		topic_id=topic.id,
+		offset=offset,
+		count=amount)
+	return response['items']
 
 
 class Hyperlink(object):
+	""" Ищет гиперссылку и проверяет ее по правилам группы """
 	def __init__(self, text):
 		hyperlink = self.find(text)
 		if hyperlink is None:
-			raise hyperlink_wrong_format
+			raise errors.hyperlink_wrong_format
 		self.id, self.name = self.divide(hyperlink)
 		checkNicknameFormat(self.name)
 
@@ -108,14 +108,22 @@ def checkNicknameFormat(name):
 		pattern = r"^[A-Za-z_\d]+$"
 		match = search(pattern, name)
 		if match is None:
-			raise GMError("Ник {} содержит недопустимые символы.".format(name))
+			raise errors.GMError("Ник {} содержит недопустимые символы.".format(name))
 		elif not 20 >= len(name) >= 3:
-			raise nickname_length
+			raise errors.nickname_length
 	else:
-		raise nickname_format
+		raise errors.nickname_format
 
 
 class Fields(dict):
+	""" Получение полей из текста по ключам
+
+		Вначале класс ищет поля в тексте по ключам. Далее
+		он проверяет наличие ключей, кидает ошибку, если
+		пропущены обязательные, и заполняет, если пропущены
+		дополнительные. В конце он переводит ключи на
+		английский, если ключи являются словарями.
+	"""
 	def __init__(self, text, mandatory_keys, optional_keys=[]):
 		super().__init__()
 		self.text = text
@@ -147,7 +155,7 @@ class Fields(dict):
 	def checkMandatoryFields(self):
 		for key in self.mandatory_keys:
 			if key not in self:
-				raise GMError("Поле '{}' не найдено.".format(key))
+				raise errors.GMError("Поле '{}' не найдено.".format(key))
 
 	def fillOptionalFields(self):
 		for key in self.optional_keys:
@@ -155,6 +163,7 @@ class Fields(dict):
 				self[key] = ""
 
 	def translate(self):
+		""" Переводит ключи на русский """
 		keys = self.all_keys
 		for russian_key in keys:
 			english_key = keys[russian_key]
@@ -163,9 +172,10 @@ class Fields(dict):
 
 
 def getPhoto(text):
+	""" Находит в тексте ссылку на изображение """
 	pattern = r"photo-\d+_\d+"
 	match = search(pattern, text)
 	if match is not None:
 		return match.group()
 	else:
-		raise GMError("Некорректная ссылка на изображение.")
+		raise errors.GMError("Некорректная ссылка на изображение.")
