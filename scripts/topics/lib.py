@@ -124,7 +124,9 @@ class Fields(dict):
 		дополнительные. В конце он переводит ключи на
 		английский, если ключи являются словарями.
 	"""
-	def __init__(self, text, mandatory_keys, optional_keys=[]):
+	def __init__(self, text, mandatory_keys, optional_keys=None):
+		if optional_keys is None:
+			optional_keys = type(mandatory_keys)()
 		super().__init__()
 		self.text = text
 		self.mandatory_keys = mandatory_keys
