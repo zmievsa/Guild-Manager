@@ -137,7 +137,8 @@ class Fields(dict):
 			self.translate()
 
 	def getAllKeys(self, mand_keys, opt_keys):
-		if type(mand_keys) is dict is type(opt_keys):
+		assert type(mand_keys) is type(opt_keys)
+		if type(mand_keys) is dict:
 			self.all_keys = dict(mand_keys, **opt_keys)
 		else:
 			self.all_keys = mand_keys + opt_keys
