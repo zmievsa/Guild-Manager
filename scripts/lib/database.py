@@ -66,11 +66,11 @@ class Database(object):
 			iterator = parent.iterchildren()
 			if list(iterator) != []:
 				if field is not None:
-					_getFields(field, iterator)
+					self._getFields(field, iterator)
 				else:
 					return list(iterator)
 
-	def _getFields(field, iterator):
+	def _getFields(self, field, iterator):
 		fields = []
 		for element in iterator:
 			subelement = element.find(field)
