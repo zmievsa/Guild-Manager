@@ -177,8 +177,7 @@ class refreshGuilds(object):
 			banner = guild.get('banner')
 			link = guild.get('page')
 			page += guild_line.format(banner, link)
-		if achi_is_active:
-			page += "\n|}"
+		page += "\n|}"
 		return page
 
 	def getGuildLineTemplates(self):
