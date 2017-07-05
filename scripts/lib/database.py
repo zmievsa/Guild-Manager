@@ -63,16 +63,16 @@ class Database(object):
 		"""
 		parent = self.find(parent)
 		if parent is not None:
-			iterator = parent.iterchildren()
-			if list(iterator) != []:
+			children = list(parent.iterchildren())
+			if children != []:
 				if field is not None:
-					return self._getFields(field, iterator)
+					return self._getFields(field, children)
 				else:
-					return list(iterator)
+					return children
 
-	def _getFields(self, field, iterator):
+	def _getFields(self, field, children):
 		fields = []
-		for element in iterator:
+		for element in children:
 			subelement = element.find(field)
 			if subelement is not None:
 				fields.append(subelement.text)
