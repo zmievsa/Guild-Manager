@@ -50,7 +50,7 @@ def vkCaptcha(method, **kwargs):
 def getBanned(group_id):
 	""" Возвращает список забаненных в сообществе пользователей """
 	bans = vk(api.groups.getBanned, group_id=group_id)['items']
-	banned = [user['id'] for user in bans]
+	banned = [user['id'] for user in bans if "id" in user]
 	return banned
 
 
