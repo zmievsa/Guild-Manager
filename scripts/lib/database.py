@@ -66,7 +66,7 @@ class Database(object):
 			iterator = parent.iterchildren()
 			if list(iterator) != []:
 				if field is not None:
-					self._getFields(field, iterator)
+					return self._getFields(field, iterator)
 				else:
 					return list(iterator)
 
