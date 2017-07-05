@@ -13,11 +13,10 @@ from time import sleep
 
 def getApi(token_path):
 	""" Логинится в вк и возвращает готовую к работе сессию """
-	with open(token_path) as token:
-		token = token.read().strip()
+	with open(token_path) as f:
+		token = f.read().strip()
 		session = Session(access_token=token)
-		api = API(session, v='5.52', lang='ru')
-		return api
+		return API(session, v='5.52', lang='ru')
 
 
 def getToken():
