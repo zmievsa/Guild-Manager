@@ -83,7 +83,7 @@ class Guild(DatabaseElement):
 		if position == "head":
 			element = self.find("head")
 		elif position == "vice":
-			element = self.find("head")
+			element = self.find("vice")
 		element.text = "{} {}".format(element.text, player_id)
 
 
