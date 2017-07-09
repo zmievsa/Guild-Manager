@@ -28,7 +28,6 @@ def getPostTime(digit=None):
 		Если же аргумент не был получен, будет возвращено время через час
 		после вызова функции.
 	"""
-	assert type(digit) is int
 	hour = 3600
 	one_day = timedelta(1)
 	today = datetime.now(timezone('Europe/Moscow'))
