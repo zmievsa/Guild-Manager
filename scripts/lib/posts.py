@@ -30,17 +30,17 @@ def getPostTime(digit=None):
 	"""
 	assert type(digit) is int
 	hour = 3600
-	day = timedelta(1)
+	one_day = timedelta(1)
 	today = datetime.now(timezone('Europe/Moscow'))
 	if digit:
-		weekday = day.weekday()
+		weekday = today.weekday()
 		while weekday != digit:
-			today += day
-			weekday = day.weekday()
-		today = day.replace(hour=18, minute=0, second=0)
-		return int(day.timestamp())
+			today += one_day
+			weekday = today.weekday()
+		today = today.replace(hour=18, minute=0, second=0)
+		return int(today.timestamp())
 	else:
-		return int(day.timestamp()) + hour
+		return int(today.timestamp()) + hour
 
 
 def getText(file_name):
