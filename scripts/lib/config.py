@@ -11,7 +11,7 @@ achi_is_active = False					# Работают ли ачи в этот момен
 
 """ TOPICS """
 
-class Image(object):
+class Image:
 	""" Упрощенное взаимодействие с атрибутами изображений """
 	def __init__(self, link):
 		self.link = link

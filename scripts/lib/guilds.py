@@ -3,7 +3,7 @@
 from lib.commands import database
 
 
-class DatabaseElement(object):
+class DatabaseElement:
 	""" Стандартный набор методов работы с объектами """
 	def find(self, name):
 		return self.xml_element.find(name)

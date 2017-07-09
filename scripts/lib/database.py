@@ -3,7 +3,7 @@
 from lxml.etree import ElementTree, XMLParser, parse
 
 
-class Database(object):
+class Database:
 	""" Необходимо использовать как singleton
 
 		Иначе может произойти потеря данных при

@@ -12,7 +12,7 @@ from lib.guilds import Guild, Player, Avatar, Achi
 from lib.commands import database, api, vk
 
 
-class updateGuild(object):
+class updateGuild:
 	""" Обновляет вики-страницу гильдии """
 	def __init__(self, guild_id):
 		self.guild = Guild(guild_id)
@@ -142,7 +142,7 @@ class updateGuild(object):
 		return page
 
 
-class refreshGuilds(object):
+class refreshGuilds:
 	""" Обновляет страницу гильдий """
 	def __init__(self):
 		page_id = 47292063
