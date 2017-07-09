@@ -47,7 +47,7 @@ def getWeeklyEweekField():
 
 
 def getHighestEweekId():
-	eweeks = database.getAll(kind="eweeks", field="id")
+	eweeks = database.getAll(parent="eweeks", field="id")
 	all_ids = [int(e) for e in eweeks]
 	return max(all_ids)
 
