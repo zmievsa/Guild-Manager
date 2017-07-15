@@ -58,8 +58,9 @@ def editFields(fields):
 def makeHyperlinks(guild):
 	fields = ("head", "vice", "players")
 	for field in fields:
-		players = guild[field].strip().split(" ")
-		guild[field] = [Hyperlink(p) for p in players]
+		players = guild[field]
+		players = players.strip().split(" ")
+		guild[field] = [Hyperlink(p.strip()) for p in players]
 
 
 def editHeadsAndVices(guild):
