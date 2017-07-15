@@ -82,7 +82,7 @@ class Hyperlink(object):
 	def __init__(self, text):
 		hyperlink = self.find(text)
 		if hyperlink is None:
-			raise errors.hyperlink_wrong_format
+			raise errors.GMError("Гиперссылка {} оформлена неверно или отсутствует.".format(text))
 		self.id, self.name = self.divide(hyperlink)
 		checkNicknameFormat(self.name)
 
