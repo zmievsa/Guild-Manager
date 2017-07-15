@@ -60,7 +60,7 @@ def makeHyperlinks(guild):
 	for field in fields:
 		players = guild[field]
 		players = players.strip().split(" ")
-		guild[field] = [Hyperlink(p.strip()) for p in players]
+		guild[field] = [Hyperlink(p) for p in players if p]
 
 
 def editHeadsAndVices(guild):
