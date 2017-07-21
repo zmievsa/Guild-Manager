@@ -48,6 +48,8 @@ def getResponse(request):
 	elif any(s in text for s in player_type):
 		id, name = asker.get("id", "name")
 		message = "Игрок: [id{}|{}]".format(id, name)
+	if "83" in text:
+		message += "\n(HC, мой друг)"
 	return message
 
 
