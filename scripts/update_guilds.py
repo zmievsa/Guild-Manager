@@ -3,6 +3,7 @@
 from lib.wiki_pages import updateGuild
 from lib.errors import ErrorManager
 from lib.commands import database
+from time import sleep
 
 
 def updateAllGuilds():

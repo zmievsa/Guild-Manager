@@ -244,6 +244,7 @@ def editPageTemplate(attributes, template):
 
 def saveWikiPage(page, page_id, group=group_id):
 	vk(api.pages.save,
+		suspend_time=1,
 		text=page,
 		user_id=my_id,
 		page_id=page_id,
