@@ -264,12 +264,15 @@ def excludeFromGuild(request):
 	player = Player(hyperlink.id)
 	if player.get("guild") != asker.get("guild"):
 		raise not_in_guild
-	elif asker.rank != 3:
-		raise need_head_rights
+	elif asker.rank <= player.rank:
+		if player.rank == 2:
+			raise need_head_rights
+		elif player.rank == 1:
+			raise need_vice_rights
 	elif player.rank == 3:
 		raise head_cant_leave
-	else:
-		player.set("guild", "0")
+	guild.setPosition(player, "player")
+	player.set("guild", "0")
 
 
 def endGuild(request):
