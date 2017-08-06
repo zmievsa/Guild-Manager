@@ -4,7 +4,7 @@ emergency_id = 98216156					# id человека, которому приход
 group_id = 64867627						# id группы aottg 4k
 test_id = 77675108						# id группы тест
 my_id = 98216156						# id аккаунта владельца
-sleep_time = 0.5						# Время ожидания sleep()
+sleep_time = 0.65						# Время ожидания sleep()
 data_folder = "../Data/"				# Путь от GM4/scripts к GM4/Data
 achi_is_active = False					# Работают ли ачи в этот момент времени
 
