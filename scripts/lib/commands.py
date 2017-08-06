@@ -31,9 +31,9 @@ def getToken():
 	wb.open(url, new=2)
 
 
-def vk(method, **kwargs):
+def vk(method, suspend_time=sleep_time, **kwargs):
 	""" Делает запрос к вк, ожидая необходимое время """
-	sleep(sleep_time)
+	sleep(suspend_time)
 	return method(**kwargs)
 
 
