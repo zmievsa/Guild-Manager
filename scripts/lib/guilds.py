@@ -181,8 +181,8 @@ class Achi(DatabaseElement):
 			или при перезапуске ачей, чтобы
 			обозначить, что все ачи не пройдены
 		"""
-		quantity = len(database.getAll("achis"))
-		progress = ["0"] * quantity
+		achis = database.getAll("achis") or ''
+		progress = ["0"] * len(achis)
 		return " ".join(progress)
 
 
