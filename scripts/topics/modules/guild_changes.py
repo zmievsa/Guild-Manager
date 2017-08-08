@@ -1,6 +1,6 @@
 """ Изменения в гильдиях """
 
-from lib.database_objects import createPlayer
+from lib.object_creation import createPlayer
 from lib.commands import database, ban_list
 from lib.wiki_pages import updateGuild
 from lib.config import group_id
