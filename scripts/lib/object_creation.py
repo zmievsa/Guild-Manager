@@ -24,6 +24,7 @@ class StandardObjectCreation:
 		kwargs["id"] = self.getId()
 		fields = self.makeFields(kwargs)
 		enterIntoDatabase(fields, xml_element)
+		return kwargs
 
 	def getId(self, minimal_id="1"):
 		all_ids = database.getAll(self.parent, field="id")
@@ -49,7 +50,7 @@ class createGuild(StandardObjectCreation):
 		kw['achi'] = Achi.getEmptyField()
 		kw['wins'], kw['loses'] = "0", "0"
 		kw['page'] = self.getPage(kw['name'])
-		self.make(**kw)
+		kw = self.make(**kw)
 		self.createGuildPlayers(kw['players'], kw['id'])
 
 	def getPage(self, name):
