@@ -1,3 +1,4 @@
 token.txt
+*.xml
 *.pyc
 __pycache__
