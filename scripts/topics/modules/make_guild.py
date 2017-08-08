@@ -20,7 +20,7 @@ def getAction(text):
 
 
 def getResponse(request):
-	player = Player(request.asker.get("id"))
+	player = Player(request.asker.id)
 	guild_name, page_id = player.guild.get("name", "page")
 	link = "https://vk.com/page-{}_{}".format(group_id, page_id)
 	return "Гильдия: {} ({})".format(guild_name, link)
