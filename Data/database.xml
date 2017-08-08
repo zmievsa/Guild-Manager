@@ -1,4 +1,6 @@
 <contents>
+  <achis>
+  </achis>
   <avatars>
     <avatar>
       <id>1</id>
@@ -431,20 +433,6 @@
   </avatars>
   <guilds>
     <guild>
-      <id>1</id>
-      <name>My petuh is infinity</name>
-      <page>52452865</page>
-      <head>381343202</head>
-      <vice>155032359</vice>
-      <wins>2</wins>
-      <loses>2</loses>
-      <requirements>Поклоняться, уважать и восхвалять петухов. Главное не забыть написать главному петуху и пройти у него проверку на проф придатность. </requirements>
-      <about>Это гильдия истинных петухов. Петух - птица, которая не умеет летать, но легенда гласит, что в год петуха истинные петухи перерождаются с новой силой.</about>
-      <logo>photo-64867627_456239418</logo>
-      <banner>photo-64867627_456239417</banner>
-      <achi/>
-    </guild>
-    <guild>
       <id>2</id>
       <name>Night Parade of Hundred Demons</name>
       <page>49918536</page>
@@ -481,7 +469,7 @@
       <wins>19</wins>
       <loses>17</loses>
       <requirements>Написать Главе или Заместителю, быть активным, адекватным и желательно заходить каждый день.</requirements>
-      <about>В нашей гильдии приятная каждому атмосфера, глава Sunset не допускает раздоров между согильдийцами. В Sunset рады каждому. Если Вы не умеете играть- мы научим, если Вы профи и хотите обучать новичков- то всегда пожалуйста, гильдия Sunset всегда открыта для вас!</about>
+      <about>В нашей гильдии приятная каждому атмосфера, глава SunseT не допускает раздоров между согильдийцами. В SunseT рады каждому. Если Вы не умеете играть — мы научим, если Вы профи и хотите обучать новичков, то всегда пожалуйста, гильдия SunseT всегда открыта для вас!</about>
       <logo>photo-64867627_456239477</logo>
       <banner>photo-64867627_439785900</banner>
       <achi/>
@@ -492,7 +480,7 @@
       <page>50265265</page>
       <head>164842295 118233489</head>
       <vice>344902930</vice>
-      <wins>51</wins>
+      <wins>56</wins>
       <loses>24</loses>
       <requirements>Гильдия GAddess не отказалась бы от новых гусениц. Самое главное желание общаться в гильдии и проводить время вместе, участвовать в эвентах по возможности. Вы можете быть мудаком или дауном, но, если остальных это устраивает и вы нормально ладите и угараете вместе, то все заебись. Уровень игры ориентировочно от 80 киллов за 10 мин на харде в лесу, умение выбивать от 2,5к и выше, желательно дополнительные навыки вроде пвп или акины. Если у вас какие-то нелады с группой, ну, нам похуй. Главное, чтобы вы ничего от нас не скрывали. А, ну и шлюхи нам не сдались, в принципе. У гильдии, кстати, группа имеется [https://m.vk.com/gaddusenici] .Вот и пездец терь.</requirements>
       <about>GAddess - БАгини .о. Символом гильдии является Великая Гусеница Гаддессов. Большую часть времени мы играем и общаемся вне группы, в том числе проводя свои турниры внутри гильдии. Гильдия не специализируется онли на титосах, мы игровая гильдия. Кстати, у гусениц есть своя группа - [https://vk.com/gaddusenici] </about>
@@ -501,7 +489,7 @@
       <achi/>
     </guild>
     <guild>
-      <id>7</id>
+      <id>1</id>
       <name>MOR</name>
       <page>50134328</page>
       <head>171195291</head>
@@ -529,20 +517,6 @@
       <achi/>
     </guild>
     <guild>
-      <id>12</id>
-      <name>Eden</name>
-      <page>52949909</page>
-      <head>193904391 241240727 356519885</head>
-      <vice>174501574</vice>
-      <wins>0</wins>
-      <loses>0</loses>
-      <requirements>Самое главное быть активным в беседе и в самой игре AottG.</requirements>
-      <about>У нас в гильдии добрые участники и глава добрый. Будем проводить вместе тренировки, совместные RP(мб), будем в скайпе сидеть вместе. Мы ждём вас, дорогие новички.</about>
-      <logo>photo-64867627_456239844</logo>
-      <banner>photo-64867627_456239845</banner>
-      <achi/>
-    </guild>
-    <guild>
       <id>13</id>
       <name>JedenPreis</name>
       <page>52965636</page>
@@ -560,8 +534,8 @@
       <id>14</id>
       <name>Black Rose Merger</name>
       <page>52965800</page>
-      <head>111802911 347294060</head>
-      <vice/>
+      <head>111802911</head>
+      <vice>347294060</vice>
       <wins>3</wins>
       <loses>1</loses>
       <requirements>Сесть на бутылку</requirements>
@@ -574,7 +548,7 @@
       <id>15</id>
       <name>[L]egion</name>
       <page>52983478</page>
-      <head>254484509 356556558</head>
+      <head>254484509</head>
       <vice/>
       <wins>0</wins>
       <loses>1</loses>
@@ -588,28 +562,42 @@
       <id>16</id>
       <name>Catcher Of Dreams</name>
       <page>53010405</page>
-      <head>323989909</head>
-      <vice>216811479</vice>
+      <head>323989909 216811479</head>
+      <vice/>
       <wins>0</wins>
-      <loses>0</loses>
+      <loses>1</loses>
       <requirements>адекватность (хоть немного).</requirements>
       <about>веселые ребята, всегда готовые прийти на помощь. Также прилагается сенсей, который научит всему, что сам знает, + батя, всегда готовый дать леща) Проще говоря: у нас не скучно :D</about>
       <logo>photo-64867627_456239816</logo>
       <banner>photo-64867627_456239815</banner>
       <achi/>
     </guild>
+    <guild>
+      <id>17</id>
+      <name>Lucid Dreams</name>
+      <page>53089647</page>
+      <head>264152955</head>
+      <vice>249409135 191185213</vice>
+      <wins>0</wins>
+      <loses>0</loses>
+      <requirements>Напишите в ЛС главе или заместителю.</requirements>
+      <about>Дружелюбные ребята, которые орут с мемчиков.</about>
+      <logo>photo-64867627_456239868</logo>
+      <banner>photo-64867627_456239869</banner>
+      <achi/>
+    </guild>
   </guilds>
   <players>
     <player>
       <id>108783467</id>
-      <name>Petuh1</name>
-      <guild>12</guild>
+      <name>SWAG</name>
+      <guild>0</guild>
       <avatar>42</avatar>
     </player>
     <player>
       <id>381343202</id>
       <name>Petuh2</name>
-      <guild>1</guild>
+      <guild>0</guild>
       <avatar>92</avatar>
     </player>
     <player>
@@ -626,26 +614,26 @@
     </player>
     <player>
       <id>142336776</id>
-      <name>Petuh5</name>
-      <guild>12</guild>
+      <name>otceiceice</name>
+      <guild>5</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>155032359</id>
-      <name>Petuh6</name>
-      <guild>1</guild>
+      <name>zender</name>
+      <guild>5</guild>
       <avatar>60</avatar>
     </player>
     <player>
       <id>165517262</id>
-      <name>Petuh7</name>
-      <guild>1</guild>
+      <name>Johny4ever</name>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>379908968</id>
       <name>Petuh8</name>
-      <guild>1</guild>
+      <guild>0</guild>
       <avatar>42</avatar>
     </player>
     <player>
@@ -693,7 +681,7 @@
     <player>
       <id>141500368</id>
       <name>Ultraness</name>
-      <guild>5</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -753,12 +741,6 @@
     <player>
       <id>387416865</id>
       <name>Stalin</name>
-      <guild>0</guild>
-      <avatar>29</avatar>
-    </player>
-    <player>
-      <id>387593566</id>
-      <name>Wineglass</name>
       <guild>0</guild>
       <avatar>29</avatar>
     </player>
@@ -1077,43 +1059,43 @@
     <player>
       <id>97478084</id>
       <name>EllRaIn</name>
-      <guild>7</guild>
+      <guild>1</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>170271797</id>
       <name>kirito009988rus</name>
-      <guild>7</guild>
+      <guild>1</guild>
       <avatar>35</avatar>
     </player>
     <player>
       <id>92363868</id>
       <name>krolik</name>
-      <guild>7</guild>
+      <guild>1</guild>
       <avatar>35</avatar>
     </player>
     <player>
       <id>68908775</id>
       <name>Morrigan</name>
-      <guild>7</guild>
+      <guild>1</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>162902006</id>
       <name>Timk</name>
-      <guild>7</guild>
+      <guild>1</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>320139275</id>
       <name>xXShintaro</name>
-      <guild>7</guild>
+      <guild>1</guild>
       <avatar>51</avatar>
     </player>
     <player>
       <id>171195291</id>
       <name>Yuusuu</name>
-      <guild>7</guild>
+      <guild>1</guild>
       <avatar>52</avatar>
     </player>
     <player>
@@ -1154,8 +1136,8 @@
     </player>
     <player>
       <id>420833867</id>
-      <name>Petuh9</name>
-      <guild>1</guild>
+      <name>Alecto</name>
+      <guild>14</guild>
       <avatar>5</avatar>
     </player>
     <player>
@@ -1202,14 +1184,14 @@
     </player>
     <player>
       <id>321636510</id>
-      <name>Kosuke</name>
+      <name>Shissui</name>
       <guild>0</guild>
       <avatar>44</avatar>
     </player>
     <player>
       <id>356519885</id>
       <name>Makoto_Hagiwara</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1221,13 +1203,13 @@
     <player>
       <id>193904391</id>
       <name>Blood</name>
-      <guild>12</guild>
-      <avatar>47</avatar>
+      <guild>0</guild>
+      <avatar>41</avatar>
     </player>
     <player>
       <id>368280465</id>
       <name>Shoshi</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1271,12 +1253,6 @@
       <name>Yrod_47</name>
       <guild>0</guild>
       <avatar>29</avatar>
-    </player>
-    <player>
-      <id>323989909</id>
-      <name>DreAmeR</name>
-      <guild>16</guild>
-      <avatar>51</avatar>
     </player>
     <player>
       <id>264988619</id>
@@ -1323,25 +1299,25 @@
     <player>
       <id>278505287</id>
       <name>Black_Dragon</name>
-      <guild>5</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>413123877</id>
       <name>Veider</name>
-      <guild>5</guild>
+      <guild>0</guild>
       <avatar>46</avatar>
     </player>
     <player>
       <id>356556558</id>
       <name>Libearium</name>
-      <guild>15</guild>
+      <guild>14</guild>
       <avatar>10</avatar>
     </player>
     <player>
       <id>427731139</id>
       <name>Odett</name>
-      <guild>5</guild>
+      <guild>0</guild>
       <avatar>58</avatar>
     </player>
     <player>
@@ -1377,7 +1353,7 @@
     <player>
       <id>272398821</id>
       <name>DLC0Master</name>
-      <guild/>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1395,13 +1371,13 @@
     <player>
       <id>174501574</id>
       <name>Teddy</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>359634427</id>
       <name>Anime_NYA</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1413,19 +1389,19 @@
     <player>
       <id>347268660</id>
       <name>Malih_Septim</name>
-      <guild>5</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>427056184</id>
       <name>Wineglass</name>
-      <guild/>
+      <guild>0</guild>
       <avatar>27</avatar>
     </player>
     <player>
       <id>208157394</id>
       <name>Moonlight_Sonate</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1474,12 +1450,12 @@
       <id>111802911</id>
       <name>Crowley</name>
       <guild>14</guild>
-      <avatar>48</avatar>
+      <avatar>68</avatar>
     </player>
     <player>
       <id>372698011</id>
       <name>DeadKiT</name>
-      <guild>14</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1496,20 +1472,20 @@
     </player>
     <player>
       <id>370226975</id>
-      <name>xaZIXA</name>
-      <guild>12</guild>
+      <name>FairMaster</name>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>384678820</id>
       <name>Deathgun</name>
-      <guild>0</guild>
+      <guild>16</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>241240727</id>
       <name>Savage</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>42</avatar>
     </player>
     <player>
@@ -1665,7 +1641,7 @@
     <player>
       <id>420745015</id>
       <name>Gwest</name>
-      <guild>16</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1695,43 +1671,43 @@
     <player>
       <id>248911923</id>
       <name>Shinokuro</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>180653908</id>
       <name>Hermit</name>
-      <guild>7</guild>
+      <guild>1</guild>
       <avatar>2</avatar>
     </player>
     <player>
       <id>433605604</id>
       <name>Hieroglyphics</name>
-      <guild>14</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>288446969</id>
       <name>Ayko</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>176273934</id>
       <name>Ministr195</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>177934596</id>
       <name>Eliid</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>255424255</id>
       <name>Senpai</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1743,13 +1719,13 @@
     <player>
       <id>404181497</id>
       <name>Chris</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>152690861</id>
       <name>RoAmiro</name>
-      <guild>15</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
@@ -1760,31 +1736,145 @@
     </player>
     <player>
       <id>435100193</id>
-      <name>EIENNIKANASHIDESU</name>
+      <name>Ya_Eby_alibaby</name>
       <guild>14</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>417430963</id>
-      <name>Ren</name>
+      <name>IceOne</name>
       <guild>16</guild>
-      <avatar>29</avatar>
+      <avatar>44</avatar>
     </player>
     <player>
       <id>180747713</id>
       <name>XEON</name>
-      <guild>12</guild>
+      <guild>0</guild>
       <avatar>29</avatar>
     </player>
     <player>
       <id>423101572</id>
       <name>levikunika</name>
-      <guild>12</guild>
+      <guild>0</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>251728309</id>
+      <name>LeviXIII</name>
+      <guild>0</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>247115006</id>
+      <name>Kurokocchi</name>
+      <guild>0</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>273866011</id>
+      <name>satisfaction</name>
+      <guild>0</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>358149883</id>
+      <name>Untermensch</name>
+      <guild>5</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>225407830</id>
+      <name>nineT</name>
+      <guild>5</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>185494743</id>
+      <name>KING_GUEST</name>
+      <guild>0</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>416888154</id>
+      <name>SingLeton</name>
+      <guild>0</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>362824729</id>
+      <name>Kuro</name>
+      <guild>0</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>250815045</id>
+      <name>Satana</name>
+      <guild>5</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>438141901</id>
+      <name>REZ</name>
+      <guild>0</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>164565974</id>
+      <name>Snoflz</name>
+      <guild>16</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>434631742</id>
+      <name>WillOps</name>
+      <guild>5</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>264152955</id>
+      <name>Izumi</name>
+      <guild>17</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>249409135</id>
+      <name>MacMillan</name>
+      <guild>17</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>191185213</id>
+      <name>Levi</name>
+      <guild>17</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>342010856</id>
+      <name>Petra_Ral</name>
+      <guild>17</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>209128169</id>
+      <name>SaintPaint</name>
+      <guild>17</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>377717526</id>
+      <name>NIKIMAN</name>
+      <guild>17</guild>
+      <avatar>29</avatar>
+    </player>
+    <player>
+      <id>436831700</id>
+      <name>Sensei</name>
+      <guild>17</guild>
       <avatar>29</avatar>
     </player>
   </players>
   <eweeks>
-    <this_week>6</this_week>
+    <this_week>4</this_week>
     <eweek>
       <id>1</id>
       <map>Forest III</map>
@@ -1814,7 +1904,7 @@
       <map>Forest III</map>
       <diff>Normal</diff>
       <goal>Max Damage</goal>
-      <settings>(Size 3-3, 100% Normal titans)</settings>
+      <settings>Size 3-3, 100% Normal titans</settings>
       <challenges>4500 3000 2000</challenges>
     </eweek>
     <eweek>
@@ -1822,7 +1912,7 @@
       <map>Racing Akina</map>
       <diff/>
       <goal/>
-      <settings>(Лучший результат из двух гонок)</settings>
+      <settings>Лучший результат из двух гонок</settings>
       <challenges>60 90 120</challenges>
     </eweek>
     <eweek>
@@ -1830,8 +1920,24 @@
       <map>Forest III</map>
       <diff>Hard</diff>
       <goal>Урон, близкий к 1000</goal>
-      <settings>(В челленджах указано количество урона, которого не хватает до тысячи)</settings>
+      <settings>В челленджах указано количество урона, которого не хватает до тысячи</settings>
       <challenges>6 20 30</challenges>
+    </eweek>
+    <eweek>
+      <id>7</id>
+      <map>Forest Lava</map>
+      <diff>Hard</diff>
+      <goal>Kills</goal>
+      <challenges>90 60 30</challenges>
+      <settings/>
+    </eweek>
+    <eweek>
+      <id>8</id>
+      <map>Forest III</map>
+      <diff>Normal</diff>
+      <goal>Total damage</goal>
+      <challenges>120000 60000 20000</challenges>
+      <settings>(100% normal, 2.5-3 size, 1k minimal damage)</settings>
     </eweek>
   </eweeks>
 </contents>
