@@ -1,6 +1,7 @@
 """ Создание объектов и занесение их в базу данных """
 
 from lib.commands import vk, api, database
+from lib.wiki_pages import updateGuild
 from lib.config import group_id, my_id
 from lib.guilds import Player, Achi
 from lxml.etree import SubElement
@@ -52,6 +53,7 @@ class createGuild(StandardObjectCreation):
 		kw['page'] = self.getPage(kw['name'])
 		kw = self.make(**kw)
 		self.createGuildPlayers(kw['players'], kw['id'])
+		updateGuild(kw['id'])
 
 	def getPage(self, name):
 		""" У любой гильдии есть вики-страница в ВК """
