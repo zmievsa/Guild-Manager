@@ -4,6 +4,8 @@ from argparse import ArgumentParser
 
 from topics.modules.guild_changes import endGuild, excludeFromGuild
 from lib.guilds import Player, Guild
+from lib.commands import database
+
 import backup_database
 import make_weekly_posts
 import make_eweek_post
@@ -64,6 +66,7 @@ def handleRequest(request):
 			player.guild.setPosition(request.id, request.rank)
 		elif request.command == "endguild":
 			endGuild(Guild(request.id))
+		database.rewrite()
 
 
 main()
