@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
+
+from topics.modules.guild_changes import endGuild, excludeFromGuild
+from lib.guilds import Player, Guild
 import backup_database
 import make_weekly_posts
 import make_eweek_post
@@ -54,11 +57,12 @@ def handleRequest(request):
 			print("Script '{}' finished".format(script))
 	elif hasattr(request, "command"):
 		if request.command == "exclude":
-			excludeFromGuild(request.id)
+			excludeFromGuild(Player(request.id))
 		elif request.command == "setrank":
-			Player(request.id).guild.setRank(request.rank)
+			player = Player(request.id)
+			player.guild.setRank(player, request.rank)
 		elif request.command == "endguild":
-			endGuild(request.id)
+			endGuild(Guild(request.id))
 
 
 main()
