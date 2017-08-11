@@ -283,7 +283,7 @@ def check_endGuild(request):
 	endGuild(request.asker.guild)
 
 
-def endGuild(guild)
+def endGuild(guild):
 	guild_id = guild.get("id")
 	removePlayersFromGuild(guild_id)
 	deleteGuildElement(guild)
