@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
-import backup_database, make_weekly_posts, make_eweek_post, update_guilds, check_topics, eweek_notify
+import backup_database
+import make_weekly_posts
+import make_eweek_post
+import update_guilds
+import check_topics
+import eweek_notify
 
 
 scripts = {
