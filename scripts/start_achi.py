@@ -26,7 +26,7 @@ def getConfig(file_name):
 		return config.read()
 
 
-def editConfig(file_name, new_text)
+def editConfig(file_name, new_text):
 	with open(file_name, "w") as config:
 		config.write(new_text)
 
