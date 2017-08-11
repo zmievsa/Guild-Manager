@@ -28,8 +28,8 @@ def getAction(text):
 	"вступлени":changeRequirements,
 	"название гильдии":changeGuildName,
 	"зачисли":addToGuild,
-	"исключи":excludeFromGuild,
-	"распустить гильдию":endGuild,
+	"исключи":check_excludeFromGuild,
+	"распустить гильдию":check_endGuild,
 	}
 	for pattern, action in actions.items():
 		if pattern in text:
@@ -247,7 +247,7 @@ def addToGuild(request):
 		createPlayer(name=name, id=id_, guild=guild_id)
 
 
-def excludeFromGuild(request):
+def check_excludeFromGuild(request):
 	"Прошу исключить игрока ..."
 	if not request.asker.inguild:
 		raise not_in_guild
@@ -257,11 +257,9 @@ def excludeFromGuild(request):
 	if "меня" in request.text:
 		if asker.rank == 3 and len(guild.heads) == 1:
 			raise head_must_present
-		guild.setPosition(asker.id, "player")
-		asker.set("guild", "0")
+		excludeFromGuild(request.asker)
 		return
-	hyperlink = Hyperlink(request.text)
-	player = Player(hyperlink.id)
+	player = Player(Hyperlink(request.text).id)
 	if player.get("guild") != asker.get("guild"):
 		raise not_in_guild
 	elif asker.rank <= player.rank:
@@ -271,14 +269,21 @@ def excludeFromGuild(request):
 			raise need_vice_rights
 	elif player.rank == 3:
 		raise head_cant_leave
-	guild.setPosition(player, "player")
+	excludeFromGuild(player)
+
+
+def excludeFromGuild(player):
+	player.guild.setPosition(player, "player")
 	player.set("guild", "0")
 
 
-def endGuild(request):
+def check_endGuild(request):
 	"Прошу распустить гильдию."
 	checkRights(request.asker, "head")
-	guild = request.asker.guild
+	endGuild(request.asker.guild)
+
+
+def endGuild(guild)
 	guild_id = guild.get("id")
 	removePlayersFromGuild(guild_id)
 	deleteGuildElement(guild)
