@@ -16,7 +16,7 @@ scripts = {
 
 def main():
 	parser = makeParser()
-	request = parser.parse_args([])
+	request = parser.parse_args()
 	handleRequest(request)
 
 
