@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from argparse import ArgumentParser
 import backup_database, make_weekly_posts, make_eweek_post, update_guilds, check_topics, start_achi, eweek_notify
 
