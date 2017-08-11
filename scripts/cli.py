@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
-import backup_database, make_weekly_posts, make_eweek_post, update_guilds, check_topics, start_achi, eweek_notify
+import backup_database, make_weekly_posts, make_eweek_post, update_guilds, check_topics, eweek_notify
 
 
 scripts = {
@@ -10,17 +10,14 @@ scripts = {
 	"mkeweek":make_eweek_post.make,
 	"updguilds":update_guilds.updateAllGuilds,
 	"chtopics":check_topics.main,
-	"startachi":start_achi.main,
 	"notify":eweek_notify.notify,
 }
-
 
 
 def main():
 	parser = makeParser()
 	request = parser.parse_args([])
 	handleRequest(request)
-
 
 
 def makeParser():
@@ -30,7 +27,6 @@ def makeParser():
 		nargs="+", choices=scripts.keys(), metavar="", help=script_help)
 	makeGuildParser(main_parser)
 	return main_parser
-	
 
 
 def makeGuildParser(main_parser):
