@@ -57,7 +57,7 @@ def handleRequest(request):
 		for script in request.scripts:
 			scripts[script]()
 			print("Script '{}' finished".format(script))
-	elif "command" in request:
+	elif "guild_command" in request:
 		if request.command == "exclude":
 			player = Player(request.id)
 			excludeFromGuild(player)
