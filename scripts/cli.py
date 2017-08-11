@@ -57,7 +57,7 @@ def handleRequest(request):
 		for script in request.scripts:
 			scripts[script]()
 			print("Script '{}' finished".format(script))
-	elif hasattr(request, "command"):
+	elif "command" in request:
 		if request.command == "exclude":
 			player = Player(request.id)
 			excludeFromGuild(player)
@@ -67,6 +67,8 @@ def handleRequest(request):
 		elif request.command == "endguild":
 			endGuild(Guild(request.id))
 		database.rewrite()
+	else:
+		print(request)
 
 
 main()
