@@ -58,13 +58,14 @@ def handleRequest(request):
 			scripts[script]()
 			print("Script '{}' finished".format(script))
 	elif "guild_command" in request:
-		if request.command == "exclude":
+		command = request.guild_command
+		if command == "exclude":
 			player = Player(request.id)
 			excludeFromGuild(player)
 			print(player.get("name"), "excluded.")
-		elif request.command == "setrank":
+		elif command == "setrank":
 			player.guild.setPosition(request.id, request.rank)
-		elif request.command == "endguild":
+		elif command == "endguild":
 			endGuild(Guild(request.id))
 		database.rewrite()
 	else:
