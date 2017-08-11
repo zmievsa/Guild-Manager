@@ -3,6 +3,7 @@
 from argparse import ArgumentParser
 
 from topics.modules.guild_changes import endGuild, excludeFromGuild
+from lib.wiki_pages import updateGuild, refreshGuilds
 from lib.guilds import Player, Guild
 from lib.commands import database
 
@@ -61,15 +62,16 @@ def handleRequest(request):
 		command = request.guild_command
 		if command == "exclude":
 			player = Player(request.id)
+			guild = player.guild
 			excludeFromGuild(player)
-			print(player.get("name"), "excluded.")
 		elif command == "setrank":
-			player.guild.setPosition(request.id, request.rank)
+			guild = player.guild
+			guild.setPosition(request.id, request.rank)
 		elif command == "endguild":
-			endGuild(Guild(request.id))
+			guild = Guild(request.id)
+			endGuild(guild)
+			refreshGuilds()
 		database.rewrite()
-	else:
-		print(request)
-
+		updateGuild(guild.id)
 
 main()
