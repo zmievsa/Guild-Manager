@@ -43,7 +43,7 @@ def makeGuildParser(main_parser):
 
 
 def handleRequest(request):
-	if request.script is not None:
+	if request.scripts is not None:
 		for script in request.scripts:
 			scripts[script]()
 			print("Script '{}' finished".format(script))
