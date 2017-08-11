@@ -57,10 +57,11 @@ def handleRequest(request):
 			print("Script '{}' finished".format(script))
 	elif hasattr(request, "command"):
 		if request.command == "exclude":
-			excludeFromGuild(Player(request.id))
-		elif request.command == "setrank":
 			player = Player(request.id)
-			player.guild.setRank(player, request.rank)
+			excludeFromGuild(player)
+			print(player.get("name"), "excluded.")
+		elif request.command == "setrank":
+			player.guild.setPosition(request.id, request.rank)
 		elif request.command == "endguild":
 			endGuild(Guild(request.id))
 
