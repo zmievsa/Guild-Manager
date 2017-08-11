@@ -59,19 +59,24 @@ def handleRequest(request):
 			scripts[script]()
 			print("Script '{}' finished".format(script))
 	elif "guild_command" in request:
-		command = request.guild_command
-		if command == "exclude":
-			player = Player(request.id)
-			guild = player.guild
-			excludeFromGuild(player)
-		elif command == "setrank":
-			guild = player.guild
-			guild.setPosition(request.id, request.rank)
-		elif command == "endguild":
-			guild = Guild(request.id)
-			endGuild(guild)
-			refreshGuilds()
-		database.rewrite()
-		updateGuild(guild.id)
+		handleGuildCommand(request)
+
+
+def handleGuildCommand(request):
+	command = request.guild_command
+	if command == "exclude":
+		player = Player(request.id)
+		guild = player.guild
+		excludeFromGuild(player)
+	elif command == "setrank":
+		guild = player.guild
+		guild.setPosition(request.id, request.rank)
+	elif command == "endguild":
+		guild = Guild(request.id)
+		endGuild(guild)
+		refreshGuilds()
+	database.rewrite()
+	updateGuild(guild.id)
+	
 
 main()
