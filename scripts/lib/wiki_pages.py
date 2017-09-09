@@ -227,9 +227,8 @@ class refreshGuilds:
 
 
 def getPageTemplate(file_name):
-	folder = data_folder + "page_templates/"
-	path = folder + file_name
-	with open(path) as file:
+	path = data_folder + "page_templates/" + file_name
+	with open(path, encoding="UTF-8") as file:
 		return file.read()
 
 
