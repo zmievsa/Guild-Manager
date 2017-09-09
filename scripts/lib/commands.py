@@ -3,8 +3,8 @@
 from vk.exceptions import VkAPIError
 from vk import Session, API
 
-from os.path import realpath
 from os import chdir
+from os.path import realpath, dirname
 
 from lib.config import sleep_time, group_id, data_folder
 from lib.database import Database
@@ -59,9 +59,7 @@ def setCurrentDirectory():
 		Меняет директорию на GM4/scripts вне зависимости
 		от того, где они находятся, и где был вызван скрипт
 	"""
-	path = realpath(__file__)
-	index = path.index("/lib")
-	path = path[:index]
+	path = dirname(dirname(realpath(__file__)))
 	chdir(path)
 
 
