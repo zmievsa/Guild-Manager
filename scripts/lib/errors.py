@@ -1,25 +1,23 @@
 """ Оповещение администратора о возникших ошибках """
 
 from traceback import format_exception, format_exc
+from contextlib import contextmanager
 from lib.config import emergency_id
 from lib.commands import vk, api
 
 
-class ErrorManager:
+@contextmanager
+def ErrorManager(name):
 	""" Упрощенное оповещение об ошибках
 
-		str name: название скрипта (обычно укороченное)
-		Использование: with ErrorManager(name): main()
+	str name: название скрипта (обычно укороченное)
+	Использование: with ErrorManager(name): main()
 	"""
-	def __init__(self, name):
-		self.name = name
-
-	def __enter__(self):
-		pass
-
-	def __exit__(self, *args):
-		if args[0] is not None:
-			sendErrorMessage(self.name)
+	try:
+		yield
+	except Exception as e:
+		sendErrorMessage(name)
+		raise e
 
 
 def sendErrorMessage(name, exception=None):
