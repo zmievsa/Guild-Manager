@@ -1,79 +1,45 @@
-""" Абстракция над lxml для упрощенной работы с базой данных """
-
-from lxml.etree import ElementTree, XMLParser, parse
+import sqlite3 as SQL
 
 
 class Database:
-	""" Необходимо использовать как singleton
-
-		Иначе может произойти потеря данных при
-		использовании двумя разными скриптами
-	"""
 	def __init__(self, path):
-		self.parse(path)
+		self.connect(path)
 
-	def parse(self, path):
-		parser = XMLParser(remove_blank_text=True, encoding="UTF-8")
-		self.contents = parse(path, parser).getroot()
+	def connect(self, path):
 		self.path = path
+		self.connection = SQL.connect(path)
+		self.cursor = self.connection.cursor()
 
-	def find(self, string):
-		return self.contents.find(string)
-
-	def rewrite(self, recursion=True):
-		""" Дважды записывает измененную базу данных в файл
-
-			Двойное записывание и рекурсия -- костыль, нужный
-			для того, чтобы сработал pretty_print
-
-		"""
-		tree = ElementTree(self.contents)
-		tree.write(self.path, pretty_print=True, encoding="UTF-8")
-		if recursion:
-			database = Database(self.path)
-			database.rewrite(recursion=False)
+	def rewrite(self):
+		""" Сохраняет базу данных """
+		self.connection.commit()
 
 	def getByField(self, parent, field, value):
-		""" Ищет элемент в базе данных по одному из полей
-
-			returns Element
-		"""
-		value = str(value).lower()
-		elements = self.getAll(parent)
-		for element in elements:
-			subelement = element.find(field)
-			if subelement is not None and subelement.text.lower() == value:
-				return element
-
-	def getById(self, parent, id):
-		return self.getByField(parent, "id", id)
-
-	def getByName(self, parent, name):
-		return self.getByField(parent, "name", name)
+		""" Ищет элемент в базе данных по одному из полей """
+		expression = "SELECT * FROM {table} WHERE {column}=?".format(
+			table=parent, column=field)
+		self.cursor.execute(expression, [value])
+		return self.cursor.fetchone()
 
 	def getAll(self, parent, field=None):
-		""" Возвращает список объектов или значения их атрибутов
+		""" Возвращает список объектов или значения их атрибутов """
+		field = field or "*"
+		expression = "SELECT {column} FROM {table}".format(table=parent, column=field)
+		self.cursor.execute(expression)
+		return self.cursor.fetchall()
 
-			Args:
-				str parent = контейнер (players, guilds, etc)
-				str field = название атрибута
+	def setField(self, parent, id, field, value):
+		expression = "UPDATE {table} SET {column}=? WHERE id={id}".format(
+			table=parent, column=field, id=id)
+		self.cursor.execute(expression, [value])
 
-			returns Element[] or str[]
+	def addElement(self, parent, args):
+		question_marks = ", ".join(["?"] * len(args))
+		expression = "INSERT into {table} VALUES({values})".format(
+			table=parent, values=question_marks)
+		self.cursor.execute(expression, args)
 
-		"""
-		parent = self.find(parent)
-		if parent is not None:
-			children = list(parent.iterchildren())
-			if children != []:
-				if field is not None:
-					return self._getFields(field, children)
-				else:
-					return children
-
-	def _getFields(self, field, children):
-		fields = []
-		for element in children:
-			subelement = element.find(field)
-			if subelement is not None:
-				fields.append(subelement.text)
-		return fields
+	def deleteElement(self, parent, id):
+		expression = "DELETE FROM {table} WHERE id={id}".format(
+			table=parent, id=id)
+		self.cursor.execute(expression)
