@@ -214,7 +214,7 @@ class refreshGuilds:
 
 	def getPlayerCount(self):
 		""" Возвращает только игроков с гильдией """
-		player_guilds = database.getAll("players", field="guild")
+		player_guilds = database.getAll("players", field="guild_id")
 		player_guilds = [g for g in player_guilds if g != 0]
 		return len(player_guilds)
 

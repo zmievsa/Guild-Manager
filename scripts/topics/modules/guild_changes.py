@@ -3,8 +3,8 @@
 from lib.object_creation import createPlayer
 from lib.commands import database, ban_list
 from lib.wiki_pages import updateGuild
+from lib.guilds import Player, Rank
 from lib.config import group_id
-from lib.guilds import Player
 
 from topics.lib import Hyperlink, checkNicknameFormat
 from topics.errors import *
@@ -53,7 +53,7 @@ def getResponse(request):
 
 def finish(request):
 	if request.asker.guild is not None:
-		updateGuild(request.asker.guild)
+		updateGuild(request.asker.guild_id)
 
 
 def changeNick(request):
@@ -124,34 +124,32 @@ def changeStatus(request):
 	status = getRequestedStatus(request.text)
 	hyperlink = Hyperlink(request.text)
 	player = Player(hyperlink.id)
-	if not player.exists or player.guild != asker.guild:
+	if not player.exists or player.guild_id != asker.guild_id:
 		raise not_in_guild
 	elif not asker.inguild or not player.inguild:
 		raise not_in_guild
 	if "глав" in status:
-		if asker.rank != 3:
-			raise need_head_rights
-		elif len(heads) == 2:
+		checkRights(asker, "head")
+		if len(heads) == 2:
 			raise too_many_heads
 		else:
 			guild.setPosition(player.id, "head")
 	elif "зам" in status:
-		if asker.rank != 3:
-			raise need_head_rights
-		elif len(vices) == 4:
+		checkRights(asker, "head")
+		if len(vices) == 4:
 			raise too_many_vices
 		elif asker.id == player.id and len(heads) == 1:
 			raise head_must_present
-		elif asker.id != player.id and player.rank == 3:
+		elif asker.id != player.id and player.rank == Rank.head:
 			raise head_cant_leave
 		else:
 			guild.setPosition(player.id, "vice")
 	elif "игрок" in status:
-		if asker.id == player.id and asker.rank == 3 and len(heads) == 1:
+		if asker.id == player.id and asker.rank == Rank.head and len(heads) == 1:
 			raise head_must_present
-		elif asker.id != player.id and asker.rank != 3:
+		elif asker.id != player.id and asker.rank != Rank.head:
 			raise need_head_rights
-		elif asker.id != player.id and player.rank == 3:
+		elif asker.id != player.id and player.rank == Rank.head:
 			raise head_cant_leave
 		else:
 			guild.setPosition(player.id, "player")
@@ -229,16 +227,16 @@ def changeRequirements(request):
 def addToGuild(request):
 	"Прошу зачислить игрока ..."
 	checkRights(request.asker, "vice")
-	guild_id = request.asker.guild.id
+	guild_id = request.asker.guild_id
 	hyperlink = Hyperlink(request.text)
 	id_, name = hyperlink.id, hyperlink.name
-	player = Player(id_)
+	player = Player(id=id_)
 	if id_ in ban_list:
 		raise user_banned
 	elif player.inguild:
 		raise already_in_guild
 	if player.exists:
-		player.set("guild", guild_id)
+		player.set("guild_id", guild_id)
 	else:
 		checkIfPlayerExists(name=name)
 		createPlayer(name=name, id=id_, guild=guild_id)
@@ -252,44 +250,44 @@ def check_excludeFromGuild(request):
 	guild = asker.guild
 	request.guilds_to_update.append(guild)
 	if "меня" in request.text:
-		if asker.rank == 3 and len(guild.heads) == 1:
+		if asker.rank == Rank.head and len(guild.heads) == 1:
 			raise head_must_present
 		excludeFromGuild(request.asker)
 		return
 	player = Player(Hyperlink(request.text).id)
-	if player.guild != asker.guild:
+	if player.guild_id != asker.guild_id:
 		raise not_in_guild
 	elif asker.rank <= player.rank:
-		if player.rank == 2:
+		if player.rank == Rank.vice:
 			raise need_head_rights
-		elif player.rank == 1:
+		elif player.rank == Rank.player:
 			raise need_vice_rights
-	elif player.rank == 3:
+	elif player.rank == Rank.head:
 		raise head_cant_leave
 	excludeFromGuild(player)
 
 
 def excludeFromGuild(player):
 	player.guild.setPosition(player, "player")
-	player.set("guild", "0")
+	player.set("guild_id", 0)
 
 
 def check_endGuild(request):
 	"Прошу распустить гильдию."
 	checkRights(request.asker, "head")
-	endGuild(request.asker.guild)
+	endGuild(request.asker.guild_id)
 
 
-def endGuild(guild):
-	removePlayersFromGuild(guild.id)
-	database.deleteElement("guilds", guild.id)
+def endGuild(guild_id):
+	removePlayersFromGuild(guild_id)
+	database.deleteElement("guilds", guild_id)
 
 
 def removePlayersFromGuild(guild_id):
 	players = [Player(id=id) for id in database.getAll("players", "id")]
 	for player in players:
-		if player.guild == guild_id:
-			player.set("guild", 0)
+		if player.guild_id == guild_id:
+			player.set("guild_id", 0)
 
 
 def getNickname(text):
@@ -312,7 +310,7 @@ def searchForNickname(text):
 
 
 def checkRights(player, position):
-	if position == "head" and player.rank < 3:
+	if position == "head" and player.rank < Rank.head:
 		raise need_head_rights
-	elif position == "vice" and player.rank < 2:
+	elif position == "vice" and player.rank < Rank.vice:
 		raise need_vice_rights

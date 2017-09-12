@@ -52,7 +52,7 @@ class Request(object):
 
 	def updateGuilds(self):
 		for guild in self.guilds_to_update:
-			updateGuild(guild.get("id"))
+			updateGuild(guild.id)
 
 	def addMessageToComment(self, message):
 		self.text = "{}\n{}\n{}".format(self.text, text_division, message)

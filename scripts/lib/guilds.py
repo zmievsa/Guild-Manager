@@ -22,7 +22,8 @@ class DatabaseElement:
 		self.makeAttributes(column, value)
 
 	def set(self, name, value):
-		logger.debug("Setting '{}' to {} of {}".format(name, value, type(self).__name__))
+		logger.debug("Setting '{}' to {} of {} ({})".format(
+			name, value, repr(self), type(self).__name__))
 		database.setField(self.parent, self.id, name, value)
 		self.__setattr__(name, value)
 
@@ -98,11 +99,7 @@ class Player(DatabaseElement):
 	def __repr__(self):
 		""" Удобно в еженедельниках """
 		if self.exists or (self.id and self.name):
-			if self.exists:
-				id, name = self.get("id", "name")
-			else:
-				id, name = self.id, self.name
-			return "[id{}|{}]".format(id, name)
+			return "[id{}|{}]".format(self.id, self.name)
 		elif self.name:
 			return self.name
 		else:
@@ -114,16 +111,15 @@ class Player(DatabaseElement):
 
 	def getGuild(self):
 		if self.exists:
-			guild_id = self.guild
-			if guild_id != 0:
-				return Guild(id=guild_id)
+			if self.guild_id != 0:
+				return Guild(id=self.guild_id)
 
 	def getRank(self):
 		if self.guild is not None:
-			id = self.id
-			if id in self.guild.heads:
+			player_id = str(self.id)
+			if player_id in self.guild.heads:
 				return Rank.head
-			elif id in self.guild.vices:
+			elif player_id in self.guild.vices:
 				return Rank.vice
 			else:
 				return Rank.player
