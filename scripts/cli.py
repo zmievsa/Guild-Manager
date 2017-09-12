@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
+from logging import getLogger
 
-from topics.modules.guild_changes import endGuild, excludeFromGuild
-from lib.wiki_pages import updateGuild, refreshGuilds
-from lib.guilds import Player, Guild
 from lib.commands import database
+from lib.guilds import Guild
+from lib.guilds import Player
+from lib.wiki_pages import refreshGuilds
+from lib.wiki_pages import updateGuild
+from topics.modules.guild_changes import endGuild
+from topics.modules.guild_changes import excludeFromGuild
 
 import backup_database
-import make_weekly_posts
-import make_eweek_post
-import update_guilds
 import check_topics
 import eweek_notify
+import make_eweek_post
+import make_weekly_posts
+import update_guilds
+
+logger = getLogger("GM.command_line")
 
 
 scripts = {
@@ -57,7 +63,7 @@ def handleRequest(request):
 	if request.scripts is not None:
 		for script in request.scripts:
 			scripts[script]()
-			print("Script '{}' finished".format(script))
+			logger.debug("Script '{}' finished".format(script))
 	elif "guild_command" in request:
 		handleGuildCommand(request)
 
