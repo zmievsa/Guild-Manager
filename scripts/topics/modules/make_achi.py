@@ -25,23 +25,23 @@ def finish(request):
 
 
 def main(request):
-	checkIfAchiIsActive()
 	mandatory_keys = "название", "иконка", "шкалы"
 	fields = Fields(request.text, mandatory_keys)
 	editFields(fields)
+	checkIfAchiIsActive()
 	checkName(fields['название'])
-	createAchi(**fields)
-
-
-def checkIfAchiIsActive():
-	if achi_is_active:
-		raise GMError("Невозможно добавлять испытания во время сезона.")
+	createAchi(*[fields[key] for key in fields.all_keys])
 
 
 def editFields(fields):
 	fields['иконка'] = getPhoto(fields['иконка'])
 	waves = fields['шкалы'].split(" ")
 	fields['шкалы'] = [getPhoto(w) for w in waves]
+
+
+def checkIfAchiIsActive():
+	if achi_is_active:
+		raise GMError("Невозможно добавлять испытания во время сезона.")
 
 
 def checkName(name):

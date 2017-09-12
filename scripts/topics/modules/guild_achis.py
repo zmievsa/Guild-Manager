@@ -71,11 +71,11 @@ def checkParticipants(players, guild):
 		isbanned = "{} забанен в группе".format(player.name)
 		not_in_guild = "{} не состоит в гильдии".format(player.name)
 		if not player.inguild:
-			raise GMError(not_in_guild)
+			raise GMError(not_in_guild) # FIX, WHERE DID U GET THESE?
 		elif player.guild != guild.id:
-			raise GMError(not_in_guild)
+			raise GMError(not_in_guild) # FIX, WHERE DID U GET THESE?
 		elif player.id in ban_list:
-			raise GMError(isbanned)
+			raise GMError(isbanned)		# FIX, WHERE DID U GET THESE?
 
 
 def addAchiPoints(fields):

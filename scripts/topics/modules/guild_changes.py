@@ -15,9 +15,7 @@ id = 29901188
 group = group_id
 comment_amount = 83
 
-
-def getAction(text):
-	actions = {
+ACTIONS = {
 	"ник":changeNick,
 	"ссылку":changeId,
 	"лого":changeLogo,
@@ -30,8 +28,11 @@ def getAction(text):
 	"зачисли":addToGuild,
 	"исключи":check_excludeFromGuild,
 	"распустить гильдию":check_endGuild,
-	}
-	for pattern, action in actions.items():
+}
+
+
+def getAction(text):
+	for pattern, action in ACTIONS.items():
 		if pattern in text:
 			return action
 
