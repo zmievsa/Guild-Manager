@@ -15,7 +15,7 @@ def getAction(text):
 
 
 def getResponse(request):
-	return "Гильдия: {}".format(request.asker.guild.get("name"))
+	return "Гильдия: {}".format(request.asker.guild.name)
 
 
 def finish(request):
@@ -50,7 +50,6 @@ def getGuild(text, result):
 
 def addPoints(guild, result):
 	if result == "поражение":
-		xml = guild.find("loses")
+		guild.set("loses", guild.loses + 1)
 	elif result == "победа":
-		xml = guild.find("wins")
-	xml.text = str(int(xml.text) + 1)
+		guild.set("wins", guild.wins + 1)

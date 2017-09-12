@@ -1,14 +1,33 @@
 """ Набор средств для упрощенной работы с вконтакте """
 
-from vk.exceptions import VkAPIError
-from vk import Session, API
-
-from os import chdir
-from os.path import realpath, dirname
-
-from lib.config import sleep_time, group_id, data_folder
+from lib.config import data_folder
+from lib.config import group_id
+from lib.config import sleep_time
 from lib.database import Database
+
+import logging
+import sys
+from os import chdir
+from os.path import dirname
+from os.path import realpath
 from time import sleep
+from vk import API
+from vk import Session
+from vk.exceptions import VkAPIError
+
+
+def makeLogger(file_name):
+	logger = logging.getLogger('GM')
+	logger.setLevel("DEBUG")
+	fh = logging.FileHandler(file_name, mode="w")
+	sh = logging.StreamHandler(stream=sys.stdout)
+	fh_formatter = logging.Formatter('[%(asctime)s] %(name)s: %(message)s')
+	sh_formatter = logging.Formatter('%(name)s: %(message)s')
+	fh.setFormatter(fh_formatter)
+	sh.setFormatter(sh_formatter)
+	logger.addHandler(fh)
+	logger.addHandler(sh)
+	return logger
 
 
 def getApi(token_path):
@@ -64,6 +83,9 @@ def setCurrentDirectory():
 
 
 setCurrentDirectory()
+logger = makeLogger(data_folder + "debug.log")
+logger.debug("Loading utils...")
 api = getApi(data_folder + "token.txt")
 ban_list = getBanned(group_id)
-database = Database(data_folder + "database.xml")
+database = Database(data_folder + "database")
+logger.debug("All utils loaded")

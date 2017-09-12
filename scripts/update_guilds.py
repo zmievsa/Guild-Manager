@@ -3,11 +3,14 @@
 from lib.wiki_pages import updateGuild
 from lib.errors import ErrorManager
 from lib.commands import database
-from time import sleep
+from logging import getLogger
+
+logger = getLogger("GM.update_guilds")
 
 
 def updateAllGuilds():
-	guild_ids = database.getAll(parent="guilds", field="id")
+	logger.debug("Updating all guilds...")
+	guild_ids = database.getAll("guilds", field="id")
 	for guild_id in guild_ids:
 		updateGuild(guild_id)
 

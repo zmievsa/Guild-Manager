@@ -1,55 +1,52 @@
 """ Набор абстракций над базой данных """
 
 from lib.commands import database
+from logging import getLogger
+from enum import IntEnum
+
+logger = getLogger("GM.lib.guilds")
+
+
+class Rank(IntEnum):
+	head = 3
+	vice = 2
+	player = 1
+	not_in_guild = 0
 
 
 class DatabaseElement:
 	""" Стандартный набор методов работы с объектами """
-	def find(self, name):
-		return self.xml_element.find(name)
 
-	def get(self, *names):
-		names = [self.find(n).text or "" for n in names]
-		return names if len(names) > 1 else names[0]
+	def __init__(self, **kwargs):
+		column, value = tuple(kwargs.items())[0]
+		self.makeAttributes(column, value)
 
 	def set(self, name, value):
-		self.find(name).text = value
+		logger.debug("Setting '{}' to {} of {}".format(name, value, type(self).__name__))
+		database.setField(self.parent, self.id, name, value)
+		self.__setattr__(name, value)
 
-	@property
-	def exists(self):
-		return self.xml_element is not None
-
-	def getElement(self, id=None, name=None):
+	def makeAttributes(self, column, value):
 		""" Поиск элемента в базе данных """
-		if id is not None:
-			self._checkid(id)
-			return database.getById(self.parent, id)
-		elif name is not None:
-			return database.getByName(self.parent, name)
-		else:
-			raise Exception("DatabaseElement: ты не указал id или имя")
-
-	@staticmethod
-	def _checkid(id):
-		if str is not type(id) is not int:
-			raise Exception("Неверный ID: Значение: {}, Тип: {}".format(id, type(id)))
+		logger.debug("Making attributes of {}, '{}'={} ({})".format(
+			type(self).__name__, column, value, type(value).__name__))
+		values, keys = database.getByField(self.parent, column, value)
+		self.exists = bool(values)
+		values = values or [None] * len(keys)
+		for key, value in zip(keys, values):
+			self.__setattr__(key, value)
 
 
 class Guild(DatabaseElement):
 	parent = "guilds"
 
-	def __init__(self, id=None, name=None):
-		self.xml_element = self.getElement(id, name)
-
 	@property
 	def heads(self):
-		head = self.get("head")
-		return self._getNonEmptyField(head)
+		return self._getNonEmptyField(self.head)
 
 	@property
 	def vices(self):
-		vice = self.get("vice")
-		return self._getNonEmptyField(vice)
+		return self._getNonEmptyField(self.vice)
 
 	@staticmethod
 	def _getNonEmptyField(field):
@@ -65,7 +62,6 @@ class Guild(DatabaseElement):
 			Возможные аргументы:
 			"player", "vice", "head"
 		"""
-		player_id = str(player_id)
 		self._removePlayerFromOldPosition(player_id)
 		if position != "player":
 			self._putPlayerIntoNewPosition(player_id, position)
@@ -81,21 +77,23 @@ class Guild(DatabaseElement):
 
 	def _putPlayerIntoNewPosition(self, player_id, position):
 		if position == "head":
-			element = self.find("head")
+			initial_value = self.head
 		elif position == "vice":
-			element = self.find("vice")
-		element.text = "{} {}".format(element.text, player_id)
+			initial_value = self.vice
+		new_value = "{} {}".format(initial_value, player_id)
+		self.set(position, new_value)
 
 
 class Player(DatabaseElement):
 	parent = "players"
 
-	def __init__(self, id=None, name=None):
-		self.xml_element = self.getElement(id, name)
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
 		self.guild = self.getGuild()
 		self.rank = self.getRank()
-		self.name = name
-		self.id = id
+		if not self.exists:
+			self.name = kwargs.get("name")
+			self.id = kwargs.get("id")
 
 	def __repr__(self):
 		""" Удобно в еженедельниках """
@@ -114,64 +112,52 @@ class Player(DatabaseElement):
 	def inguild(self):
 		return self.rank > 0
 
-	def recreate(self, id, name):
-		""" Костыль для еженедельника """
-		self.__init__(id, name)
-
 	def getGuild(self):
 		if self.exists:
-			guild_id = self.get("guild")
-			if guild_id != "0":
-				return Guild(guild_id)
+			guild_id = self.guild
+			if guild_id != 0:
+				return Guild(id=guild_id)
 
 	def getRank(self):
 		if self.guild is not None:
-			id = self.get("id")
+			id = self.id
 			if id in self.guild.heads:
-				return 3
+				return Rank.head
 			elif id in self.guild.vices:
-				return 2
+				return Rank.vice
 			else:
-				return 1
+				return Rank.player
 		else:
-			return 0
+			return Rank.not_in_guild
 
 
 class Eweek(DatabaseElement):
 	parent = "eweeks"
 
-	def __init__(self, id):
-		self.xml_element = self.getElement(id)
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+		if self.exists:
+			self.challenges = self.challenges.split(" ")
 
 	def __repr__(self):
 		return self.formatRules()
 
-	@property
-	def challenges(self):
-		return self.get("challenges").split(" ")
-
 	def formatRules(self):
 		""" Генерирует правила еженедельника """
-		map_, diff, goal, settings = self.get(
-			"map", "diff", "goal", "settings")
 		text = "{} {}, {} ({})"
-		if not goal:
+		if self.goal is None:
 			text = text.replace(", ", "")
-		if not settings:
-			text = text.replace(" (", "")
-			text = text.replace(")", "")
-		return text.format(map_, diff, goal, settings)
+		if self.settings is None:
+			text = text[:9] # cut out the '()'
+		return text.format(self.map, self.diff, self.goal, self.settings)
 
 
 class Achi(DatabaseElement):
 	parent = "achis"
 
-	def __init__(self, id=None, name=None):
-		self.xml_element = self.getElement(id, name)
-
-	@property
-	def waves(self):
-		return self.get("waves").split(" ")
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+		self.waves = self.waves.split(" ")
 
 	@staticmethod
 	def getEmptyField():
@@ -189,8 +175,5 @@ class Achi(DatabaseElement):
 class Avatar(DatabaseElement):
 	parent = "avatars"
 
-	def __init__(self, id):
-		self.xml_element = self.getElement(id)
-
 	def __repr__(self):
-		return self.get("link")
+		return self.link

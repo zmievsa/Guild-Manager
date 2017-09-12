@@ -43,11 +43,9 @@ def getResponse(request):
 	"вступлени", "распустить", "исключи", "зачисли", "статус")
 	player_type = ("ник", "ссылку", "аватар")
 	if any(s in text for s in guild_type):
-		guild_name = asker.guild.get("name")
-		message = "Гильдия: {}".format(guild_name)
+		message = "Гильдия: {}".format(asker.guild.name)
 	elif any(s in text for s in player_type):
-		id, name = asker.get("id", "name")
-		message = "Игрок: [id{}|{}]".format(id, name)
+		message = "Игрок: [id{}|{}]".format(asker.id, asker.name)
 	if "83" in text:
 		message += "\n(HC, мой друг)"
 	return message
@@ -55,7 +53,7 @@ def getResponse(request):
 
 def finish(request):
 	if request.asker.guild is not None:
-		updateGuild(request.asker.get("guild"))
+		updateGuild(request.asker.guild)
 
 
 def changeNick(request):
@@ -115,7 +113,6 @@ def checkAvatar(avatar_id):
 
 def getHighestAvatarId():
 	all_avatars = database.getAll("avatars", "id")
-	all_avatars = (int(a) for a in all_avatars)
 	return max(all_avatars)
 
 
@@ -127,7 +124,7 @@ def changeStatus(request):
 	status = getRequestedStatus(request.text)
 	hyperlink = Hyperlink(request.text)
 	player = Player(hyperlink.id)
-	if not player.exists or player.get("guild") != asker.get("guild"):
+	if not player.exists or player.guild != asker.guild:
 		raise not_in_guild
 	elif not asker.inguild or not player.inguild:
 		raise not_in_guild
@@ -232,11 +229,11 @@ def changeRequirements(request):
 def addToGuild(request):
 	"Прошу зачислить игрока ..."
 	checkRights(request.asker, "vice")
-	guild_id = request.asker.guild.get("id")
+	guild_id = request.asker.guild.id
 	hyperlink = Hyperlink(request.text)
 	id_, name = hyperlink.id, hyperlink.name
 	player = Player(id_)
-	if int(id_) in ban_list:
+	if id_ in ban_list:
 		raise user_banned
 	elif player.inguild:
 		raise already_in_guild
@@ -260,7 +257,7 @@ def check_excludeFromGuild(request):
 		excludeFromGuild(request.asker)
 		return
 	player = Player(Hyperlink(request.text).id)
-	if player.get("guild") != asker.get("guild"):
+	if player.guild != asker.guild:
 		raise not_in_guild
 	elif asker.rank <= player.rank:
 		if player.rank == 2:
@@ -284,21 +281,15 @@ def check_endGuild(request):
 
 
 def endGuild(guild):
-	guild_id = guild.get("id")
-	removePlayersFromGuild(guild_id)
-	deleteGuildElement(guild)
+	removePlayersFromGuild(guild.id)
+	database.deleteElement("guilds", guild.id)
 
 
 def removePlayersFromGuild(guild_id):
-	players = database.getAll("players")
+	players = [Player(id=id) for id in database.getAll("players", "id")]
 	for player in players:
-		if player.find("guild").text == guild_id:
-			player.find("guild").text = "0"
-
-
-def deleteGuildElement(guild):
-	parent = guild.xml_element.getparent()
-	parent.remove(guild.xml_element)
+		if player.guild == guild_id:
+			player.set("guild", 0)
 
 
 def getNickname(text):

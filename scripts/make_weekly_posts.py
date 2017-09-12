@@ -4,12 +4,16 @@ from lib.posts import editPost, getPostTime, post
 from lib.errors import ErrorManager
 from lib.config import data_folder
 from lib.commands import database
+from logging import getLogger
 from lib.guilds import Eweek
 from os import listdir
+
+logger = getLogger("GM.weekly_posts")
 
 
 def generate():
 	""" Генерирует посты на неделю """
+	logger.debug("Generating weekly posts...")
 	post_templates = getPlannedPosts()
 	eweek = getNewEweek()
 	setThisWeekEweek(eweek)
@@ -39,17 +43,17 @@ def getNewEweek():
 	old_eweek = int(xml_field.text)
 	highest_id = getHighestEweekId()
 	new_eweek_id = getNextEweek(old_eweek, highest_id)
-	return Eweek(new_eweek_id)
+	return Eweek(id=new_eweek_id)
 
 
 def getWeeklyEweekField():
+	# FIX CALLS TO XML
 	return database.find("eweeks").find("this_week")
 
 
 def getHighestEweekId():
-	eweeks = database.getAll(parent="eweeks", field="id")
-	all_ids = [int(e) for e in eweeks]
-	return max(all_ids)
+	eweek_ids = database.getAll(parent="eweeks", field="id")
+	return max(eweek_ids)
 
 
 def getNextEweek(old_eweek, highest_possible):

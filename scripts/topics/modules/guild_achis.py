@@ -18,7 +18,7 @@ def getAction(text):
 
 
 def getResponse(request):
-	return "Гильдия: " + request.asker.guild.get("name")
+	return "Гильдия: " + request.asker.guild.name
 
 
 def finish(request):
@@ -36,10 +36,10 @@ def main(request):
 
 def editFields(fields):
 	players = fields['участники'].split(" ")
-	fields['участники'] = [Player(p) for p in players]
+	fields['участники'] = [Player(id=p) for p in players]
 	fields['волны'] = int(fields['волны'])
-	fields['гильдия'] = Guild(fields['гильдия'])
-	fields['испытание'] = Achi(fields['испытание'])
+	fields['гильдия'] = Guild(name=fields['гильдия'])
+	fields['испытание'] = Achi(name=fields['испытание'])
 
 
 def checkFields(fields):
@@ -66,21 +66,21 @@ def checkWaves(achi, waves):
 
 
 def checkParticipants(players, guild):
-	guild = guild.get("id")
+	guild = guild.id
 	for player in players:
 		isbanned = "{} забанен в группе".format(player.name)
 		not_in_guild = "{} не состоит в гильдии".format(player.name)
 		if not player.inguild:
 			raise GMError(not_in_guild)
-		elif player.get("guild") != guild.get("id"):
+		elif player.guild != guild.id:
 			raise GMError(not_in_guild)
-		elif int(player.get("id")) in ban_list:
+		elif player.id in ban_list:
 			raise GMError(isbanned)
 
 
 def addAchiPoints(fields):
-	guild_achi = fields['гильдия'].get("achi")
-	achi_id = fields['испытание'].get("id")
+	guild_achi = fields['гильдия'].achi
+	achi_id = fields['испытание'].id
 	waves = fields['волны']
 	guild_achi[achi_id] = str(waves)
 	fields['гильдия'].set("achi", guild_achi)

@@ -3,13 +3,18 @@
 from lib.commands import vk, api, ban_list
 from lib.errors import ErrorManager
 from lib.config import group_id
+from logging import getLogger
+
+logger = getLogger("GM.notify")
 
 
 def notify():
 	""" Оповещает игроков о начале еженедельника """
 	message = getMessage()
+	logger.debug("Getting eweek players...")
 	users = getEweekPlayers()
 	users = {user for user in users if user not in ban_list}
+	logger.debug("Sending messages...")
 	sendMessages(users, message)
 
 
@@ -43,8 +48,9 @@ def sendMessages(users, message):
 	for user in users:
 		try:
 			vk(api.messages.send, user_id=user, message=message)
+			logger.debug("Succesfully sent the message to {}".format(user))
 		except:
-			pass
+			logger.debug("Failed to send the message to {}".format(user))
 
 
 if __name__ == "__main__":

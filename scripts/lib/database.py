@@ -19,14 +19,18 @@ class Database:
 		expression = "SELECT * FROM {table} WHERE {column}=?".format(
 			table=parent, column=field)
 		self.cursor.execute(expression, [value])
-		return self.cursor.fetchone()
+		description = [d[0] for d in self.cursor.description]
+		return self.cursor.fetchone(), description
 
 	def getAll(self, parent, field=None):
 		""" Возвращает список объектов или значения их атрибутов """
 		field = field or "*"
 		expression = "SELECT {column} FROM {table}".format(table=parent, column=field)
 		self.cursor.execute(expression)
-		return self.cursor.fetchall()
+		lst = self.cursor.fetchall()
+		if field != "*":
+			lst = [tuple_[0] for tuple_ in lst]
+		return lst
 
 	def setField(self, parent, id, field, value):
 		expression = "UPDATE {table} SET {column}=? WHERE id={id}".format(

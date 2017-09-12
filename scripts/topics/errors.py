@@ -2,8 +2,7 @@
 
 
 class GMError(Exception):
-	def __init__(self, message):
-		self.message = message
+	pass
 
 
 need_head_rights = GMError("Недостаточно прав. Требуемый ранг: Глава")

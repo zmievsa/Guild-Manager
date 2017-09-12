@@ -6,13 +6,18 @@ from lib.config import group_id, test_id
 from lib.guilds import Eweek, Player
 from lib.errors import ErrorManager
 from re import search
+from logging import getLogger
+
+logger = getLogger("GM.make_eweek_post")
 
 
 def make():
 	""" Создает пост с результатами еженедельника """
+	logger.debug("Getting eweek players...")
 	players = getPlayers()
 	challenges = getChallenges()
 	players = sortPlayers(players, *challenges)
+	logger.debug("Creating eweek post...")
 	post_text = createPost(players, challenges)
 	post_time = getPostTime()
 	post(post_text, post_time)
@@ -86,9 +91,9 @@ def makePlayers(results, participants):
 			if player.name in participants:
 				name = player.name
 				id = participants[player.name]
-				player.recreate(id, name) # костыль
+				player.__init__(id=id, name=name) # костыль
 				if player.guild:
-					guild = player.guild.get("name")
+					guild = player.guild.name
 					player.guild = "[" + guild + "]"
 			if not player.guild:
 				player.guild = ""
@@ -96,9 +101,10 @@ def makePlayers(results, participants):
 
 
 def getChallenges():
+	# FIX CALLS TO XML
 	eweek_id = database.find("eweeks").find("this_week").text
-	challenges = Eweek(eweek_id).challenges
-	return [int(ch) for ch in challenges]
+	eweek = Eweek(id=eweek_id)
+	return eweek.ch1, eweek.ch2, eweek.ch3
 
 
 def sortPlayers(players, ch1, ch2, ch3):

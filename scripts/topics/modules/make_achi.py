@@ -26,10 +26,10 @@ def finish(request):
 
 def main(request):
 	checkIfAchiIsActive()
-	mandatory_keys = {"название":"name", "иконка":"icon", "шкалы":"waves"}
+	mandatory_keys = "название", "иконка", "шкалы"
 	fields = Fields(request.text, mandatory_keys)
 	editFields(fields)
-	checkName(fields['name'])
+	checkName(fields['название'])
 	createAchi(**fields)
 
 
@@ -39,9 +39,9 @@ def checkIfAchiIsActive():
 
 
 def editFields(fields):
-	fields['icon'] = getPhoto(fields['icon'])
-	waves = fields['waves'].split(" ")
-	fields['waves'] = [getPhoto(w) for w in waves]
+	fields['иконка'] = getPhoto(fields['иконка'])
+	waves = fields['шкалы'].split(" ")
+	fields['шкалы'] = [getPhoto(w) for w in waves]
 
 
 def checkName(name):

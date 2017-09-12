@@ -5,6 +5,9 @@ from lib.wiki_pages import refreshGuilds
 
 from topics.modules import guild_changes, guild_battles, make_guild, make_eweek, make_achi
 from topics.lib import Request, getComments
+from logging import getLogger
+
+logger = getLogger("GM.check_topics")
 
 
 def main():
@@ -14,6 +17,7 @@ def main():
 
 
 def parseTopics(topic_list):
+	logger.debug("Started parsing topics")
 	for topic in topic_list:
 		comments = getComments(topic, topic.comment_amount)
 		try:
@@ -24,6 +28,7 @@ def parseTopics(topic_list):
 
 def parseChanges(comments, topic):
 	""" Парсинг обсуждения и внесение изменений """
+	logger.debug("Parsing '{}' topic...".format(topic.__name__))
 	for comment in comments:
 		from_id, text, comment_already_checked = breakUpComment(comment)
 		if not comment_already_checked:
@@ -34,7 +39,7 @@ def parseChanges(comments, topic):
 
 def breakUpComment(comment):
 	""" Возвращает нужные нам атрибуты комментария """
-	from_id = str(comment['from_id'])
+	from_id = comment['from_id']
 	text = comment['text'].strip()
 	attachments = comment.get('attachments')
 	comment_already_checked = attachments is not None

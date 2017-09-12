@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 from lib.errors import ErrorManager
-from lib.guilds import Guild, Achi
 from lib.commands import database
 from lib.achi import getAchiField
+from lib.guilds import Guild
 
 
 def main():
@@ -18,7 +18,7 @@ def enableAchiConfig():
 	new_line = "achi_is_active = True"
 	text = getConfig(file_name)
 	new_text = text.replace(old_line, new_line)
-	editConfig(file_name, text)
+	editConfig(file_name, new_text)
 
 
 def getConfig(file_name):
@@ -39,8 +39,8 @@ def resetAchiProgress():
 
 
 def getGuilds():
-	guilds = database.getAll("guilds")
-	return [Guild(g) for g in guilds]
+	guild_ids = database.getAll("guilds", "id")
+	return [Guild(id=id) for id in guild_ids]
 
 
 if __name__ == "__main__":

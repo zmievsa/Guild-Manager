@@ -4,6 +4,9 @@ from traceback import format_exception, format_exc
 from contextlib import contextmanager
 from lib.config import emergency_id
 from lib.commands import vk, api
+from logging import getLogger
+
+logger = getLogger("GM.lib.errors")
 
 
 @contextmanager
@@ -16,6 +19,7 @@ def ErrorManager(name):
 	try:
 		yield
 	except Exception as e:
+		logger.debug("Sending error message...")
 		sendErrorMessage(name)
 		raise e
 

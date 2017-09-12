@@ -1,71 +1,72 @@
-""" Создание объектов и занесение их в базу данных """
+""" Занесение объектов в базу данных """
 
 from lib.commands import vk, api, database
 from lib.wiki_pages import updateGuild
 from lib.config import group_id, my_id
-from lib.guilds import Player, Achi
-from lxml.etree import SubElement
+from lib.guilds import Player
+from logging import getLogger
+
+logger = getLogger("GM.lib.creation")
 
 
 class StandardObjectCreation:
 	""" Стандартное создание элементов базы данных
 
-		Оно включает в себя обязательный id и создание полей
-		с помощью словаря kwargs, где ключи -- названия полей.
-		Выстраиваются они в последовательности, заданной в
-		keys атрибуте дочернего класса. Элемент создается
-		в контейнере parent (Players, Guilds, etc).
-
 		Рекоммендуется использовать дочерние классы исключительно
 		через заявки и обсуждения (topics), так как все проверки
 		правильности введенных данных не входят в создание объекта.
 	"""
-	def make(self, **kwargs):
-		xml_element = makeXMLElement(self.parent)
-		kwargs["id"] = self.getId()
-		fields = self.makeFields(kwargs)
-		enterIntoDatabase(fields, xml_element)
-		return kwargs
+	custom_id = False
+
+	def __init__(self, *args, **kwargs):
+		logger.debug("Creating object '{}' with args='{}', kwargs={}".format(
+			type(self).__name__, args, kwargs))
+		if not self.custom_id:
+			object_id = self.getId()
+			args.insert(0, object_id) # Id must come first
+		if self.parent:
+			self.editArgs(args, kwargs)
+			database.addElement(self.parent, args)
+		else:
+			raise Exception("Parent not found")
 
 	def getId(self, minimal_id="1"):
 		all_ids = database.getAll(self.parent, field="id")
-		if all_ids is not None:
-			all_ids = (int(i) for i in all_ids)
-			new_id = max(all_ids) + 1
-			return str(new_id)
+		if all_ids:
+			return max(all_ids) + 1
 		else:
 			return minimal_id
 
-	def makeFields(self, kwargs):
-		""" Позволяет сделать неслучайный порядок полей """
-		return [(key, kwargs[key]) for key in self.keys]
+	def editArgs(self, args, kwargs):
+		""" Dummy method for child classes """
 
 
 class createGuild(StandardObjectCreation):
 	parent = "guilds"
-	keys = ("id", "name", "page", "head", "vice",
-		"wins", "loses", "requirements", "about",
-		"logo", "banner", "achi")
 
-	def __init__(self, **kw):
-		kw['achi'] = Achi.getEmptyField()
-		kw['wins'], kw['loses'] = "0", "0"
-		kw['page'] = self.getPage(kw['name'])
-		kw = self.make(**kw)
-		self.createGuildPlayers(kw['players'], kw['id'])
-		updateGuild(kw['id'])
+	def __init__(self, *args):
+		super().__init__(*args)
+		self.createGuildPlayers()
+		updateGuild(id)
+
+	def editArgs(self, args, kwargs):
+		name = args[1]
+		args.insert(3, self.getPage(name))
+		args.insert(5, 0) # wins
+		args.insert(6, 0) # loses
 
 	def getPage(self, name):
 		""" У любой гильдии есть вики-страница в ВК """
-		page = vk(api.pages.save,
+		page_id = vk(api.pages.save,
 					text="",
 					title=name,
 					user_id=my_id,
 					group_id=group_id)
-		return str(page)
+		return page_id
 
 	def createGuildPlayers(self, players, guild_id):
 		""" Часто игроков новых гильдий нет в базе данных """
+		logger.debug("Creating players of guild {}".format(guild_id))
 		for player in players:
 			old_player = Player(id=player.id)
 			if not old_player.exists:
@@ -74,48 +75,22 @@ class createGuild(StandardObjectCreation):
 				old_player.set("guild", guild_id)
 
 
+class createPlayer(StandardObjectCreation):
+	parent = "players"
+	custom_id = True
+
+	def editArgs(self, args, kwargs):
+		guild_id = kwargs.get("guild", 0)
+		args.insert(2, guild_id)
+
+
 class createEweek(StandardObjectCreation):
 	parent = "eweeks"
-	keys = ("id", "map", "diff", "goal",
-	"challenges", "settings")
-
-	def __init__(self, **kwargs):
-		self.make(**kwargs)
 
 
 class createAvatar(StandardObjectCreation):
-	keys = "id", "link"
-
-	def __init__(self, link):
-		self.make(link=link)
+	parent = "avatars"
 
 
 class createAchi(StandardObjectCreation):
-	keys = "id", "name", "icon", "waves"
-
-	def __init__(self, **kwargs):
-		self.make(**kwargs)
-
-
-def createPlayer(id, name, guild="0"):
-	"""Использование функции обусловлено нестандартным id """
-	xml_element = makeXMLElement("players")
-	std_avatar = "29"
-	fields = (
-		("id", id), ("name", name),
-		("guild", guild), ("avatar", std_avatar))
-	enterIntoDatabase(fields, xml_element)
-	return Player(id)
-
-
-def makeXMLElement(parent_name, element_name=None):
-	""" Чаще всего объект в контейнере имеет то же название (guilds: guild) """
-	element_name = element_name or parent_name[:-1]
-	parent = database.find(parent_name)
-	return SubElement(parent, element_name)
-
-
-def enterIntoDatabase(fields, xml_element):
-	for name, value in fields:
-		field = SubElement(xml_element, name)
-		field.text = value
+	parent = "achis"

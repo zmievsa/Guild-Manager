@@ -20,8 +20,8 @@ def getAction(text):
 
 
 def getResponse(request):
-	player = Player(request.asker.id)
-	guild_name, page_id = player.guild.get("name", "page")
+	player = Player(id=request.asker.id)
+	guild_name, page_id = player.guild.name, player.guild.page
 	link = "https://vk.com/page-{}_{}".format(group_id, page_id)
 	return "Гильдия: {} ({})".format(guild_name, link)
 
@@ -38,25 +38,23 @@ def makeGuild(request):
 	editHeadsAndVices(fields)
 	if not guildAlreadyExists(fields):
 		checkGuildInfo(fields)
-		createGuild(**fields)
+		createGuild(*[fields[key] for key in fields.all_keys])
 
 
 def getKeys():
-	mandatory_keys = {
-		"баннер":"banner", "название":"name", "глава":"head",
-		"состав":"players", "требования":"requirements",
-		"описание":"about", "баннер":"banner", "лого":"logo"}
-	optional_keys = {"зам":"vice",}
+	mandatory_keys = ("баннер", "название", "глава", "состав",
+						"требования", "описание", "баннер", "лого")
+	optional_keys = "зам",
 	return mandatory_keys, optional_keys
 
 
 def editFields(fields):
-	fields['banner'] = getPhoto(fields['banner'])
-	fields['logo'] = getPhoto(fields['logo'])
+	fields['баннер'] = getPhoto(fields['баннер'])
+	fields['лого'] = getPhoto(fields['лого'])
 
 
 def makeHyperlinks(guild):
-	fields = ("head", "vice", "players")
+	fields = ("глава", "зам", "состав")
 	for field in fields:
 		players = guild[field]
 		players = players.strip().split(" ")
@@ -64,7 +62,7 @@ def makeHyperlinks(guild):
 
 
 def editHeadsAndVices(guild):
-	fields = ("head", "vice")
+	fields = ("глава", "зам")
 	for field in fields:
 		players = guild[field]
 		players = [p.id for p in players]
@@ -72,8 +70,8 @@ def editHeadsAndVices(guild):
 
 
 def checkGuildInfo(guild):
-	checkPlayers(guild['players'])
-	checkGuildName(guild['name'])
+	checkPlayers(guild['состав'])
+	checkGuildName(guild['название'])
 	checkIfHeadsVicesInGuild(guild)
 
 
@@ -92,21 +90,19 @@ def checkNumberOfPlayers(players):
 
 def checkPlayerUniqueness(player):
 	old_player = Player(name=player.name)
-	if old_player.exists and old_player.get("id") != player.id:
-		name = player.name
-		id = old_player.get("id")
-		raise GMError("Игрок с ником {} уже [id{}|существует]".format(name, id))
+	if old_player.exists and old_player.id != player.id:
+		raise GMError("Игрок с ником {} уже [id{}|существует]".format(
+			player.name, old_player.id))
 
 
 def checkIfPlayerHasGuild(hyperlink):
-	player = Player(hyperlink.id)
+	player = Player(id=hyperlink.id)
 	if player.rank > 0:
-		guild_name = player.guild.get("name")
-		raise GMError("{} уже состоит в гильдии {}".format(hyperlink, guild_name))
+		raise GMError("{} уже состоит в гильдии {}".format(hyperlink, player.guild.name))
 
 
 def checkIfPlayerInBan(player):
-	if int(player.id) in ban_list:
+	if player.id in ban_list:
 		raise GMError("{} забанен в группе.".format(player))
 
 
@@ -119,9 +115,9 @@ def checkGuildName(guild_name):
 
 
 def checkIfHeadsVicesInGuild(guild):
-	heads = guild['head'].split(" ")
-	vices = guild['vice'].split(" ")
-	for player in guild['players']:
+	heads = guild['глава'].split(" ")
+	vices = guild['зам'].split(" ")
+	for player in guild['состав']:
 		if player.id in heads:
 			heads.remove(player.id)
 		elif player.id in vices:
@@ -131,9 +127,9 @@ def checkIfHeadsVicesInGuild(guild):
 
 
 def guildAlreadyExists(guild):
-	name = guild['name']
-	head = guild['head']
+	name = guild['название']
+	head = guild['глава']
 	old_guild = Guild(name=name)
 	if old_guild.exists:
-		if old_guild.get("head") == head:
+		if old_guild.head == head:
 			return True

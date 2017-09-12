@@ -6,6 +6,9 @@ from lib.wiki_pages import updateGuild
 from lib.guilds import Player
 from topics import errors
 from re import search
+from logging import getLogger
+
+logger = getLogger("GM.lib.creation")
 
 
 class Request(object):
@@ -14,16 +17,20 @@ class Request(object):
 		self.id = comment_id
 		self.topic = topic
 		self.text = post_text
-		self.asker = Player(post_owner)
+		logger.debug("Getting asker ({}) information...".format(post_owner))
+		self.asker = Player(id=post_owner)
 		self.action = self.topic.getAction(self.text.lower())
 		self.guilds_to_update = []
+		logger.debug("Recieved request '{}'".format(post_text))
 
 	def process(self):
 		""" Обрабатывает запрос """
+		logger.debug("Began processing request...")
 		try:
 			self.checkActionExistence()
 			self.action(self)
 		except errors.GMError as e:
+			logger.debug("Encountered error '{}'".format(e))
 			self.message = e
 			self.picture = failure_image.link
 		else:
@@ -32,6 +39,7 @@ class Request(object):
 
 	def finish(self):
 		""" Завершает обработку и вносит изменения """
+		logger.debug("Finishing request...")
 		database.rewrite()
 		self.topic.finish(self)
 		self.updateGuilds()
@@ -51,6 +59,7 @@ class Request(object):
 
 	def editComment(self):
 		""" Оповещает игрока о результатах обработки заявки """
+		logger.debug("Editing the comment...")
 		vkCaptcha(api.board.editComment,
 			group_id=self.topic.group,
 			topic_id=self.topic.id,
@@ -84,7 +93,9 @@ class Hyperlink(object):
 		if hyperlink is None:
 			raise errors.GMError("Гиперссылка {} оформлена неверно или отсутствует.".format(text))
 		self.id, self.name = self.divide(hyperlink)
+		self.id = int(self.id)
 		checkNicknameFormat(self.name)
+		logger.debug("Recieved a hyperlink {}".format(self))
 
 	def __repr__(self):
 		return "[id{}|{}]".format(self.id, self.name)
@@ -121,10 +132,10 @@ class Fields(dict):
 		Вначале класс ищет поля в тексте по ключам. Далее
 		он проверяет наличие ключей, кидает ошибку, если
 		пропущены обязательные, и заполняет, если пропущены
-		дополнительные. В конце он переводит ключи на
-		английский, если ключи являются словарями.
+		дополнительные
 	"""
 	def __init__(self, text, mandatory_keys, optional_keys=None):
+		logger.debug("Extracting fields...")
 		if optional_keys is None:
 			optional_keys = type(mandatory_keys)()
 		super().__init__()
@@ -135,15 +146,10 @@ class Fields(dict):
 		self.makeFields()
 		self.checkMandatoryFields()
 		self.fillOptionalFields()
-		if type(self.all_keys) is dict:
-			self.translate()
 
 	def getAllKeys(self, mand_keys, opt_keys):
 		assert type(mand_keys) is type(opt_keys)
-		if type(mand_keys) is dict:
-			self.all_keys = dict(mand_keys, **opt_keys)
-		else:
-			self.all_keys = mand_keys + opt_keys
+		self.all_keys = mand_keys + opt_keys
 
 	def makeFields(self):
 		text = self.text.splitlines()
@@ -163,15 +169,7 @@ class Fields(dict):
 	def fillOptionalFields(self):
 		for key in self.optional_keys:
 			if key not in self:
-				self[key] = ""
-
-	def translate(self):
-		""" Переводит ключи на русский """
-		keys = self.all_keys
-		for russian_key in keys:
-			english_key = keys[russian_key]
-			self[english_key] = self[russian_key]
-			self.pop(russian_key)
+				self[key] = None
 
 
 def getPhoto(text):

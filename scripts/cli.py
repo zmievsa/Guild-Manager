@@ -17,7 +17,7 @@ import eweek_notify
 
 scripts = {
 	"backupdata":backup_database.backup,
-	"mkweekly":make_weekly_posts.generate, 
+	"mkweekly":make_weekly_posts.generate,
 	"mkeweek":make_eweek_post.make,
 	"updguilds":update_guilds.updateAllGuilds,
 	"chtopics":check_topics.main,
@@ -77,6 +77,6 @@ def handleGuildCommand(request):
 		refreshGuilds()
 	database.rewrite()
 	updateGuild(guild.id)
-	
+
 
 main()
