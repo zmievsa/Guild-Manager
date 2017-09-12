@@ -84,7 +84,7 @@ def setCurrentDirectory():
 
 setCurrentDirectory()
 logger = makeLogger(data_folder + "debug.log")
-logger.debug("\n\n")
+logger.debug("BEGINNING A NEW SESSION...")
 logger.debug("Loading utils...")
 api = getApi(data_folder + "token.txt")
 ban_list = getBanned(group_id)
