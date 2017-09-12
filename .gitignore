@@ -1,4 +1,4 @@
 token.txt
-debug.log
+Data/debug.log
 *.pyc
 __pycache__

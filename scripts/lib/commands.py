@@ -19,7 +19,7 @@ from vk.exceptions import VkAPIError
 def makeLogger(file_name):
 	logger = logging.getLogger('GM')
 	logger.setLevel("DEBUG")
-	fh = logging.FileHandler(file_name, mode="w")
+	fh = logging.FileHandler(file_name, mode="a")
 	sh = logging.StreamHandler(stream=sys.stdout)
 	fh_formatter = logging.Formatter('[%(asctime)s] %(name)s: %(message)s')
 	sh_formatter = logging.Formatter('%(name)s: %(message)s')
@@ -84,6 +84,7 @@ def setCurrentDirectory():
 
 setCurrentDirectory()
 logger = makeLogger(data_folder + "debug.log")
+logger.debug("\n\n")
 logger.debug("Loading utils...")
 api = getApi(data_folder + "token.txt")
 ban_list = getBanned(group_id)
