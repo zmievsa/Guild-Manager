@@ -1,4 +1,4 @@
 token.txt
-*.xml
+debug.log
 *.pyc
 __pycache__
