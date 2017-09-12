@@ -1,5 +1,5 @@
 token.txt
-Data/debug.log
 *database
+*.log
 *.pyc
 __pycache__
