@@ -25,7 +25,7 @@ scripts = {
 	"backupdata":backup_database.backup,
 	"mkweekly":make_weekly_posts.generate,
 	"mkeweek":make_eweek_post.make,
-	"updguilds":update_guilds.updateAllGuilds,
+	"updguilds":update_guilds.main,
 	"chtopics":check_topics.main,
 	"notify":eweek_notify.notify,
 }

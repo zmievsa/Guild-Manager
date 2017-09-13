@@ -8,7 +8,7 @@ from logging import getLogger
 logger = getLogger("GM.update_guilds")
 
 
-def updateAllGuilds():
+def main():
 	logger.debug("Updating all guilds...")
 	guild_ids = database.getAll("guilds", field="id")
 	for guild_id in guild_ids:
@@ -18,4 +18,4 @@ def updateAllGuilds():
 
 if __name__ == "__main__":
 	with ErrorManager("UpdateGuilds"):
-		updateAllGuilds()
+		main()
