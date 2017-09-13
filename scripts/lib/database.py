@@ -1,4 +1,7 @@
 import sqlite3 as SQL
+from logging import getLogger
+
+logger = getLogger("GM.database")
 
 
 class Database:
@@ -10,6 +13,10 @@ class Database:
 		self.connection = SQL.connect(path)
 		self.cursor = self.connection.cursor()
 
+	def execute(self, expression, *args, **kwargs):
+		logger.debug(expression)
+		self.cursor.execute(expression, *args, **kwargs)
+
 	def rewrite(self):
 		""" Сохраняет базу данных """
 		self.connection.commit()
@@ -18,7 +25,7 @@ class Database:
 		""" Ищет элемент в базе данных по одному из полей """
 		expression = "SELECT * FROM {table} WHERE {column}=?".format(
 			table=parent, column=field)
-		self.cursor.execute(expression, [value])
+		self.execute(expression, [value])
 		description = [d[0] for d in self.cursor.description]
 		return self.cursor.fetchone(), description
 
@@ -26,7 +33,7 @@ class Database:
 		""" Возвращает список объектов или значения их атрибутов """
 		field = field or "*"
 		expression = "SELECT {column} FROM {table}".format(table=parent, column=field)
-		self.cursor.execute(expression)
+		self.execute(expression)
 		lst = self.cursor.fetchall()
 		if field != "*":
 			lst = [tuple_[0] for tuple_ in lst]
@@ -35,15 +42,15 @@ class Database:
 	def setField(self, parent, id, field, value):
 		expression = "UPDATE {table} SET {column}=? WHERE id={id}".format(
 			table=parent, column=field, id=id)
-		self.cursor.execute(expression, [value])
+		self.execute(expression, [value])
 
 	def addElement(self, parent, args):
 		question_marks = ", ".join(["?"] * len(args))
 		expression = "INSERT into {table} VALUES({values})".format(
 			table=parent, values=question_marks)
-		self.cursor.execute(expression, args)
+		self.execute(expression, args)
 
 	def deleteElement(self, parent, id):
 		expression = "DELETE FROM {table} WHERE id={id}".format(
 			table=parent, id=id)
-		self.cursor.execute(expression)
+		self.execute(expression)

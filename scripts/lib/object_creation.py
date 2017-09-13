@@ -1,8 +1,8 @@
 """ Занесение объектов в базу данных """
 
+from lib.config import group_id, my_id, std_avatar_id
 from lib.commands import vk, api, database
 from lib.wiki_pages import updateGuild
-from lib.config import group_id, my_id
 from lib.guilds import Player
 from logging import getLogger
 
@@ -19,8 +19,9 @@ class StandardObjectCreation:
 	custom_id = False
 
 	def __init__(self, *args, **kwargs):
-		logger.debug("Creating object '{}' with args='{}', kwargs={}".format(
+		logger.debug("{} with args='{}', kwargs={}".format(
 			type(self).__name__, args, kwargs))
+		args = list(args)
 		if not self.custom_id:
 			object_id = self.getId()
 			args.insert(0, object_id) # Id must come first
@@ -80,8 +81,9 @@ class createPlayer(StandardObjectCreation):
 	custom_id = True
 
 	def editArgs(self, args, kwargs):
-		guild_id = kwargs.get("guild", 0)
+		guild_id = kwargs.get("guild_id", 0)
 		args.insert(2, guild_id)
+		args.insert(3, std_avatar_id)
 
 
 class createEweek(StandardObjectCreation):

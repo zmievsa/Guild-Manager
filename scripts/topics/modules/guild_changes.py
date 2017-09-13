@@ -63,7 +63,7 @@ def changeNick(request):
 	if request.asker.exists:
 		request.asker.set("name", name)
 	else:
-		createPlayer(id=request.asker.id, name=name)
+		createPlayer(request.asker.id, name)
 
 
 def changeId(request):
@@ -73,7 +73,7 @@ def changeId(request):
 	if request.asker.exists:
 		request.asker.set("id", hyperlink.id)
 	else:
-		createPlayer(id=hyperlink.id, name=hyperlink.name)
+		createPlayer(hyperlink.id, hyperlink.name)
 
 
 def checkIfPlayerExists(id=None, name=None):
@@ -239,7 +239,7 @@ def addToGuild(request):
 		player.set("guild_id", guild_id)
 	else:
 		checkIfPlayerExists(name=name)
-		createPlayer(name=name, id=id_, guild=guild_id)
+		createPlayer(id_, name, guild_id=guild_id)
 
 
 def check_excludeFromGuild(request):
