@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 from lib.errors import ErrorManager
+from lib.guilds import Guild, Achi
 from lib.commands import database
-from lib.achi import getAchiField
-from lib.guilds import Guild
 
 
 ACHI_FIELD_ID = 1
@@ -21,7 +20,7 @@ def enableAchi():
 
 def resetAchiProgress():
 	guilds = getGuilds()
-	achi_field = getAchiField()
+	achi_progress = Achi.getEmptyProgressField()
 	for guild in guilds:
 		guild.set("achi_progress", achi_field)
 

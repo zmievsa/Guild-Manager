@@ -89,4 +89,5 @@ logger.debug("Loading utils...")
 api = getApi(data_folder + "token.txt")
 ban_list = getBanned(group_id)
 database = Database(data_folder + "database")
+achi_is_active, _ = database.getByField("config", field="id", value=1)[2]
 logger.debug("All utils loaded")

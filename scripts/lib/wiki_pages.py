@@ -7,9 +7,9 @@
 		Сохранение вики-страницы
 """
 
-from lib.config import group_id, my_id, achi_is_active, data_folder
+from lib.commands import database, api, vk, achi_is_active
+from lib.config import group_id, my_id, data_folder
 from lib.guilds import Guild, Player, Avatar, Achi
-from lib.commands import database, api, vk
 from logging import getLogger
 
 logger = getLogger("GM.lib.wiki_pages")

@@ -1,9 +1,10 @@
 """ Создание испытаний """
 
-from lib.config import test_id, achi_is_active
 from lib.object_creation import createAchi
+from lib.commands import achi_is_active
 from topics.lib import Fields, getPhoto
 from topics.errors import GMError
+from lib.config import test_id
 from lib.guilds import Achi
 
 

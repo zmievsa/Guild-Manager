@@ -156,7 +156,7 @@ class Achi(DatabaseElement):
 		self.waves = self.waves.split(" ")
 
 	@staticmethod
-	def getEmptyField():
+	def getEmptyProgressField():
 		""" Выводит поле ачей для гильдий
 
 			Используется при создании гильдии
