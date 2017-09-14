@@ -38,9 +38,6 @@ class StandardObjectCreation:
 		else:
 			return minimal_id
 
-	def editArgs(self, args, kwargs):
-		""" Dummy method for child classes """
-
 
 class createGuild(StandardObjectCreation):
 	parent = "guilds"
