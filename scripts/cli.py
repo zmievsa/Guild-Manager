@@ -81,7 +81,7 @@ def handleGuildCommand(request):
 		guild = Guild(request.id)
 		endGuild(guild)
 		refreshGuilds()
-	database.rewrite()
+	database.save()
 	updateGuild(guild.id)
 
 

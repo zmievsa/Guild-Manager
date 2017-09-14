@@ -18,7 +18,7 @@ def generate():
 	eweek = getNewEweek()
 	setThisWeekEweek(eweek)
 	makePosts(post_templates, eweek)
-	database.rewrite()
+	database.save()
 
 
 def makePosts(days, eweek):

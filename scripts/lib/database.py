@@ -17,7 +17,7 @@ class Database:
 		logger.debug(expression)
 		self.cursor.execute(expression, *args, **kwargs)
 
-	def rewrite(self):
+	def save(self):
 		""" Сохраняет базу данных """
 		self.connection.commit()
 

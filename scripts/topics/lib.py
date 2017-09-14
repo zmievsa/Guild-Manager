@@ -40,7 +40,7 @@ class Request(object):
 	def finish(self):
 		""" Завершает обработку и вносит изменения """
 		logger.debug("Finishing request...")
-		database.rewrite()
+		database.save()
 		self.topic.finish(self)
 		self.updateGuilds()
 		self.addMessageToComment(self.message)
