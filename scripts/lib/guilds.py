@@ -1,8 +1,11 @@
 """ Набор абстракций над базой данных """
 
-from lib.commands import database
+from lib.commands import database, vk, api
+from lib.config import my_id, group_id
+from lib.wiki_pages import updateGuild
 from logging import getLogger
 from enum import IntEnum
+
 
 logger = getLogger("GM.lib.guilds")
 
@@ -17,8 +20,7 @@ class Rank(IntEnum):
 class DatabaseElement:
 	""" Стандартный набор методов работы с объектами """
 
-	def __init__(self, **kwargs):
-		column, value = tuple(kwargs.items())[0]
+	def __init__(self, column, value):
 		self.makeAttributes(column, value)
 
 	def set(self, name, value):
@@ -33,29 +35,29 @@ class DatabaseElement:
 			type(self).__name__, column, value, type(value).__name__))
 		values, keys = database.getByField(self.parent, column, value)
 		self.exists = bool(values)
-		values = values or [None] * len(keys)
-		for key, value in zip(keys, values):
-			self.__setattr__(key, value)
+		if self.exists:
+			for key, value in zip(keys, values):
+				self.__setattr__(key, value)
+
+	def create(self, **kwargs):
+		logger.debug("Creating {} object...".format(self.__name__))
+		self._editKwargs(kwargs)
+		database.addElement(self.parent, **kwargs)
+		self._finishCreation(self, kwargs)
+
+	def _editKwargs(self, kwargs):
+		""" Если у объекта есть стандартные или необычные поля """
+
+	def _finishCreation(self, kwargs):
+		""" Если объекту для создания нужно сделать еще что-либо """
 
 
 class Guild(DatabaseElement):
 	parent = "guilds"
 
-	@property
-	def heads(self):
-		return self._getNonEmptyField(self.head)
-
-	@property
-	def vices(self):
-		return self._getNonEmptyField(self.vice)
-
-	@staticmethod
-	def _getNonEmptyField(field):
-		""" Почти пустое поле могло бы некорректно отобразиться """
-		if field:
-			return field.split(" ")
-		else:
-			return []
+	def __init__(self, id=None, name=None):
+		column, value = ("id", id) if id else ("name", name)
+		super().__init__(column, value)
 
 	def setPosition(self, player_id, position):
 		""" Меняет статус игрока в гильдии
@@ -64,8 +66,19 @@ class Guild(DatabaseElement):
 			"player", "vice", "head"
 		"""
 		self._removePlayerFromOldPosition(player_id)
-		if position != "player":
+		if position != "player": # player is the absense of position
 			self._putPlayerIntoNewPosition(player_id, position)
+
+	@property
+	def heads(self):
+		return self.head.split(" ")
+
+	@property
+	def vices(self):
+		if self.vice:
+			return self.vice.split(" ")
+		else:
+			return []
 
 	def _removePlayerFromOldPosition(self, player_id):
 		heads, vices = self.heads, self.vices
@@ -84,17 +97,48 @@ class Guild(DatabaseElement):
 		new_value = "{} {}".format(initial_value, player_id)
 		self.set(position, new_value)
 
+	def _editKwargs(self, kwargs):
+		self.players = kwargs.pop("players")
+		kwargs["wins"] = kwargs["loses"] = 0
+		kwargs["page"] = self._makePage(kwargs["name"])
+
+	def _finishCreation(self, kwargs):
+		self.__init__(name=kwargs["name"])
+		self._createPlayers()
+		updateGuild(self.id)
+
+	@staticmethod
+	def _makePage(name):
+		""" У любой гильдии есть вики-страница в ВК """
+		page_id = vk(api.pages.save,
+					text="",
+					title=name,
+					user_id=my_id,
+					group_id=group_id)
+		return page_id
+
+	def _createPlayers(self):
+		""" Часто игроков новых гильдий нет в базе данных """
+		logger.debug("Creating players of guild {}".format(self.id))
+		for player in self.players:
+			old_player = Player(player.id)
+			if not old_player.exists:
+				Player.create(id=player.id, name=player.name, guild_id=self.id)
+			else:
+				old_player.set("guild_id", self.id)
+
 
 class Player(DatabaseElement):
 	parent = "players"
+	custom_id = True
 
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
+	def __init__(self, id=None, name=None):
+		column, value = ("id", id) if id else ("name", name)
+		self.name = name
+		self.id = id
+		super().__init__(column, value)
 		self.guild = self.getGuild()
 		self.rank = self.getRank()
-		if not self.exists:
-			self.name = kwargs.get("name")
-			self.id = kwargs.get("id")
 
 	def __repr__(self):
 		""" Удобно в еженедельниках """
@@ -112,7 +156,7 @@ class Player(DatabaseElement):
 	def getGuild(self):
 		if self.exists:
 			if self.guild_id != 0:
-				return Guild(id=self.guild_id)
+				return Guild(self.guild_id)
 
 	def getRank(self):
 		if self.guild is not None:
@@ -126,12 +170,17 @@ class Player(DatabaseElement):
 		else:
 			return Rank.not_in_guild
 
+	def _editKwargs(self, kwargs):
+		if "guild_id" not in kwargs:
+			kwargs["guild_id"] = 0
+		kwargs["avatar"] = 29
+
 
 class Eweek(DatabaseElement):
 	parent = "eweeks"
 
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
+	def __init__(self, id):
+		super().__init__("id", id)
 		if self.exists:
 			self.challenges = self.challenges.split(" ")
 
@@ -151,8 +200,8 @@ class Eweek(DatabaseElement):
 class Achi(DatabaseElement):
 	parent = "achis"
 
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
+	def __init__(self, id):
+		super().__init__("id", id)
 		self.waves = self.waves.split(" ")
 
 	@staticmethod
@@ -170,6 +219,9 @@ class Achi(DatabaseElement):
 
 class Avatar(DatabaseElement):
 	parent = "avatars"
+
+	def __init__(self, link):
+		super().__init__("link", link)
 
 	def __repr__(self):
 		return self.link
