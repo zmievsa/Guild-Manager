@@ -1,8 +1,8 @@
 """ Создание еженедельников """
 
-from lib.object_creation import createEweek
 from lib.config import test_id
 from topics.lib import Fields
+from lib.guilds import Eweek
 
 
 id = 35748154
@@ -23,7 +23,7 @@ def finish(request):
 
 
 def main(request):
-	mandatory_keys = "карта", "ч1", "ч2", "ч3"
-	optional_keys = "сложность", "цель", "дополнительно"
+	mandatory_keys = {"карта":"map", "ч1":"ch1", "ч2":"ch2", "ч3":"ch3"}
+	optional_keys = {"сложность":"diff", "цель":"goal", "дополнительно":"settings"}
 	fields = Fields(request.text, mandatory_keys, optional_keys)
-	createEweek(*[fields[key] for key in fields.all_keys])
+	Eweek().create(**fields)

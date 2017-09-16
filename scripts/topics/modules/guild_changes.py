@@ -1,6 +1,5 @@
 """ Изменения в гильдиях """
 
-from lib.object_creation import createPlayer
 from lib.commands import database, ban_list
 from lib.wiki_pages import updateGuild
 from lib.guilds import Player, Rank
@@ -63,7 +62,7 @@ def changeNick(request):
 	if request.asker.exists:
 		request.asker.set("name", name)
 	else:
-		createPlayer(request.asker.id, name)
+		Player().create(id=request.asker.id, name=name)
 
 
 def changeId(request):
@@ -73,7 +72,7 @@ def changeId(request):
 	if request.asker.exists:
 		request.asker.set("id", hyperlink.id)
 	else:
-		createPlayer(hyperlink.id, hyperlink.name)
+		Player().create(id=hyperlink.id, name=hyperlink.name)
 
 
 def checkIfPlayerExists(id=None, name=None):
@@ -239,7 +238,7 @@ def addToGuild(request):
 		player.set("guild_id", guild_id)
 	else:
 		checkIfPlayerExists(name=name)
-		createPlayer(id_, name, guild_id=guild_id)
+		Player().create(id=id_, name=name, guild_id=guild_id)
 
 
 def check_excludeFromGuild(request):

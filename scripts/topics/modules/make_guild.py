@@ -1,6 +1,5 @@
 """ Создание гильдий """
 
-from lib.object_creation import createGuild
 from lib.guilds import Player, Guild
 from lib.commands import ban_list
 from lib.config import group_id
@@ -38,23 +37,25 @@ def makeGuild(request):
 	editHeadsAndVices(fields)
 	if not guildAlreadyExists(fields):
 		checkGuildInfo(fields)
-		createGuild(*[fields[key] for key in fields.all_keys])
+		Guild().create(**fields)
 
 
 def getKeys():
-	mandatory_keys = ("баннер", "название", "глава", "состав",
-						"требования", "описание", "баннер", "лого")
-	optional_keys = "зам",
+	mandatory_keys = {
+		"баннер":"banner", "название":"name", "глава":"head",
+		"состав":"players", "требования":"requirements",
+		"описание":"about", "баннер":"banner", "лого":"logo"}
+	optional_keys = {"зам":"vice"}
 	return mandatory_keys, optional_keys
 
 
 def editFields(fields):
-	fields['баннер'] = getPhoto(fields['баннер'])
-	fields['лого'] = getPhoto(fields['лого'])
+	fields['banner'] = getPhoto(fields['banner'])
+	fields['logo'] = getPhoto(fields['logo'])
 
 
 def makeHyperlinks(guild):
-	fields = ("глава", "зам", "состав")
+	fields = ("head", "vice", "players")
 	for field in fields:
 		players = guild[field]
 		players = players.strip().split(" ")
@@ -62,7 +63,7 @@ def makeHyperlinks(guild):
 
 
 def editHeadsAndVices(guild):
-	fields = ("глава", "зам")
+	fields = ("head", "vice")
 	for field in fields:
 		players = guild[field]
 		players = [p.id for p in players]
@@ -70,8 +71,8 @@ def editHeadsAndVices(guild):
 
 
 def checkGuildInfo(guild):
-	checkPlayers(guild['состав'])
-	checkGuildName(guild['название'])
+	checkPlayers(guild['players'])
+	checkGuildName(guild['name'])
 	checkIfHeadsVicesInGuild(guild)
 
 
@@ -115,9 +116,9 @@ def checkGuildName(guild_name):
 
 
 def checkIfHeadsVicesInGuild(guild):
-	heads = guild['глава'].split(" ")
-	vices = guild['зам'].split(" ")
-	for player in guild['состав']:
+	heads = guild['head'].split(" ")
+	vices = guild['vice'].split(" ")
+	for player in guild['players']:
 		if player.id in heads:
 			heads.remove(player.id)
 		elif player.id in vices:
@@ -127,8 +128,8 @@ def checkIfHeadsVicesInGuild(guild):
 
 
 def guildAlreadyExists(guild):
-	name = guild['название']
-	head = guild['глава']
+	name = guild['name']
+	head = guild['head']
 	old_guild = Guild(name=name)
 	if old_guild.exists:
 		if old_guild.head == head:

@@ -1,6 +1,5 @@
 """ Создание испытаний """
 
-from lib.object_creation import createAchi
 from lib.commands import achi_is_active
 from topics.lib import Fields, getPhoto
 from topics.errors import GMError
@@ -26,18 +25,18 @@ def finish(request):
 
 
 def main(request):
-	mandatory_keys = "название", "иконка", "шкалы"
+	mandatory_keys = {"название":"name", "иконка":"icon", "шкалы":"waves"}
 	fields = Fields(request.text, mandatory_keys)
 	editFields(fields)
 	checkIfAchiIsActive()
-	checkName(fields['название'])
-	createAchi(*[fields[key] for key in fields.all_keys])
+	checkName(fields['name'])
+	Achi().create(**fields)
 
 
 def editFields(fields):
-	fields['иконка'] = getPhoto(fields['иконка'])
-	waves = fields['шкалы'].split(" ")
-	fields['шкалы'] = [getPhoto(w) for w in waves]
+	fields['icon'] = getPhoto(fields['icon'])
+	waves = fields['waves'].split(" ")
+	fields['waves'] = [getPhoto(w) for w in waves]
 
 
 def checkIfAchiIsActive():
