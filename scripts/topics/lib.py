@@ -128,14 +128,13 @@ def checkNicknameFormat(name):
 
 class Fields(dict):
 	""" Получение полей из текста по ключам
-
 		Вначале класс ищет поля в тексте по ключам. Далее
 		он проверяет наличие ключей, кидает ошибку, если
 		пропущены обязательные, и заполняет, если пропущены
-		дополнительные
+		дополнительные. В конце он переводит ключи на
+		английский, если ключи являются словарями.
 	"""
 	def __init__(self, text, mandatory_keys, optional_keys=None):
-		logger.debug("Extracting fields...")
 		if optional_keys is None:
 			optional_keys = type(mandatory_keys)()
 		super().__init__()
@@ -146,10 +145,15 @@ class Fields(dict):
 		self.makeFields()
 		self.checkMandatoryFields()
 		self.fillOptionalFields()
+		if type(self.all_keys) is dict:
+			self.translate()
 
 	def getAllKeys(self, mand_keys, opt_keys):
 		assert type(mand_keys) is type(opt_keys)
-		self.all_keys = mand_keys + opt_keys
+		if type(mand_keys) is dict:
+			self.all_keys = dict(mand_keys, **opt_keys)
+		else:
+			self.all_keys = mand_keys + opt_keys
 
 	def makeFields(self):
 		text = self.text.splitlines()
@@ -169,7 +173,15 @@ class Fields(dict):
 	def fillOptionalFields(self):
 		for key in self.optional_keys:
 			if key not in self:
-				self[key] = None
+				self[key] = ""
+
+	def translate(self):
+		""" Переводит ключи на русский """
+		keys = self.all_keys
+		for russian_key in keys:
+			english_key = keys[russian_key]
+			self[english_key] = self[russian_key]
+			self.pop(russian_key)
 
 
 def getPhoto(text):
