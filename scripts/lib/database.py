@@ -44,13 +44,23 @@ class Database:
 			table=parent, column=field, id=id)
 		self.execute(expression, [value])
 
-	def addElement(self, parent, args):
-		question_marks = ", ".join(["?"] * len(args))
-		expression = "INSERT into {table} VALUES({values})".format(
-			table=parent, values=question_marks)
+	def addElement(self, parent, args=None, kwargs=None):
+		expression = "INSERT into {table} {names} VALUES({values})"
+		if args:
+			expression = expression.replace("{names}", "")
+			expression = expression.format(table=parent, values=makeQuestionMarks(args))
+		elif kwargs:
+			names, args = kwargs.keys(), kwargs.values()
+			names = "({})".format(", ".join(names))
+			expression = expression.format(table=parent, names=", ".join(names),
+				values=makeQuestionMarks(args))
 		self.execute(expression, args)
 
 	def deleteElement(self, parent, id):
 		expression = "DELETE FROM {table} WHERE id={id}".format(
 			table=parent, id=id)
 		self.execute(expression)
+
+
+def makeQuestionMarks(args):
+	return ", ".join(["?"] * len(args))
