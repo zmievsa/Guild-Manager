@@ -33,10 +33,10 @@ class DatabaseElement:
 		""" Поиск элемента в базе данных """
 		logger.debug("Making attributes of {}, '{}'={} ({})".format(
 			type(self).__name__, column, value, type(value).__name__))
-		dict_= database.getByField(self.parent, column, value)
-		self.exists = bool(dict_.values())
+		response = database.getByField(self.parent, column, value)
+		self.exists = bool(response)
 		if self.exists:
-			for key, value in dict_.items():
+			for key, value in response.items():
 				self.__setattr__(key, value)
 
 	def create(self, **kwargs):
