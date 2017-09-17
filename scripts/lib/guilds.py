@@ -2,8 +2,8 @@
 
 from lib.commands import database, vk, api
 from lib.config import my_id, group_id
-from lib.wiki_pages import updateGuild
 from logging import getLogger
+from lib import wiki_pages
 from enum import IntEnum
 
 
@@ -19,9 +19,9 @@ class Rank(IntEnum):
 
 class DatabaseElement:
 	""" Стандартный набор методов работы с объектами """
-
-	def __init__(self, column, value):
-		self.makeAttributes(column, value)
+	def __init__(self, **kwargs):
+		key, value = getPositiveKwarg(kwargs)
+		self.makeAttributes(key, value)
 
 	def set(self, name, value):
 		logger.debug("Setting '{}' to {} of {} ({})".format(
@@ -33,10 +33,10 @@ class DatabaseElement:
 		""" Поиск элемента в базе данных """
 		logger.debug("Making attributes of {}, '{}'={} ({})".format(
 			type(self).__name__, column, value, type(value).__name__))
-		values, keys = database.getByField(self.parent, column, value)
-		self.exists = bool(values)
+		dict_= database.getByField(self.parent, column, value)
+		self.exists = bool(dict_.values())
 		if self.exists:
-			for key, value in zip(keys, values):
+			for key, value in dict_.items():
 				self.__setattr__(key, value)
 
 	def create(self, **kwargs):
@@ -56,8 +56,7 @@ class Guild(DatabaseElement):
 	parent = "guilds"
 
 	def __init__(self, id=None, name=None):
-		column, value = ("id", id) if id else ("name", name)
-		super().__init__(column, value)
+		super().__init__(id=id, name=name)
 
 	def setPosition(self, player_id, position):
 		""" Меняет статус игрока в гильдии
@@ -105,7 +104,7 @@ class Guild(DatabaseElement):
 	def _finishCreation(self, kwargs):
 		self.__init__(name=kwargs["name"])
 		self._createPlayers()
-		updateGuild(self.id)
+		wiki_pages.updateGuild(self.id)
 
 	@staticmethod
 	def _makePage(name):
@@ -133,10 +132,9 @@ class Player(DatabaseElement):
 	custom_id = True
 
 	def __init__(self, id=None, name=None):
-		column, value = ("id", id) if id else ("name", name)
 		self.name = name
 		self.id = id
-		super().__init__(column, value)
+		super().__init__(id=id, name=name)
 		self.guild = self.getGuild()
 		self.rank = self.getRank()
 
@@ -180,7 +178,7 @@ class Eweek(DatabaseElement):
 	parent = "eweeks"
 
 	def __init__(self, id):
-		super().__init__("id", id)
+		super().__init__(id=id)
 		if self.exists:
 			self.challenges = self.challenges.split(" ")
 
@@ -201,7 +199,7 @@ class Achi(DatabaseElement):
 	parent = "achis"
 
 	def __init__(self, id):
-		super().__init__("id", id)
+		super().__init__(id=id)
 		self.waves = self.waves.split(" ")
 
 	@staticmethod
@@ -220,8 +218,14 @@ class Achi(DatabaseElement):
 class Avatar(DatabaseElement):
 	parent = "avatars"
 
-	def __init__(self, link):
-		super().__init__("link", link)
+	def __init__(self, id=None, link=None):
+		super().__init__(id=id, link=link)
 
 	def __repr__(self):
 		return self.link
+
+
+def getPositiveKwarg(kwargs):
+	for key, value in kwargs.items():
+		if value:
+			return key, value

@@ -9,7 +9,7 @@
 
 from lib.commands import database, api, vk, achi_is_active
 from lib.config import group_id, my_id, data_folder
-from lib.guilds import Guild, Player, Avatar, Achi
+from lib import guilds as guildlib
 from logging import getLogger
 
 logger = getLogger("GM.lib.wiki_pages")
@@ -18,7 +18,7 @@ logger = getLogger("GM.lib.wiki_pages")
 class updateGuild:
 	""" Обновляет вики-страницу гильдии """
 	def __init__(self, guild_id):
-		self.guild = Guild(id=guild_id)
+		self.guild = guildlib.Guild(id=guild_id)
 		if self.guild.exists:
 			logger.debug("Updating guild '{}'...".format(self.guild.name))
 			self.preparePage()
@@ -49,15 +49,14 @@ class updateGuild:
 		return attr
 
 	def getAttributes(self):
-		values, keys = database.getByField("guilds", "id", self.guild.id)
-		return dict(zip(keys, values))
+		return database.getByField("guilds", "id", self.guild.id)
 
 	def getPlayers(self):
 		all_players = database.getAll("players")
 		guild_players = []
 		for player_id, name, guild_id, avatar in all_players:
 			if guild_id == self.guild.id:
-				guild_players.append(Player(id=player_id))
+				guild_players.append(guildlib.Player(id=player_id))
 		return guild_players
 
 	def getHead(self):
@@ -77,7 +76,7 @@ class updateGuild:
 
 	def makeFancyList(self, ids):
 		""" Список замов или глав """
-		players = [Player(id=p) for p in ids]
+		players = [guildlib.Player(id=p) for p in ids]
 		formatted_list = []
 		for player in players:
 			hyperlink = "[[id{}|{}]]".format(player.id, player.name)
@@ -112,7 +111,7 @@ class updateGuild:
 				avatars = []
 			string = "! <center>[[id{}|{}]]</center>\n".format(player.id, player.name)
 			player_list += string
-			avatar = Avatar(id=player.avatar)
+			avatar = guildlib.Avatar(id=player.avatar)
 			photo = "| [[{}|125x125px;noborder;nolink| ]]\n".format(avatar)
 			avatars.append(photo)
 			if index == len(players) - 1:
@@ -126,7 +125,7 @@ class updateGuild:
 		guild_achi_keys = self.guild.achi.split(" ")
 		page = "<br><center>'''[[page-64867627_49895049|Испытания]]'''</center>"
 		for index, result in enumerate(guild_achi_keys):
-			achi = Achi(id=index)
+			achi = guildlib.Achi(id=index)
 			wave = achi.waves[result]
 			title_line = "\n=={}==".format(achi.name)
 			icon_pic = "[[{}|125px;noborder| ]]".format(achi.icon)
@@ -160,7 +159,7 @@ class refreshGuilds:
 	def getGuildList(self):
 		logger.debug("Getting guild list...")
 		guilds = database.getAll("guilds", "id")
-		guilds = [Guild(id=g) for g in guilds]
+		guilds = [guildlib.Guild(id=g) for g in guilds]
 		return self.makeFancyGuildList(guilds), len(guilds)
 
 	def makeFancyGuildList(self, guilds):
