@@ -76,13 +76,11 @@ def changeId(request):
 
 
 def checkIfPlayerExists(id=None, name=None):
-	if id:
-		player = Player(id=id)
-		if player.exists:
+	player = Player(id, name)
+	if player.exists:
+		if id is not None:
 			raise player_already_exists
-	elif name:
-		player = Player(name=name)
-		if player.exists:
+		elif name is not None:
 			raise nickname_already_exists
 
 
