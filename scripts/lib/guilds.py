@@ -31,8 +31,6 @@ class DatabaseElement:
 
 	def makeAttributes(self, column, value):
 		""" Поиск элемента в базе данных """
-		logger.debug("Making attributes of {}, '{}'={} ({})".format(
-			type(self).__name__, column, value, type(value).__name__))
 		response = database.getByField(self.parent, column, value)
 		self.exists = bool(response)
 		if self.exists:

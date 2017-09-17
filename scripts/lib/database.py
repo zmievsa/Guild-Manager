@@ -14,7 +14,6 @@ class Database:
 		self.cursor = self.connection.cursor()
 
 	def execute(self, expression, *args, **kwargs):
-		logger.debug("{} (args: {}, kwargs: {})".format(expression, args, kwargs))
 		self.cursor.execute(expression, *args, **kwargs)
 
 	def save(self):
