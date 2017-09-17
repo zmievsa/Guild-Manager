@@ -46,7 +46,7 @@ def getResponse(request):
 	elif any(s in text for s in player_type):
 		message = "Игрок: [id{}|{}]".format(asker.id, asker.name)
 	if "83" in text:
-		message += "\n(HC, мой друг)"
+		message += "\n(HC)"
 	return message
 
 
