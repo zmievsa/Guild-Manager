@@ -23,6 +23,7 @@ def parseTopics(topic_list):
 		try:
 			parseChanges(comments, topic)
 		except Exception as e:
+			logger.exception("Exception occured in topic '{}'".format(topic.__name__))
 			sendErrorMessage("topics", e)
 
 

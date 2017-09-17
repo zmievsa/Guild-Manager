@@ -19,13 +19,14 @@ def ErrorManager(name):
 	try:
 		yield
 	except Exception as e:
-		logger.debug("Sending error message...")
+		logger.exception("Exception occured, exiting...")
 		sendErrorMessage(name)
 		raise e
 
 
 def sendErrorMessage(name, exception=None):
 	""" Использует либо полученную ошибку, либо ту, что возникла последней """
+	logger.debug("Sending error message...")
 	exception = format_error(exception)
 	message = "{}:\n{}".format(name, exception)
 	vk(api.messages.send, user_id=emergency_id, message=message)
