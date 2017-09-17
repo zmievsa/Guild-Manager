@@ -1,5 +1,6 @@
 """ Набор средств для упрощенной работы с вконтакте """
 
+from lib.config import offline_debug
 from lib.config import data_folder
 from lib.config import group_id
 from lib.config import sleep_time
@@ -52,8 +53,11 @@ def getToken():
 
 def vk(method, suspend_time=sleep_time, **kwargs):
 	""" Делает запрос к вк, ожидая необходимое время """
-	sleep(suspend_time)
-	return method(**kwargs)
+	if not offline_debug:
+		sleep(suspend_time)
+		return method(**kwargs)
+	else:
+		return {"items":[], "count":0}
 
 
 def vkCaptcha(method, **kwargs):

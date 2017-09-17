@@ -7,6 +7,7 @@ my_id = 98216156						# id аккаунта владельца
 std_avatar_id = 29						# id стандартного аватара
 sleep_time = 0.65						# Время ожидания sleep()
 data_folder = "../Data/"				# Путь от GM4/scripts к GM4/Data
+offline_debug = True					# При оффлайн-работе
 
 
 """ TOPICS """
