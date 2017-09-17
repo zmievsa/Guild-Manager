@@ -21,9 +21,8 @@ class GuildManager(tk.Frame):
 		self.packWidgets()
 
 	def configure(self):
-		self.root.minsize(width=200, height=150)
-		self.root.maxsize(width=200, height=150)
-		self.winfo_toplevel().title("Guild Manager")
+		self.root.resizable(0, 0)
+		self.root.title("Guild Manager")
 
 	def createWidgets(self):
 		self.btn_check_topics = tk.Button(self,
