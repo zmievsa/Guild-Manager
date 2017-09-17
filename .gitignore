@@ -1,6 +1,6 @@
 Data/database_backups/*
+Data/debug.log
 token.txt
 *database
-*.log
 *.pyc
 __pycache__
