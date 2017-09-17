@@ -26,8 +26,11 @@ class Database:
 		expression = "SELECT * FROM {table} WHERE {column}=?".format(
 			table=parent, column=field)
 		self.execute(expression, [value])
-		description = [d[0] for d in self.cursor.description]
-		return self.cursor.fetchone(), description
+		description = (d[0] for d in self.cursor.description)
+		response = self.cursor.fetchone()
+		if response:
+			response = dict(zip(description, response))
+		return response
 
 	def getAll(self, parent, field=None):
 		""" Возвращает список объектов или значения их атрибутов """
