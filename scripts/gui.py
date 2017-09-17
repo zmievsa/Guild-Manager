@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from lib.errors import ErrorManager
 import check_topics
 import update_guilds
 import tkinter as tk
@@ -36,4 +37,5 @@ class GuildManager(tk.Frame):
 
 
 if __name__ == "__main__":
-	main()
+	with ErrorManager("GUI"):
+		main()
