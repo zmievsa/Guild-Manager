@@ -1,8 +1,8 @@
 """ Изменения в гильдиях """
 
 from lib.commands import database, ban_list
+from lib.guilds import Player, Avatar, Rank
 from lib.wiki_pages import updateGuild
-from lib.guilds import Player, Rank
 from lib.config import group_id
 
 from topics.lib import Hyperlink, checkNicknameFormat
@@ -88,9 +88,11 @@ def changeAvatar(request):
 	"Прошу сменить мой аватар на ..."
 	if not request.asker.exists:
 		raise player_not_found
-	new_avatar = getNewAvatar(request.text)
-	checkAvatar(new_avatar)
-	request.asker.set("avatar", new_avatar)
+	avatar_id = getNewAvatar(request.text)
+	if Avatar(avatar_id).exists:
+		request.asker.set("avatar", avatar_id)
+	else:
+		raise no_such_avatar
 
 
 def getNewAvatar(text):
@@ -100,17 +102,6 @@ def getNewAvatar(text):
 		raise wrong_request
 	else:
 		return avatar_id.group()
-
-
-def checkAvatar(avatar_id):
-	highest_id = getHighestAvatarId()
-	if not highest_id >= int(avatar_id) >= 1:
-		raise no_such_avatar
-
-
-def getHighestAvatarId():
-	all_avatars = database.getAll("avatars", "id")
-	return max(all_avatars)
 
 
 def changeStatus(request):
@@ -181,7 +172,7 @@ def getPhoto(text):
 		raise photo_not_found
 	else:
 		photo = photo.group()[4:]
-	if str(aottg_main) not in photo:
+	if str(group_id) not in photo:
 		raise need_photo_uploaded
 	return photo
 
