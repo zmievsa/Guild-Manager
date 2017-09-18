@@ -154,16 +154,18 @@ def getRequestedStatus(text):
 
 def changeLogo(request):
 	"Прошу сменить логотип"
-	checkRights(request.asker, "head")
-	photo = getPhoto(request.text)
-	request.asker.guild.set("logo", photo)
+	changePhoto(request, "logo")
 
 
 def changeBanner(request):
 	"Прошу сменить баннер"
+	changePhoto(request, "banner")
+
+
+def changePhoto(request, photo_type):
 	checkRights(request.asker, "head")
 	photo = getPhoto(request.text)
-	request.asker.guild.set("banner", photo)
+	request.asker.guild.set(photo_type, photo)
 
 
 def getPhoto(text):
