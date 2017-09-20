@@ -227,3 +227,5 @@ def getPositiveKwarg(kwargs):
 	for key, value in kwargs.items():
 		if value:
 			return key, value
+	else:
+		return None, None
