@@ -13,16 +13,16 @@ logger = getLogger("GM.check_topics")
 
 
 def main():
-	topic_list = getTopics(topics_folder)
-	parseTopics(topic_list)
+	topics = getTopics(topics_folder)
+	parseTopics(topics)
 	refreshGuilds()
 
 
 def getTopics(folder):
 	for file in os.listdir(folder):
 		name, extension = os.path.splitext(file)
-		if extension == "py":
-			yield import_module("topics.modules.{}" + name)
+		if extension == ".py" and not name.startswith("ignore"):
+			yield import_module("topics.modules." + name)
 
 
 def parseTopics(topic_list):
