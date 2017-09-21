@@ -1,19 +1,28 @@
 #!/usr/bin/env python3
 
 from lib.errors import ErrorManager, sendErrorMessage
+from lib.topics import Request, getComments
+from lib.config import topics_folder
 from lib.wiki_pages import refreshGuilds
 
-from topics.modules import guild_changes, guild_battles, make_guild, make_eweek, make_achi
-from topics.lib import Request, getComments
+from importlib import import_module
 from logging import getLogger
+import os
 
 logger = getLogger("GM.check_topics")
 
 
 def main():
-	topic_list = guild_changes, guild_battles, make_guild, make_eweek, make_achi
+	topic_list = getTopics(topics_folder)
 	parseTopics(topic_list)
 	refreshGuilds()
+
+
+def getTopics(folder):
+	for file in os.listdir(folder):
+		name, extension = os.path.splitext(file)
+		if extension == "py":
+			yield import_module("topics.modules.{}" + name)
 
 
 def parseTopics(topic_list):
