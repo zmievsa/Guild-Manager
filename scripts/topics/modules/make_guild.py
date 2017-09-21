@@ -4,7 +4,7 @@ from lib.guilds import Player, Guild
 from lib.commands import ban_list
 from lib.config import group_id
 
-from topics.lib import Hyperlink, getPhoto, Fields
+from lib.topics import Hyperlink, getPhoto, Fields
 from topics.errors import GMError
 from re import search
 

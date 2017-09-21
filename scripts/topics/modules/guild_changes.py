@@ -5,7 +5,7 @@ from lib.guilds import Player, Avatar, Rank
 from lib.wiki_pages import updateGuild
 from lib.config import group_id
 
-from topics.lib import Hyperlink, checkNicknameFormat
+from lib.topics import Hyperlink, checkNicknameFormat
 from topics.errors import *
 from re import search
 

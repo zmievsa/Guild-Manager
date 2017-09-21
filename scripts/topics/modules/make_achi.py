@@ -1,7 +1,7 @@
 """ Создание испытаний """
 
 from lib.commands import achi_is_active
-from topics.lib import Fields, getPhoto
+from lib.topics import Fields, getPhoto
 from topics.errors import GMError
 from lib.config import test_id
 from lib.guilds import Achi

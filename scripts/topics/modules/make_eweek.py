@@ -1,7 +1,7 @@
 """ Создание еженедельников """
 
 from lib.config import test_id
-from topics.lib import Fields
+from lib.topics import Fields
 from lib.guilds import Eweek
 
 
