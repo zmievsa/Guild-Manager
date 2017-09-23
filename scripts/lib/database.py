@@ -53,8 +53,11 @@ class Database:
 			expression = expression.format(table=parent, values=makeQuestionMarks(args))
 		elif kwargs:
 			names, args = kwargs.keys(), kwargs.values()
+			# sqlite doesn't support all types of iterables
+			# If you send 'dict_values[]' as args -- exception occurs
+			args = list(args)
 			names = "({})".format(", ".join(names))
-			expression = expression.format(table=parent, names=", ".join(names),
+			expression = expression.format(table=parent, names=names,
 				values=makeQuestionMarks(args))
 		self.execute(expression, args)
 
