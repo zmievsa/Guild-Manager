@@ -38,10 +38,10 @@ class DatabaseElement:
 				self.__setattr__(key, value)
 
 	def create(self, **kwargs):
-		logger.debug("Creating {} object...".format(self.__name__))
+		logger.debug("Creating {} object...".format(type(self).__name__))
 		self._editKwargs(kwargs)
-		database.addElement(self.parent, **kwargs)
-		self._finishCreation(self, kwargs)
+		database.addElement(self.parent, kwargs=kwargs)
+		self._finishCreation(kwargs)
 
 	def _editKwargs(self, kwargs):
 		""" Если у объекта есть стандартные или необычные поля """
@@ -228,4 +228,4 @@ def getPositiveKwarg(kwargs):
 		if value:
 			return key, value
 	else:
-		return None, None
+		return "id", None
