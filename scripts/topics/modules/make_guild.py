@@ -66,7 +66,7 @@ def editHeadsAndVices(guild):
 	fields = ("head", "vice")
 	for field in fields:
 		players = guild[field]
-		players = [p.id for p in players]
+		players = [str(p.id) for p in players]
 		guild[field] = " ".join(players)
 
 
