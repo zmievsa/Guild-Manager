@@ -120,7 +120,7 @@ class Guild(DatabaseElement):
 		for player in self.players:
 			old_player = Player(player.id)
 			if not old_player.exists:
-				Player.create(id=player.id, name=player.name, guild_id=self.id)
+				Player().create(id=player.id, name=player.name, guild_id=self.id)
 			else:
 				old_player.set("guild_id", self.id)
 
