@@ -119,10 +119,11 @@ def checkIfHeadsVicesInGuild(guild):
 	heads = guild['head'].split(" ")
 	vices = guild['vice'].split(" ")
 	for player in guild['players']:
-		if player.id in heads:
-			heads.remove(player.id)
-		elif player.id in vices:
-			vices.remove(player.id)
+		player_id = str(player.id)
+		if player_id in heads:
+			heads.remove(player_id)
+		elif player_id in vices:
+			vices.remove(player_id)
 	if len(heads) or len(vices):
 		raise GMError("Не все заместители/главы находятся в составе гильдии.")
 
