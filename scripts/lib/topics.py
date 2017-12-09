@@ -11,7 +11,7 @@ from logging import getLogger
 logger = getLogger("GM.lib.creation")
 
 
-class Request(object):
+class Request:
 	""" Запрос пользователя к гильдменеджеру """
 	def __init__(self, post_text, post_owner, comment_id, topic):
 		self.id = comment_id
@@ -86,7 +86,7 @@ def getComments(topic, amount):
 	return response['items']
 
 
-class Hyperlink(object):
+class Hyperlink:
 	""" Ищет гиперссылку и проверяет ее по правилам группы """
 	def __init__(self, text):
 		hyperlink = self.find(text)
