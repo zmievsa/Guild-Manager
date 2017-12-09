@@ -1,23 +1,28 @@
 import sqlite3 as SQL
 from logging import getLogger
+from os.path import exists, isfile
 
 logger = getLogger("GM.database")
 
 
 class Database:
 	def __init__(self, path):
-		self.connect(path)
-
-	def connect(self, path):
 		self.path = path
-		self.connection = SQL.connect(path)
+		self.checkFileExistence()
+		self.connect()
+
+	def connect(self):
+		self.connection = SQL.connect(self.path)
 		self.cursor = self.connection.cursor()
 
+	def checkFileExistence(self):
+		if not (exists(self.path) and isfile(self.path)):
+			raise FileNotFoundError("Database not found:" + self.path)
+
 	def execute(self, expression, *args, **kwargs):
-		self.cursor.execute(expression, *args, **kwargs)
+		return self.cursor.execute(expression, *args, **kwargs)
 
 	def save(self):
-		""" Сохраняет базу данных """
 		self.connection.commit()
 
 	def getByField(self, parent, field, value):
@@ -59,7 +64,7 @@ class Database:
 			names = "({})".format(", ".join(names))
 			expression = expression.format(table=parent, names=names,
 				values=makeQuestionMarks(args))
-		self.execute(expression, args)
+		return self.execute(expression, args).lastrowid
 
 	def deleteElement(self, parent, id):
 		expression = "DELETE FROM {table} WHERE id={id}".format(
