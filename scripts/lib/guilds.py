@@ -37,17 +37,32 @@ class DatabaseElement:
 			for key, value in response.items():
 				self.__setattr__(key, value)
 
-	def create(self, **kwargs):
-		logger.debug("Creating {} object...".format(type(self).__name__))
-		self._editKwargs(kwargs)
-		database.addElement(self.parent, kwargs=kwargs)
-		self._finishCreation(kwargs)
+	@classmethod
+	def create(cls, **kwargs):
+		logger.debug("Creating {} object...".format(cls.__name__))
+		cls._editKwargs(kwargs)
+		special_kwargs = cls._popSpecialKwargs(kwargs)
+		element_id = database.addElement(cls.parent, kwargs=kwargs)
+		instance = cls.getInstance(kwargs, element_id)
+		instance._finishCreation(special_kwargs)
+		return instance
 
-	def _editKwargs(self, kwargs):
-		""" Если у объекта есть стандартные или необычные поля """
+	@classmethod
+	def _editKwargs(cls, kwargs):
+		""" If an object has special fields """
 
-	def _finishCreation(self, kwargs):
-		""" Если объекту для создания нужно сделать еще что-либо """
+	@classmethod
+	def _popSpecialKwargs(cls, kwargs):
+		""" If an object recieves some additional information in kwargs and needs to save it until finishCreation"""
+		return {}
+
+	def _finishCreation(self, special_kwargs):
+		""" If an object needs to do anything else in order to be created """
+
+	@classmethod
+	def getInstance(cls, kwargs, object_id):
+		""" Override, if an object uses something different from 'id' as a primary key """
+		return cls(id=object_id)
 
 
 class Guild(DatabaseElement):
@@ -94,14 +109,17 @@ class Guild(DatabaseElement):
 		new_value = "{} {}".format(initial_value, player_id)
 		self.set(position, new_value)
 
-	def _editKwargs(self, kwargs):
-		self.players = kwargs.pop("players")
+	@classmethod
+	def _editKwargs(cls, kwargs):
 		kwargs["wins"] = kwargs["loses"] = 0
-		kwargs["page"] = self._makePage(kwargs["name"])
+		kwargs["page"] = cls._makePage(kwargs["name"])
 
-	def _finishCreation(self, kwargs):
-		self.__init__(name=kwargs["name"])
-		self._createPlayers()
+	@classmethod
+	def _popSpecialKwargs(cls, kwargs):
+		return {"players":kwargs.pop("players")}
+
+	def _finishCreation(self, special_kwargs):
+		self._createPlayers(special_kwargs["players"])
 		wiki_pages.updateGuild(self.id)
 
 	@staticmethod
@@ -114,13 +132,13 @@ class Guild(DatabaseElement):
 					group_id=group_id)
 		return page_id
 
-	def _createPlayers(self):
+	def _createPlayers(self, players):
 		""" Часто игроков новых гильдий нет в базе данных """
 		logger.debug("Creating players of guild {}".format(self.id))
-		for player in self.players:
+		for player in players:
 			old_player = Player(player.id)
 			if not old_player.exists:
-				Player().create(id=player.id, name=player.name, guild_id=self.id)
+				Player.create(id=player.id, name=player.name, guild_id=self.id)
 			else:
 				old_player.set("guild_id", self.id)
 
@@ -166,7 +184,7 @@ class Player(DatabaseElement):
 		else:
 			return Rank.not_in_guild
 
-	def _editKwargs(self, kwargs):
+	def _editKwargs(cls, kwargs):
 		if "guild_id" not in kwargs:
 			kwargs["guild_id"] = 0
 		kwargs["avatar"] = 29

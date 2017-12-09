@@ -37,7 +37,7 @@ def makeGuild(request):
 	editHeadsAndVices(fields)
 	if not guildAlreadyExists(fields):
 		checkGuildInfo(fields)
-		Guild().create(**fields)
+		Guild.create(**fields)
 
 
 def getKeys():

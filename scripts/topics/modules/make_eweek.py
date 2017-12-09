@@ -26,4 +26,4 @@ def main(request):
 	mandatory_keys = {"карта":"map", "ч1":"ch1", "ч2":"ch2", "ч3":"ch3"}
 	optional_keys = {"сложность":"diff", "цель":"goal", "дополнительно":"settings"}
 	fields = Fields(request.text, mandatory_keys, optional_keys)
-	Eweek().create(**fields)
+	Eweek.create(**fields)

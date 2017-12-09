@@ -30,7 +30,7 @@ def main(request):
 	editFields(fields)
 	checkIfAchiIsActive()
 	checkName(fields['name'])
-	Achi().create(**fields)
+	Achi.create(**fields)
 
 
 def editFields(fields):
