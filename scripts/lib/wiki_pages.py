@@ -10,12 +10,19 @@
 from lib.commands import database, api, vk, achi_is_active
 from lib.config import group_id, my_id, data_folder
 from lib import guilds as guildlib
+
+from abc import ABC as AbstractBaseClass
 from logging import getLogger
 
 logger = getLogger("GM.lib.wiki_pages")
 
 
-class updateGuild:
+class NoInstanceObject(AbstractBaseClass):
+	def __init__(*args, **kwargs): pass
+	def __new__(*args, **kwargs): __init__(*args, **kwargs)
+
+
+class updateGuild(NoInstanceObject):
 	""" Обновляет вики-страницу гильдии """
 	def __init__(self, guild_id):
 		self.guild = guildlib.Guild(id=guild_id)
@@ -135,7 +142,7 @@ class updateGuild:
 		return page
 
 
-class refreshGuilds:
+class refreshGuilds(NoInstanceObject):
 	""" Обновляет страницу гильдий """
 	def __init__(self):
 		page_id = 47292063

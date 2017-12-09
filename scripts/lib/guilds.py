@@ -1,10 +1,13 @@
 """ Набор абстракций над базой данных """
 
+from abc import ABC as AbstractBaseClass, abstractmethod
+from logging import getLogger
+from enum import IntEnum
+
 from lib.commands import database, vk, api
 from lib.config import my_id, group_id
-from logging import getLogger
 from lib import wiki_pages
-from enum import IntEnum
+
 
 
 logger = getLogger("GM.lib.guilds")
@@ -17,8 +20,10 @@ class Rank(IntEnum):
 	not_in_guild = 0
 
 
-class DatabaseElement:
+class DatabaseElement(AbstractBaseClass):
 	""" Стандартный набор методов работы с объектами """
+	parent = abstractmethod(property())
+	
 	def __init__(self, **kwargs):
 		key, value = getPositiveKwarg(kwargs)
 		self.makeAttributes(key, value)
