@@ -8,7 +8,6 @@ std_avatar_id = 29						# id стандартного аватара
 sleep_time = 0.65						# Время ожидания sleep()
 data_folder = "../Data/"				# Путь от GM4/scripts к GM4/Data
 topics_folder = "topics/modules/"		# Путь к модулям для топиков
-offline_debug = False					# При оффлайн-работе
 
 
 """ TOPICS """
