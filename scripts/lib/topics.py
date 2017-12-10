@@ -109,7 +109,7 @@ class Hyperlink:
 
 	@staticmethod
 	def divide(hyperlink):
-		hyperlink = hyperlink[3:-1]  # removes brackets [] and "id"
+		hyperlink = hyperlink[3:-1]  # removes brackets and "id" portion
 		id_, name = hyperlink.split("|")
 		return id_, name
 

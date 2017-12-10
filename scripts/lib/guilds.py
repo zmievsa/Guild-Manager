@@ -22,7 +22,6 @@ class Rank(IntEnum):
 
 class DatabaseElement(AbstractBaseClass):
 	""" Стандартный набор методов работы с объектами """
-	parent = abstractmethod(property())
 	
 	def __init__(self, **kwargs):
 		key, value = getPositiveKwarg(kwargs)
