@@ -87,7 +87,11 @@ logger = makeLogger(data_folder + "debug.log")
 logger.debug("BEGINNING A NEW SESSION...")
 logger.debug("Loading utils...")
 api = getApi(data_folder + "token.txt")
-ban_list = getBanned(group_id)
 database = Database(data_folder + "database")
 achi_is_active = database.getByField("config", field="id", value=1)["value"]
+try:
+	ban_list = getBanned(group_id)
+except VkAPIError:
+	logger.debug("Failed to load banlist")
+	ban_list = []
 logger.debug("All utils loaded")
