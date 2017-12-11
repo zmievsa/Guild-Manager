@@ -1,2 +1,2 @@
-vk
+vk_api
 pytz

@@ -11,9 +11,7 @@ from os import chdir
 from os.path import dirname
 from os.path import realpath
 from time import sleep
-from vk import API
-from vk import Session
-from vk.exceptions import VkAPIError
+import vk_api
 
 
 def makeLogger(file_name):
@@ -34,8 +32,8 @@ def getApi(token_path):
 	""" Логинится в вк и возвращает готовую к работе сессию """
 	with open(token_path) as f:
 		token = f.read().strip()
-		session = Session(access_token=token)
-		return API(session, v='5.52', lang='ru')
+		session = vk_api.VkApi(token=token, api_version="5.52")
+		return session.get_api()
 
 
 def getToken():
@@ -60,7 +58,7 @@ def vkCaptcha(method, **kwargs):
 	""" Не позволяет программе вылететь, когда вк просит ввести капчу """
 	try:
 		return vk(method, **kwargs)
-	except VkAPIError:
+	except vk_api.VkApiError:
 		sleep(10)
 		return vkCaptcha(method, **kwargs)
 
@@ -91,7 +89,7 @@ database = Database(data_folder + "database")
 achi_is_active = database.getByField("config", field="id", value=1)["value"]
 try:
 	ban_list = getBanned(group_id)
-except VkAPIError:
+except vk_api.VkApiError:
 	logger.debug("Failed to load banlist")
 	ban_list = []
 logger.debug("All utils loaded")
