@@ -188,6 +188,7 @@ class Player(DatabaseElement):
 		else:
 			return Rank.not_in_guild
 
+	@classmethod
 	def _editKwargs(cls, kwargs):
 		if "guild_id" not in kwargs:
 			kwargs["guild_id"] = 0
