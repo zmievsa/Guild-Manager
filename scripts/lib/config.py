@@ -1,13 +1,18 @@
 """ Набор констант, необходимых для работы гильдменеджера """
 
-emergency_id = 98216156					# id человека, которому приходят ошибки
-group_id = 64867627						# id группы aottg 4k
-test_id = 77675108						# id группы тест
-my_id = 98216156						# id аккаунта владельца
-std_avatar_id = 29						# id стандартного аватара
-sleep_time = 0.65						# Время ожидания sleep()
-data_folder = "../Data/"				# Путь от GM4/scripts к GM4/Data
-topics_folder = "topics/modules/"		# Путь к модулям для топиков
+emergency_id = 98216156							# id человека, которому приходят ошибки
+group_id = 64867627								# id группы aottg 4k
+test_id = 77675108								# id группы тест
+my_id = 98216156								# id аккаунта владельца
+std_avatar_id = 29								# id стандартного аватара
+sleep_time = 0.65								# Время ожидания sleep()
+
+topics_folder = "topics/modules/"				# Путь к модулям для топиков
+data_folder = "../Data/"						# Путь от GM4/scripts к GM4/Data
+LOG_PATH = data_folder + "debug.log"
+LOG_CONFIG_PATH = data_folder + "debug.cfg"
+TOKEN_PATH = data_folder + "token.txt"
+DATABASE_PATH = data_folder + "database"
 
 
 """ TOPICS """

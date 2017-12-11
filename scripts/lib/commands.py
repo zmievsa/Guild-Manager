@@ -3,29 +3,32 @@
 from lib.config import data_folder
 from lib.config import group_id
 from lib.config import sleep_time
+from lib.config import TOKEN_PATH
+from lib.config import LOG_PATH
+from lib.config import LOG_CONFIG_PATH
+from lib.config import DATABASE_PATH
 from lib.database import Database
 
 import logging
+import logging.config
 import sys
 from os import chdir
 from os.path import dirname
 from os.path import realpath
 from time import sleep
 import vk_api
+import io
 
 
-def makeLogger(file_name):
-	logger = logging.getLogger('GM')
-	logger.setLevel("DEBUG")
-	fh = logging.FileHandler(file_name, mode="a")
-	sh = logging.StreamHandler(stream=sys.stdout)
-	fh_formatter = logging.Formatter('[%(asctime)s] %(name)s: %(message)s')
-	sh_formatter = logging.Formatter('%(name)s: %(message)s')
-	fh.setFormatter(fh_formatter)
-	sh.setFormatter(sh_formatter)
-	logger.addHandler(fh)
-	logger.addHandler(sh)
-	return logger
+logger = logging.getLogger("GM")
+
+
+def configureLogger(log_config_path, log_path):
+	with open(log_config_path) as f:
+		contents = f.read()
+	file_like_obj = io.StringIO(contents.format(log_file=log_path))
+	logging.config.fileConfig(file_like_obj)
+
 
 
 def getApi(token_path):
@@ -51,7 +54,8 @@ def getToken():
 def vk(method, suspend_time=sleep_time, **kwargs):
 	""" Делает запрос к вк, ожидая необходимое время """
 	sleep(suspend_time)
-	return method(**kwargs)
+	# return method(**kwargs)
+	return {"items":[], "count":0}
 
 
 def vkCaptcha(method, **kwargs):
@@ -81,11 +85,10 @@ def setCurrentDirectory():
 
 
 setCurrentDirectory()
-logger = makeLogger(data_folder + "debug.log")
+configureLogger(LOG_CONFIG_PATH, LOG_PATH)
 logger.debug("BEGINNING A NEW SESSION...")
-logger.debug("Loading utils...")
-api = getApi(data_folder + "token.txt")
-database = Database(data_folder + "database")
+api = getApi(TOKEN_PATH)
+database = Database(DATABASE_PATH)
 achi_is_active = database.getByField("config", field="id", value=1)["value"]
 try:
 	ban_list = getBanned(group_id)
