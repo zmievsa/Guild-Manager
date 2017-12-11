@@ -1,10 +1,7 @@
 import unittest
-from unittest.mock import MagicMock
+
+from tests.util import mock_api, dummy_database
 from topics.modules import guild_changes
-
-
-mock_api = MagicMock()
-
 
 
 class TopicTestCase(unittest.TestCase):
@@ -19,4 +16,3 @@ class TestGuildChanges(TopicTestCase):
 
 if __name__ == "__main__":
 	unittest.main()
-		
