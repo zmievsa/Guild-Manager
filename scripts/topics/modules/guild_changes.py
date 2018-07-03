@@ -72,7 +72,14 @@ def changeId(request):
 	if request.asker.exists:
 		request.asker.set("id", hyperlink.id)
 	else:
+		checkIfPlayerIsTheAsker(hyperlink.name, request.asker)
 		Player.create(id=hyperlink.id, name=hyperlink.name)
+
+
+def checkIfPlayerIsTheAsker(playerName, asker):
+	player = Player(name=playerName)
+	if (player.exists and player.id != asker.id):
+		raise player_already_exists
 
 
 def checkIfPlayerExists(id=None, name=None):
