@@ -2,8 +2,6 @@ import sqlite3 as SQL
 from logging import getLogger
 from os.path import exists, isfile
 
-from topics.errors import GMError
-
 logger = getLogger("GM.database")
 
 
@@ -76,7 +74,3 @@ class Database:
 
 def makeQuestionMarks(args):
 	return ", ".join(["?"] * len(args))
-
-
-class DatabaseError(GMError):
-	pass
