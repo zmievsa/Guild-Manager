@@ -19,7 +19,7 @@ logger = getLogger("GM.lib.wiki_pages")
 
 class NoInstanceObject(AbstractBaseClass):
 	def __init__(*args, **kwargs): pass
-	def __new__(cls, *args, **kwargs): super().__new__(cls, *args, **kwargs)
+	def __new__(cls, *args, **kwargs): super().__new__(cls)
 
 
 class updateGuild(NoInstanceObject):
