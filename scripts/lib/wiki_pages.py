@@ -18,6 +18,10 @@ logger = getLogger("GM.lib.wiki_pages")
 
 
 class NoInstanceObject(AbstractBaseClass):
+	""" Abstract class for classes that do not need to be instanciated.
+	The purpose is that when we create it, it returns None and looks
+	exactly like a function
+	"""
 	def __init__(*args, **kwargs): pass
 	def __new__(cls, *args, **kwargs): super().__new__(cls)
 
