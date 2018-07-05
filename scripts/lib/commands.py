@@ -54,8 +54,8 @@ def getToken():
 def vk(method, suspend_time=sleep_time, **kwargs):
 	""" Делает запрос к вк, ожидая необходимое время """
 	sleep(suspend_time)
-	# return method(**kwargs)
-	return {"items":[], "count":0}
+	return method(**kwargs)
+	# return {"items":[], "count":0}
 
 
 def vkCaptcha(method, **kwargs):
