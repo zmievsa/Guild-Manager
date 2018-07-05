@@ -34,6 +34,7 @@ def parseTopics(topic_list):
 		except Exception as e:
 			logger.exception("Exception occured in topic '{}'".format(topic.__name__))
 			sendErrorMessage("topics", e)
+	logger.debug("Finished parsing topics")
 
 
 def parseChanges(comments, topic):
@@ -45,6 +46,7 @@ def parseChanges(comments, topic):
 			request = Request(text, from_id, comment['id'], topic)
 			request.process()
 			request.finish()
+	logger.debug("Finished parsing '{}' topic".format(topic.__name__))
 
 
 def breakUpComment(comment):
