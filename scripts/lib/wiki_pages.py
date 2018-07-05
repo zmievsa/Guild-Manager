@@ -23,7 +23,9 @@ class NoInstanceObject(AbstractBaseClass):
 	exactly like a function
 	"""
 	def __init__(*args, **kwargs): pass
-	def __new__(cls, *args, **kwargs): super().__new__(cls)
+	def __new__(cls, *args, **kwargs):
+		instance = super().__new__(cls)
+		instance.__init__(*args, **kwargs)
 
 
 class updateGuild(NoInstanceObject):
