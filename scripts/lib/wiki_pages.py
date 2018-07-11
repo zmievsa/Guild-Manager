@@ -136,6 +136,7 @@ class updateGuild(NoInstanceObject):
 	def getAchi(self):
 		""" Создает отображение списка ачей """
 		guild_achi_keys = self.guild.achi.split(" ")
+		guild_achi_keys = [int(key) for key in guild_achi_keys]
 		page = "<br><center>'''[[page-64867627_49895049|Испытания]]'''</center>"
 		for index, result in enumerate(guild_achi_keys):
 			achi = guildlib.Achi(id=index)
