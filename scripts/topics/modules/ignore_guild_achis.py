@@ -79,8 +79,9 @@ def checkParticipants(players, guild):
 
 
 def addAchiPoints(fields):
-	guild_achi = fields['гильдия'].achi
+	# should be buggy AF
+	guild_all_achi = fields['гильдия'].achi
 	achi_id = fields['испытание'].id
 	waves = fields['волны']
-	guild_achi[achi_id] = str(waves)
-	fields['гильдия'].set("achi", guild_achi)
+	guild_all_achi[achi_id] = str(waves)
+	fields['гильдия'].set("achi", guild_all_achi)
